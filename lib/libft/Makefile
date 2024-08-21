@@ -16,17 +16,17 @@ FILES = ft_strdup.c ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c 
 OBJ = ${FILES:.c=.o}
 
 .c.o:		 
-	@${CC} ${FLAGS} -c $< -o ${<:.c=.o}
+	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
 
 ${NAME}: ${OBJ}
-	@$(AR) rcs ${NAME} ${OBJ}
+	$(AR) rcs ${NAME} ${OBJ}
 
 all: $(NAME)
 
 clean:
-	@$(RM) $(OBJ)
+	$(RM) $(OBJ)
 
 fclean: clean
-	@$(RM) $(NAME)
+	$(RM) $(NAME)
 
 re: clean all

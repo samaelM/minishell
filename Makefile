@@ -49,11 +49,12 @@ OBJETS		=	${FILES:${SRC_DIR}/%.c=${OBJ_DIR}/%.o}
 
 INC_DIR		=	./inc
 
+MS_INC		=	$(INC_DIR)/minishell.h
+
 LIB_DIR		=	./lib
-
 LIBFT_DIR	=	$(LIB_DIR)/libft
-
-LIBFT		=	libft.a
+LIBFT_INC	=	$(LIBFT_DIR)/libft.h
+LIBFT		=	$(LIBFT_DIR)/libft.a
 
 ###########################
 ######  COMPILATION  ######
@@ -73,21 +74,21 @@ RLFLAGS		=	-lreadline
 
 all : $(NAME)
 
-$(NAME): $(LIBFT_DIR)/$(LIBFT) $(OBJETS)
-	cc $(OBJETS) $(LIBFT_DIR)/$(LIBFT) -o $(NAME) $(CFLAGS) $(RLFLAGS)
+$(NAME): $(LIBFT) $(OBJETS)
+	cc $(OBJETS) $(LIBFT) -o $(NAME) $(CFLAGS) $(RLFLAGS)
 
-${OBJ_DIR}/%.o: ${SRC_DIR}/%.c $(INC_DIR)/minishell.h
+${OBJ_DIR}/%.o: ${SRC_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
 	cc $(CFLAGS) -c -o $@ $< -g
 
-$(LIBFT_DIR)/$(LIBFT): $(LIBFT_DIR)/libft.h
+$(LIBFT): $(LIBFT_INC)
 	make -C $(LIBFT_DIR)
 
 clean:
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@make -C lib/libft/ fclean
+	@make -C $(LIBFT_DIR) fclean
 	@rm -rf $(NAME)
 
 re: fclean all

@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/08/21 14:54:49 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/08/21 19:20:40 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,19 @@ int	main(int ac, char **av, char **envp)
 	{
 		if (ft_strncmp(cmd, "exit", 4) == 0)
 		{
-			free(cmd);
+			free(cmd);							//replace with ft_exit
 			break ;
 		}
 		else if (ft_strncmp(cmd, "echo", 4) == 0)
 		{
-			printf("%s\n", cmd + 5);
+			printf("%s\n", cmd + 5);			//replace with ft_echo
 			free(cmd);
 		}
 		else if (ft_strncmp(cmd, "cd", 2) == 0)
 		{
-			chdir(cmd + 3);
+			chdir(cmd + 3);						//replace with ft_cd
 			free(cmd);
-		}
+		} // mettre d'autre else if pour les autre commandes builtins
 		else if (*cmd)
 		{
 			add_history(cmd);
