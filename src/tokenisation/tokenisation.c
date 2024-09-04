@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/08/21 17:05:43 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/08/27 13:24:59 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,10 @@
 // 	return (ft_clear(tab));
 // }
 
-t_command *ft_token(char **command)
-{
-	t_command *token_cmd;
-	token_cmd = malloc(sizeof(t_command));
+// t_command *ft_token(char **command)
+// {
+// 	t_command *token_cmd;
+// 	token_cmd = malloc(sizeof(t_command));
 	
-	return (token_cmd);
-}
+// 	return (token_cmd);
+// }
