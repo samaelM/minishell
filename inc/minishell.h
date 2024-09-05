@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/08/27 15:57:51 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/04 19:42:56 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ typedef enum s_symbole
 
 typedef struct s_command
 {
-	int		infile;		// fichier d'entree (par defaut stdin)
-	char	*cmdpath;	// path absolue de la commande (/bin/ls)
-	char	*cmd;		// juste la commande (ls, cat, wc etc)
+	int infile;    // fichier d'entree (par defaut stdin)
+	char *cmdpath; // path absolue de la commande (/bin/ls)
+	char *cmd;     // juste la commande (ls, cat, wc etc)
 	// char	*options;
-	t_symb	symbole;	// s'il y a un sumbole (pipe, heredoc etc)
-	char	**args;		// les argument de la commande (-R, -rf etc)
-	int		outfile;	// fichier de sortie (par defaut stdout)
+	t_symb symbole; // s'il y a un sumbole (pipe, heredoc etc)
+	char **args;    // les argument de la commande (-R, -rf etc)
+	int outfile;    // fichier de sortie (par defaut stdout)
 }			t_command;
 
 ///////////////////////////////////////////
@@ -65,7 +65,7 @@ typedef struct s_command
 
 ///				EXECUTION				///
 
-int	ft_exec_cmd(int fd, char *arg, char **envp, char **path);
+int			ft_exec_cmd(int fd, char *arg, char **envp, char **path);
 
 ///				COMPARATOR				///
 

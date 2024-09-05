@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/08/21 19:20:40 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/04 19:41:08 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	ft_exec_cmd(int fd, char *arg, char **envp, char **path)
 	return (0);
 }
 
-int	main(int ac, char **av, char **envp)
+__int32_t	main(int ac, char **av, char **envp)
 {
 	char	*cmd;
 	// char	**args;

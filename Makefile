@@ -11,20 +11,31 @@ NAME 		= minishell
 ######	Builtins	#####
 B_DIR		=	builtins
 B_SRC		=	cd.c \
-				echo.c \
 				env.c \
-				exit.c \
+				echo.c \
+				unset.c \
 				export.c \
 				pwd.c \
-				unset.c \
+				exit.c \
 
 ######	Token		#####
 T_DIR		=	tokenisation
 T_SRC		=	tokenisation.c
 
-######	Token		#####
+######	signals		#####
 S_DIR		=	signals
 S_SRC		=	signals_handlers.c \
+
+######	redirection	#####
+R_DIR		=	redirections/
+R_SRC		=	pipex.c \
+				infile.c \
+				outfile.c \
+				here_doc.c \
+
+######	exec		#####
+E_DIR		=	exec
+E_SRC		=	exec.c \
 
 ######	All sources	#####
 SRC_DIR		=	src
@@ -33,6 +44,8 @@ SRC			=	main.c \
 				${addprefix ${B_DIR}/,${B_SRC}} \
 				${addprefix ${T_DIR}/,${T_SRC}} \
 				${addprefix ${S_DIR}/,${S_SRC}} \
+				${addprefix ${R_DIR}/,${R_SRC}} \
+				${addprefix ${E_DIR}/,${E_SRC}} \
 
 FILES		=	${addprefix ${SRC_DIR}/,${SRC}}
 
