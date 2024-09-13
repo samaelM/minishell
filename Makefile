@@ -27,7 +27,7 @@ S_DIR		=	signals
 S_SRC		=	signals_handlers.c \
 
 ######	redirection	#####
-R_DIR		=	redirections/
+R_DIR		=	redirections
 R_SRC		=	pipex.c \
 				infile.c \
 				outfile.c \
