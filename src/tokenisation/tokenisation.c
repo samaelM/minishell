@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/08/27 13:24:59 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/16 18:21:18 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,69 @@
 // 	return (ft_clear(tab));
 // }
 
-// t_command *ft_token(char **command)
+
+int	is_in_set(char c, char *set)
+{
+	int	i;
+
+	i = 0;
+	while (set[i])
+	{
+		if (set[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+int	size_arguments(char *cmd)
+{
+	int	size;
+	int	idx;
+
+	size = 0;
+	idx = 0;
+	while (cmd[idx] && is_in_set(cmd[idx], " 	"))
+		idx++;
+	return (1);
+}
+
+char	*ft_get_arguments(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i] && is_in_set(cmd[i], " 	"))
+		i++;
+	return (cmd);
+}
+
+t_command	*ft_token(char *cmd)
+{
+	t_command	*token_cmd;
+	int			i;
+	int			j;
+
+	token_cmd = malloc(sizeof(t_command));
+	i = 0;
+	j = 0;
+	while (cmd[i] && is_in_set(cmd[i], " 	"))
+		i++;
+	j = i;
+	while (cmd[i] && ft_isalnum(cmd[i]))
+		i++;
+	token_cmd->cmd = malloc(i - j + 2);
+	ft_strlcpy(token_cmd->cmd, cmd + j, i - j +1);
+	return (token_cmd);
+}
+// int main(void)
 // {
-// 	t_command *token_cmd;
-// 	token_cmd = malloc(sizeof(t_command));
-	
-// 	return (token_cmd);
+// 	char *line =NULL;
+// 	t_command *cmd;
+// 	while (42)
+// 	{
+// 		line = get_next_line(STDIN_FILENO);
+// 		printf("line:>%s<\n", line);
+// 		cmd = ft_token(line);
+// 		printf("cmd:>%s<\n", cmd->cmd);
+// 	}
 // }

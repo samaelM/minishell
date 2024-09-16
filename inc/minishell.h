@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/04 19:42:56 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/13 14:01:40 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int			ft_pipex(void);
 
 ///				TOKENISATION			///
 
-t_command	*ft_token(char **command);
+t_command	*ft_token(char *command);
 
 ///				BUILT-INS				///
 
