@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/16 18:22:30 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/17 17:32:29 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,54 +76,54 @@ int	ft_exec_cmd(int fd, char *arg, char **envp, char **path)
 	return (0);
 }
 
-int	main(int ac, char **av, char **envp)
-{
-	char	*cmd;
-	// char	**args;
-	// t_command *oui;
-	int		status;
-	pid_t	pid;
-	(void)ac;
-	(void)av;
+// int	main(int ac, char **av, char **envp)
+// {
+// 	char	*cmd;
+// 	int		status;
+// 	pid_t	pid;
 
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, sigint_handler);
-	ft_watermark();
-	while ((cmd = readline("\033[1;95mAna-Shell> \033[0m")) != NULL)
-	{
-		// oui = ft_token(cmd);
-		// printf("%s", oui->cmd);
-		if (ft_strncmp(cmd, "exit", 4) == 0)
-		{
-			free(cmd);							//replace with ft_exit
-			break ;
-		}
-		else if (ft_strncmp(cmd, "echo", 4) == 0)
-		{
-			printf("%s\n", cmd + 5);			//replace with ft_echo
-			free(cmd);
-		}
-		else if (ft_strncmp(cmd, "cd", 2) == 0)
-		{
-			chdir(cmd + 3);						//replace with ft_cd
-			free(cmd);
-		} // mettre d'autre else if pour les autre commandes builtins
-		else if (*cmd)
-		{
-			add_history(cmd);
-			pid = fork();
-			if (pid == -1)
-				printf("fork");
-			else if (pid == 0)
-			{
-				// cmd = ft_strdup("   echo 		a");
-				ft_exec_cmd(1, cmd, envp, ft_split(ft_find_path(envp), ':'));
-				free(cmd);
-			}
-			else
-				waitpid(pid, &status, 0);
-			free(cmd);
-		}
-	}
-	return (0);
-}
+// 	// char	**args;
+// 	// t_command *oui;
+// 	(void)ac;
+// 	(void)av;
+// 	signal(SIGINT, sigint_handler);
+// 	signal(SIGQUIT, sigquit_handler);
+// 	ft_watermark();
+// 	while ((cmd = readline("\033[1;95mShell-et-poivre> \033[0m")) != NULL)
+// 	{
+// 		add_history(cmd);
+// 		// oui = ft_token(cmd);
+// 		// printf("%s", oui->cmd);
+// 		if (ft_strncmp(cmd, "exit", 4) == 0)
+// 		{
+// 			free(cmd); // replace with ft_exit
+// 			break ;
+// 		}
+// 		else if (ft_strncmp(cmd, "echo", 4) == 0)
+// 		{
+// 			printf("%s\n", cmd + 5); // replace with ft_echo
+// 			free(cmd);
+// 		}
+// 		else if (ft_strncmp(cmd, "cd", 2) == 0)
+// 		{
+// 			chdir(cmd + 3); // replace with ft_cd
+// 			free(cmd);
+// 		} // mettre d'autre else if pour les autre commandes builtins
+// 		else if (*cmd)
+// 		{
+// 			pid = fork();
+// 			if (pid == -1)
+// 				printf("fork");
+// 			else if (pid == 0)
+// 			{
+// 				// cmd = ft_strdup("   echo 		a");
+// 				ft_exec_cmd(1, cmd, envp, ft_split(ft_find_path(envp), ':'));
+// 				free(cmd);
+// 			}
+// 			else
+// 				waitpid(pid, &status, 0);
+// 			free(cmd);
+// 		}
+// 	}
+// 	return (0);
+// }

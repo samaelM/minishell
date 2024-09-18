@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/16 18:21:18 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:47:11 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,13 +113,12 @@
 // 	return (ft_clear(tab));
 // }
 
-
 int	is_in_set(char c, char *set)
 {
 	int	i;
 
 	i = 0;
-	while (set[i])
+	while (set && set[i])
 	{
 		if (set[i] == c)
 			return (1);
@@ -127,27 +126,47 @@ int	is_in_set(char c, char *set)
 	}
 	return (0);
 }
-int	size_arguments(char *cmd)
-{
-	int	size;
-	int	idx;
+// int	size_arguments(char *cmd)
+// {
+// 	int	i;
+// 	int	j;
+// 	int	size;
+// 	int in_quote; // 0 => non 1 => " 2 => '
 
-	size = 0;
-	idx = 0;
-	while (cmd[idx] && is_in_set(cmd[idx], " 	"))
-		idx++;
-	return (1);
-}
+// 	j = 0;
+// 	i = 0;
+// 	size = 0;
+// 	while (cmd[i])
+// 	{
+// 		while (cmd[i] && is_in_set(cmd[i], " 	"))
+// 			i++;
+// 		j = i;
+// 		if (cmd[i] && is_in_set(cmd[i], "\"'"))
+// 		{
+// 			// if (cmd[i] == '"')
+// 				// in_quote = ;
+// 			printf("oui");
+// 			i++;
+// 		}
+// 		while (cmd[i] && ft_isalnum(cmd[i]))
+// 		{
+// 			i++;
+// 			size++;
+// 		}
+// 		// size += i - j;
+// 	}
+// 	return (ft_countwords(cmd));
+// }
 
-char	*ft_get_arguments(char *cmd)
-{
-	int	i;
+// char	*ft_get_arguments(char *cmd)
+// {
+// 	int	i;
 
-	i = 0;
-	while (cmd[i] && is_in_set(cmd[i], " 	"))
-		i++;
-	return (cmd);
-}
+// 	i = 0;
+// 	while (cmd[i] && is_in_set(cmd[i], " 	"))
+// 		i++;
+// 	return (cmd);
+// }
 
 t_command	*ft_token(char *cmd)
 {
@@ -161,21 +180,138 @@ t_command	*ft_token(char *cmd)
 	while (cmd[i] && is_in_set(cmd[i], " 	"))
 		i++;
 	j = i;
-	while (cmd[i] && ft_isalnum(cmd[i]))
+	while (cmd[i] && ft_isprint(cmd[i]))
 		i++;
 	token_cmd->cmd = malloc(i - j + 2);
-	ft_strlcpy(token_cmd->cmd, cmd + j, i - j +1);
+	ft_strlcpy(token_cmd->cmd, cmd + j, i - j + 1);
+	// while (cmd[i] && is_in_set(cmd[i], " 	"))
+	// 	i++;
+	// j = i;
+	// while (cmd[i] && ft_isalnum(cmd[i]))
+	// 	i++;
+	// if (cmd[i] && is_in_set(cmd[i], "\"'"))
+	// 	i++;
 	return (token_cmd);
 }
-// int main(void)
+
+int	ft_size_token(char *str)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	while (str[i])
+	{
+		while (str[i] && is_in_set(str[i], " 	"))
+			i++;
+		// if (str[i] && is_in_set(str[i], "\"'"))
+		// 	j++;
+		while (str[i] && is_in_set(str[i], "\"'"))
+		{
+			if (str[i] && str[i] == '"')
+			{
+				i++;
+				while (str[i] && str[i] != '"')
+					i++; // rajouter une condition si il trouve un anti slash
+				i++;
+			}
+			else if (str[i] && str[i] == '\'')
+			{
+				i++;
+				while (str[i] && str[i] != '\'')
+					i++; // rajouter une condition si il trouve un anti slash
+				i++;
+			}
+		}
+	}
+	return (j);
+}
+
+char	*ft_get_arg(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+	}
+	return (str);
+}
+
+int	ft_counttoken(char *str)
+{
+	int	i;
+	int	nb_t;
+
+	i = 0;
+	nb_t = 0;
+	while (str[i])
+	{
+		while (str[i] && is_in_set(str[i], " 	"))
+			i++;
+		if (str[i] && is_in_set(str[i], "\"'"))
+			nb_t++;
+		while (str[i] && is_in_set(str[i], "\"'"))
+		{
+			if (str[i] && str[i] == '"')
+			{
+				i++;
+				while (str[i] && str[i] != '"')
+					i++; // rajouter une condition si il trouve un anti slash
+				i++;
+			}
+			else if (str[i] && str[i] == '\'')
+			{
+				i++;
+				while (str[i] && str[i] != '\'')
+					i++; // rajouter une condition si il trouve un anti slash
+				i++;
+			}
+		}
+		if (str[i])
+		{
+			while (str[i] && is_in_set(str[i], " 	"))
+			{
+				i++;
+			}
+			while (str[i] && !is_in_set(str[i], " 	"))
+				i++;
+			// printf("oui %i\n", i);
+			// remplacer par un strfind
+			nb_t++;
+		}
+	}
+	return (nb_t);
+}
+
+// t_command	*ft_token(char *cmd)
 // {
-// 	char *line =NULL;
-// 	t_command *cmd;
-// 	while (42)
-// 	{
-// 		line = get_next_line(STDIN_FILENO);
-// 		printf("line:>%s<\n", line);
-// 		cmd = ft_token(line);
-// 		printf("cmd:>%s<\n", cmd->cmd);
-// 	}
+// 	t_command	*command;
+// 	int			i;
+
+// 	command = malloc(sizeof(t_command));
+// 	command->args = malloc(sizeof(char *) * ft_counttoken(cmd));
+// 	i = 0;
 // }
+
+int	main(void)
+{
+	char		*line;
+	t_command	*cmd;
+
+	line = NULL;
+	while (42)
+	{
+		line = readline("\033[1;95mShell-et-poivre> \033[0m");
+		add_history(line);
+		// line=NULL;
+		printf("nb_t = %d\n", ft_counttoken(line));
+		printf("size t0 = %d\n", ft_size_token(line));
+		printf("line:>%s<\n", line);
+		cmd = ft_token(line);
+		printf("cmd:>%s<\n", cmd->cmd);
+		// printf("size = %d\n", size_arguments(line));
+		// printf("%s", ft_strtrimtoken(line));
+	}
+}

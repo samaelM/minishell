@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:47:56 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/08/21 14:53:20 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/17 14:16:27 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	sigint_handler(int signum)
 void	sigquit_handler(int signum)
 {
 	ft_printf("\nbye bye!\n");
-	signal(SIGQUIT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
 	(void)signum;
+	exit(0);
 }
