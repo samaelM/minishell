@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/18 18:47:11 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/18 18:58:23 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,10 +201,10 @@ int	ft_size_token(char *str)
 
 	j = 0;
 	i = 0;
-	while (str[i])
+	while (str[i] && is_in_set(str[i], " 	"))
+		i++;
+	while (str[i] && !is_in_set(str[i], " 	"))
 	{
-		while (str[i] && is_in_set(str[i], " 	"))
-			i++;
 		// if (str[i] && is_in_set(str[i], "\"'"))
 		// 	j++;
 		while (str[i] && is_in_set(str[i], "\"'"))
@@ -213,17 +213,29 @@ int	ft_size_token(char *str)
 			{
 				i++;
 				while (str[i] && str[i] != '"')
+				{
 					i++; // rajouter une condition si il trouve un anti slash
+					j++;
+				}
 				i++;
 			}
 			else if (str[i] && str[i] == '\'')
 			{
 				i++;
 				while (str[i] && str[i] != '\'')
+				{
 					i++; // rajouter une condition si il trouve un anti slash
+					j++;
+				}
 				i++;
 			}
 		}
+		while (str[i] && !is_in_set(str[i], "\"' 	"))
+		{
+			i++;
+			j++;
+		}
+		// 	i++;
 	}
 	return (j);
 }
