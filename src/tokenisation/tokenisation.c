@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/19 17:59:05 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/20 17:16:57 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,43 @@ int	is_in_set(char c, char *set)
 		i++;
 	}
 	return (0);
+}
+
+int	ft_envname_len(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && !is_in_set(str[i], " 	\"'$"))
+		i++;
+	return (i);
+}
+int	ft_env_len(char *str)
+{
+	int		i;
+	char	*env_var;
+
+	i = ft_envname_len(str);
+	env_var = malloc(sizeof(char) * (i + 1));
+	ft_strlcpy(env_var, str, i + 1);
+	printf("cette arg env: %s\n", env_var);
+	i = ft_strlen(getenv(env_var));
+	printf("retourne: %d\n", i);
+	free(env_var);
+	return (i);
+}
+
+char	*ft_get_env(char *str)
+{
+	int		i;
+	char	*env_var;
+	char	*content;
+
+	i = ft_envname_len(str);
+	env_var = malloc(sizeof(char) * (i + 1));
+	ft_strlcpy(env_var, str, i + 1);
+	content = getenv(env_var);
+	return (content);
 }
 
 int	ft_size_token(char *str)
@@ -44,8 +81,14 @@ int	ft_size_token(char *str)
 				i++;
 				while (str[i] && str[i] != '"')
 				{
-					i++; // rajouter une condition si il trouve un anti slash
-					j++;
+					if (str[i] == '$')
+					{
+						j += ft_env_len(str + i + 1);
+						i += ft_envname_len(str + i + 1);
+					}
+					else
+						j++;
+					i++;
 				}
 				i++;
 			}
@@ -54,7 +97,7 @@ int	ft_size_token(char *str)
 				i++;
 				while (str[i] && str[i] != '\'')
 				{
-					i++; // rajouter une condition si il trouve un anti slash
+					i++;
 					j++;
 				}
 				i++;
@@ -62,8 +105,14 @@ int	ft_size_token(char *str)
 		}
 		while (str[i] && !is_in_set(str[i], "\"' 	"))
 		{
+			if (str[i] == '$')
+			{
+				j += ft_env_len(str + i + 1);
+				i += ft_envname_len(str + i + 1);
+			}
+			else
+				j++;
 			i++;
-			j++;
 		}
 	}
 	return (j);
@@ -87,7 +136,15 @@ int	ft_get_arg(char *dest, char *str)
 				i++;
 				while (str[i] && str[i] != '"')
 				{
-					dest[j++] = str[i];
+					if (str[i] == '$')
+					{
+						ft_strlcpy(dest + j, ft_get_env(str + i + 1),
+							ft_env_len(str + i + 1) + 1);
+						j += ft_env_len(str + i + 1);
+						i += ft_envname_len(str + i + 1);
+					}
+					else
+						dest[j++] = str[i];
 					i++;
 				}
 				i++;
@@ -105,7 +162,15 @@ int	ft_get_arg(char *dest, char *str)
 		}
 		while (str[i] && !is_in_set(str[i], "\"' 	"))
 		{
-			dest[j++] = str[i];
+			if (str[i] == '$')
+			{
+				ft_strlcpy(dest + j, ft_get_env(str + i + 1), ft_env_len(str + i
+						+ 1) + 1);
+				j += ft_env_len(str + i + 1);
+				i += ft_envname_len(str + i + 1);
+			}
+			else
+				dest[j++] = str[i];
 			i++;
 		}
 	}
@@ -179,18 +244,28 @@ t_command	*ft_token(char *cmd)
 	return (command);
 }
 
-int	main(void)
+int	main(int ac, char **av, char **envp)
 {
 	char		*line;
 	int			i;
 	t_command	*cmd;
 
 	line = NULL;
+	(void)ac;
+	(void)av;
+	// (void)cmd;
+	(void)envp;
 	while (42)
 	{
 		i = 0;
 		line = readline("\033[1;95mShell-et-poivre> \033[0m");
 		add_history(line);
+		// while (envp[i])
+		// 	printf("%s\n", envp[i++]);
+		// printf("env var len: %d\n",ft_size_env_var(line, envp));
+		// printf("getenv: %s\n", getenv(line));
+		// printf("getenvlen: %zu\n", ft_strlen(getenv(line)));
+		// printf("getenvlen2: %d\n", ft_env_len(line));
 		printf("nb_t = %d\n", ft_counttoken(line));
 		printf("size t0 = %d\n", ft_size_token(line));
 		printf("line:>%s<\n", line);
