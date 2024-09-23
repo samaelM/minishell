@@ -6,11 +6,29 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/20 17:16:57 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/23 18:42:05 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+size_t	ft_sstrlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t	i;
+
+	i = 0;
+	while (src && src[i] && i + 1 < dstsize)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	if (dstsize > 0)
+	{
+		dst[i] = '\0';
+		i++;
+	}
+	return (ft_strlen(src));
+}
 
 int	is_in_set(char c, char *set)
 {
@@ -35,6 +53,7 @@ int	ft_envname_len(char *str)
 		i++;
 	return (i);
 }
+
 int	ft_env_len(char *str)
 {
 	int		i;
@@ -42,10 +61,8 @@ int	ft_env_len(char *str)
 
 	i = ft_envname_len(str);
 	env_var = malloc(sizeof(char) * (i + 1));
-	ft_strlcpy(env_var, str, i + 1);
-	printf("cette arg env: %s\n", env_var);
+	ft_sstrlcpy(env_var, str, i + 1);
 	i = ft_strlen(getenv(env_var));
-	printf("retourne: %d\n", i);
 	free(env_var);
 	return (i);
 }
@@ -58,7 +75,7 @@ char	*ft_get_env(char *str)
 
 	i = ft_envname_len(str);
 	env_var = malloc(sizeof(char) * (i + 1));
-	ft_strlcpy(env_var, str, i + 1);
+	ft_sstrlcpy(env_var, str, i + 1);
 	content = getenv(env_var);
 	return (content);
 }
@@ -72,7 +89,7 @@ int	ft_size_token(char *str)
 	i = 0;
 	while (str[i] && is_in_set(str[i], " 	"))
 		i++;
-	while (str[i] && !is_in_set(str[i], " 	"))
+	while (str[i] && !is_in_set(str[i], " 	|"))
 	{
 		while (str[i] && is_in_set(str[i], "\"'"))
 		{
@@ -103,7 +120,7 @@ int	ft_size_token(char *str)
 				i++;
 			}
 		}
-		while (str[i] && !is_in_set(str[i], "\"' 	"))
+		while (str[i] && !is_in_set(str[i], "\"' 	|"))
 		{
 			if (str[i] == '$')
 			{
@@ -118,16 +135,18 @@ int	ft_size_token(char *str)
 	return (j);
 }
 
-int	ft_get_arg(char *dest, char *str)
+int	ft_get_arg(t_command *command, int idx, char *str)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*dest;
 
+	dest = command->args[idx];
 	j = 0;
 	i = 0;
 	while (str[i] && is_in_set(str[i], " 	"))
 		i++;
-	while (str[i] && !is_in_set(str[i], " 	"))
+	while (str[i] && !is_in_set(str[i], " 	|"))
 	{
 		while (str[i] && is_in_set(str[i], "\"'"))
 		{
@@ -138,7 +157,7 @@ int	ft_get_arg(char *dest, char *str)
 				{
 					if (str[i] == '$')
 					{
-						ft_strlcpy(dest + j, ft_get_env(str + i + 1),
+						ft_sstrlcpy(dest + j, ft_get_env(str + i + 1),
 							ft_env_len(str + i + 1) + 1);
 						j += ft_env_len(str + i + 1);
 						i += ft_envname_len(str + i + 1);
@@ -160,12 +179,12 @@ int	ft_get_arg(char *dest, char *str)
 				i++;
 			}
 		}
-		while (str[i] && !is_in_set(str[i], "\"' 	"))
+		while (str[i] && !is_in_set(str[i], "\"' 	|"))
 		{
 			if (str[i] == '$')
 			{
-				ft_strlcpy(dest + j, ft_get_env(str + i + 1), ft_env_len(str + i
-						+ 1) + 1);
+				ft_sstrlcpy(dest + j, ft_get_env(str + i + 1), ft_env_len(str
+						+ i + 1) + 1);
 				j += ft_env_len(str + i + 1);
 				i += ft_envname_len(str + i + 1);
 			}
@@ -188,32 +207,37 @@ int	ft_counttoken(char *str)
 	while (str[i])
 	{
 		while (str[i] && is_in_set(str[i], " 	"))
+			// retire les espaces/tabs du debut
 			i++;
-		if (str[i])
+		if (str[i] == '|')
+			return (nb_t);
+		if (str[i]) // si on est pas arriver a la fin,
+			// alors nb token++
 			nb_t++;
 		while (str[i] && !is_in_set(str[i], " 	"))
+		// tant qu'il ya pas de separateur
 		{
-			if (str[i] && str[i] == '"')
+			if (str[i] && str[i] == '"') // si dquote
 			{
 				i++;
 				while (str[i] && str[i] != '"')
-				{
-					i++; // rajouter une condition si il trouve un anti slash
-				}
+					// jusqu'a la fermeture du dquote
+					i++;
 				i++;
 			}
-			else if (str[i] && str[i] == '\'')
+			else if (str[i] && str[i] == '\'') // si quote
 			{
 				i++;
 				while (str[i] && str[i] != '\'')
-				{
-					i++; // rajouter une condition si il trouve un anti slash
-				}
+					// jusqu'a la fermeture du quote
+					i++;
 				i++;
 			}
+			else if (str[i] && str[i] == '|')
+				return (nb_t);
 			else
 			{
-				while (str[i] && !is_in_set(str[i], "\"' 	"))
+				while (str[i] && !is_in_set(str[i], "\"' 	|"))
 					i++;
 			}
 		}
@@ -224,23 +248,41 @@ int	ft_counttoken(char *str)
 t_command	*ft_token(char *cmd)
 {
 	t_command	*command;
+	t_command	*tmp;
 	int			i;
 	int			j;
 	int			size;
 
 	j = 0;
-	size = ft_counttoken(cmd);
-	command = malloc(sizeof(t_command));
-	command->args = malloc(sizeof(char *) * (size + 1));
-	i = 0;
-	while (i < size)
+	command = ft_calloc(1, sizeof(t_command));
+	tmp = command;
+	while (*cmd)
 	{
-		command->args[i] = malloc(sizeof(char) * (ft_size_token(cmd) + 1));
-		j = ft_get_arg(command->args[i], cmd);
-		cmd = cmd + j;
-		i++;
+		size = ft_counttoken(cmd);
+		printf("nb_t = %d\n", size);
+		tmp->args = ft_calloc((size + 1), sizeof(char *));
+		i = 0;
+		while (i < size)
+		{
+			tmp->args[i] = ft_calloc((ft_size_token(cmd) + 1), sizeof(char));
+			j = ft_get_arg(tmp, i, cmd);
+			printf("%s\n", tmp->args[i]);
+			cmd = cmd + j;
+			i++;
+		}
+		tmp->args[i] = 0;
+		while (*cmd && is_in_set(*cmd, " 	"))
+			// faire en sorte que cq retire que 1 pipe
+			cmd++;
+		if (*cmd && *cmd == '|')
+			cmd++;
+		if (*cmd)
+		{
+			printf("new cmd\n");
+			tmp->next = ft_calloc(1, sizeof(t_command));
+			tmp = tmp->next;
+		}
 	}
-	command->args[i] = 0;
 	return (command);
 }
 
@@ -248,6 +290,7 @@ int	main(int ac, char **av, char **envp)
 {
 	char		*line;
 	int			i;
+	int			j;
 	t_command	*cmd;
 
 	line = NULL;
@@ -258,6 +301,7 @@ int	main(int ac, char **av, char **envp)
 	while (42)
 	{
 		i = 0;
+		j = 0;
 		line = readline("\033[1;95mShell-et-poivre> \033[0m");
 		add_history(line);
 		// while (envp[i])
@@ -270,11 +314,22 @@ int	main(int ac, char **av, char **envp)
 		printf("size t0 = %d\n", ft_size_token(line));
 		printf("line:>%s<\n", line);
 		cmd = ft_token(line);
-		while (cmd->args[i])
+		while (cmd)
 		{
-			printf("arg %d:>%s<\n", i, cmd->args[i]);
-			i++;
+			i = 0;
+			printf("-----\ncmd[%d]\n", j++);
+			while (cmd->args && cmd->args[i])
+			{
+				printf("arg[%d]:>%s<\n", i, cmd->args[i]);
+				free(cmd->args[i]);
+				i++;
+			}
+			cmd = cmd->next;
 		}
+		printf("-----\n");
+		// free(cmd->args);
 		free(cmd);
+		free(line);
 	}
+	rl_clear_history();
 }

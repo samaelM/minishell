@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/13 14:01:40 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/20 18:10:50 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,9 @@ typedef enum s_symbole
 {
 	NONE,
 	PIPE,
-	HERE_DOC,
-	INFILE,
-	OUTFILE,
 	AND,
 	OR
-}			t_symb;
+}						t_symb;
 
 typedef struct s_command
 {
@@ -57,7 +54,8 @@ typedef struct s_command
 	t_symb symbole; // s'il y a un sumbole (pipe, heredoc etc)
 	char **args;    // les argument de la commande (-R, -rf etc)
 	int outfile;    // fichier de sortie (par defaut stdout)
-}			t_command;
+	struct s_command	*next;
+}						t_command;
 
 ///////////////////////////////////////////
 ///				PROTOTYPES				///
@@ -65,36 +63,37 @@ typedef struct s_command
 
 ///				EXECUTION				///
 
-int			ft_exec_cmd(int fd, char *arg, char **envp, char **path);
+int						ft_exec_cmd(int fd, char *arg, char **envp,
+							char **path);
 
 ///				COMPARATOR				///
 
-int			ft_and(void);
-int			ft_or(void);
+int						ft_and(void);
+int						ft_or(void);
 
 ///				PIPES					///
 
-int			ft_pipex(void);
+int						ft_pipex(void);
 
 ///				TOKENISATION			///
 
-t_command	*ft_token(char *command);
+t_command				*ft_token(char *command);
 
 ///				BUILT-INS				///
 
-int			ft_cd(void);
-int			ft_echo(void);
-int			ft_env(void);
-int			ft_exit(void);
-int			ft_export(void);
-int			ft_pwd(void);
-int			ft_unset(void);
+int						ft_cd(void);
+int						ft_echo(void);
+int						ft_env(void);
+int						ft_exit(void);
+int						ft_export(void);
+int						ft_pwd(void);
+int						ft_unset(void);
 
 ///				SIGNALS					///
-void		sigint_handler(int sig_num);
-void		sigquit_handler(int sig_num);
+void					sigint_handler(int sig_num);
+void					sigquit_handler(int sig_num);
 
 ///				OTHER					///
-void		ft_watermark(void);
+void					ft_watermark(void);
 
 #endif
