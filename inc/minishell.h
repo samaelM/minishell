@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/13 14:01:40 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/23 17:37:09 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,13 @@ t_command	*ft_token(char *command);
 
 ///				BUILT-INS				///
 
-int			ft_cd(void);
+int ft_cd(t_command *command);
+int			ft_pwd(void);
+
 int			ft_echo(void);
 int			ft_env(void);
 int			ft_exit(void);
 int			ft_export(void);
-int			ft_pwd(void);
 int			ft_unset(void);
 
 ///				SIGNALS					///
