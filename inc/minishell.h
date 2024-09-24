@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/24 18:54:19 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/09/26 19:04:16 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_command
 ///				EXECUTION				///
 
 int			ft_exec_cmd(int fd, char *arg, char **envp, char **path);
-int ft_exec(t_command *command, char **envp);
+int ft_exec(t_command *command, t_list *env_list);
 
 ///				COMPARATOR				///
 
@@ -90,10 +90,13 @@ int ft_cd(t_command *command);
 int			ft_pwd(void);
 int ft_echo(t_command *command);
 int ft_exit(t_command *command);
+int ft_env(t_command *command, t_list *env_list);
 
-int ft_env(t_command *command, char **envp);
-int			ft_export(void);
-int			ft_unset(void);
+int ft_export(t_command *command, t_list *env_list);
+int ft_unset(t_command *command, t_list *env_list);
+
+t_list *create_our_env(char **envp);
+t_list *find_var_in_env(t_command *command, t_list *env_list, char *var);
 
 ///				SIGNALS					///
 void		sigint_handler(int sig_num);

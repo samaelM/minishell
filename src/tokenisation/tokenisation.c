@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/24 18:50:53 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:10:00 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,10 +254,12 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	(void)envp;
+	t_list *env_list = create_our_env(envp);
+
 	while (42)
 	{
 		line = readline("\033[1;95mShell-et-poivre> \033[0m");
-		add_history(line);
+		//add_history(line);
 		// while (envp[i])
 		// 	printf("%s\n", envp[i++]);
 		// printf("env var len: %d\n",ft_size_env_var(line, envp));
@@ -278,7 +280,7 @@ int	main(int argc, char **argv, char **envp)
 		cmd->exit_value = 0;
 		free(line);
 		//
-		ft_exec(cmd, envp);
+		ft_exec(cmd, env_list);
 		free(cmd);
 	}
 }

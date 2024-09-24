@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:30:33 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/23 18:15:23 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/09/25 17:24:32 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int ft_cd(t_command *command)
 	//ft_pwd();
 	if(command->args[1] == NULL)
 	{
-		home = getenv("HOME");
+		home = getenv("HOME"); // home no unset
 		if(!home)
 		{
 			printf("cd: HOME not set\n");

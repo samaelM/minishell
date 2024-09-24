@@ -6,13 +6,13 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/09/24 18:54:04 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/09/26 18:27:46 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int ft_exec(t_command *command, char **envp)
+int ft_exec(t_command *command, t_list *env_list)
 {
 	//	pid_t	pid;
 	//	int		status;	
@@ -39,17 +39,16 @@ int ft_exec(t_command *command, char **envp)
 		}
 		else if (ft_strncmp(command->cmd, "env", 3) == 0)
 		{	
-			ft_env(command, envp);
+			ft_env(command, env_list);
 		}
-		
-	// else if(ft_strncmp(command->cmd, "export", 6) == 0 )
-	// {
-	// 	ft_export(command->cmd);
-	// }
-	// else if(ft_strncmp(command->cmd, "unset", 5) == 0 )
-	// {
-	// 	ft_unset(command->cmd);
-	// }
+		else if(ft_strncmp(command->cmd, "export", 6) == 0 )
+		{
+			ft_export(command, env_list);
+		}
+		else if(ft_strncmp(command->cmd, "unset", 5) == 0 )
+		{
+			ft_unset(command, env_list);
+		}
 	//else if(*command->cmd) // espaces
 	{
 	// 	pid = fork();
@@ -67,5 +66,9 @@ int ft_exec(t_command *command, char **envp)
 	// 	waitpid(pid, &status, 0);
 	}}
 	//free(command->cmd);
+	// clear lst;
+	// pb de commande pwddddddddd
 	return (0);
 }
+
+
