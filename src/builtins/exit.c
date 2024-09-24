@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:22:30 by ahenault          #+#    #+#             */
-/*   Updated: 2024/09/30 19:43:51 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/02 17:29:13 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,4 @@ int	ft_exit(t_global *glob)
 	return (0);
 }
 
-// retirer espace a la fin
-// que exit pas exitttt == parsing =) / guillemets a retirer
-// exit n
-// si chars apres exit ; exit et "numeric argument required"
-// : too many arguments
 // free(cmd);

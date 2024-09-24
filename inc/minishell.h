@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/30 19:24:18 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/04 20:13:09 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct s_command
 typedef struct s_global
 {
 	t_command			*command;
-	t_list				*env_list;
+	char **env;
 	int					exit_value;
 }						t_global;
 
@@ -86,13 +86,14 @@ int						ft_cd(t_command *command);
 int						ft_pwd(void);
 int						ft_echo(t_command *command);
 int						ft_exit(t_global *glob);
-int						ft_env(t_command *command, t_list *env_list);
+int ft_env(t_global *glob);
 
-int						ft_export(t_command *command, t_list *env_list);
-int						ft_unset(t_command *command, t_list *env_list);
+int ft_export(t_global *glo);
+int ft_unset(t_global *glob);
+int change_env_var(t_global *glo, char *var, int line);
 
-t_list					*create_our_env(char **envp);
-t_list					*find_var_in_env(t_list *env_list, char *var);
+char **create_our_env(char **envp);
+int find_var_in_env(char **env, char *var);
 
 ///				SIGNALS					///
 void					sigint_handler(int sig_num);
