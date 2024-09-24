@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/23 17:37:09 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:54:19 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
+#include <linux/limits.h>
+#include <errno.h>
 
 ///////////////////////////////////////////
 ///				MACROS					///
@@ -57,6 +59,7 @@ typedef struct s_command
 	t_symb symbole; // s'il y a un sumbole (pipe, heredoc etc)
 	char **args;    // les argument de la commande (-R, -rf etc)
 	int outfile;    // fichier de sortie (par defaut stdout)
+	int exit_value; // a bouger ailleurs
 }			t_command;
 
 ///////////////////////////////////////////
@@ -66,6 +69,7 @@ typedef struct s_command
 ///				EXECUTION				///
 
 int			ft_exec_cmd(int fd, char *arg, char **envp, char **path);
+int ft_exec(t_command *command, char **envp);
 
 ///				COMPARATOR				///
 
@@ -84,10 +88,10 @@ t_command	*ft_token(char *command);
 
 int ft_cd(t_command *command);
 int			ft_pwd(void);
+int ft_echo(t_command *command);
+int ft_exit(t_command *command);
 
-int			ft_echo(void);
-int			ft_env(void);
-int			ft_exit(void);
+int ft_env(t_command *command, char **envp);
 int			ft_export(void);
 int			ft_unset(void);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenisation.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/20 17:16:57 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/24 18:50:53 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,20 +244,18 @@ t_command	*ft_token(char *cmd)
 	return (command);
 }
 
-int	main(int ac, char **av, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	char		*line;
-	int			i;
 	t_command	*cmd;
+	int			i;
 
 	line = NULL;
-	(void)ac;
-	(void)av;
-	// (void)cmd;
+	(void)argc;
+	(void)argv;
 	(void)envp;
 	while (42)
 	{
-		i = 0;
 		line = readline("\033[1;95mShell-et-poivre> \033[0m");
 		add_history(line);
 		// while (envp[i])
@@ -266,15 +264,21 @@ int	main(int ac, char **av, char **envp)
 		// printf("getenv: %s\n", getenv(line));
 		// printf("getenvlen: %zu\n", ft_strlen(getenv(line)));
 		// printf("getenvlen2: %d\n", ft_env_len(line));
-		printf("nb_t = %d\n", ft_counttoken(line));
+		i = 0;
+		printf("\033[1;94mnb_t = %d\n", ft_counttoken(line));
 		printf("size t0 = %d\n", ft_size_token(line));
 		printf("line:>%s<\n", line);
 		cmd = ft_token(line);
 		while (cmd->args[i])
 		{
-			printf("arg %d:>%s<\n", i, cmd->args[i]);
+			printf("\033[1;94marg %d:>%s<\033[0m\n", i, cmd->args[i]);
 			i++;
 		}
+		cmd->cmd = cmd->args[0];
+		cmd->exit_value = 0;
+		free(line);
+		//
+		ft_exec(cmd, envp);
 		free(cmd);
 	}
 }
