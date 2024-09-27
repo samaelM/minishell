@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/30 18:04:14 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/09/30 20:10:38 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,16 @@ void	ft_printcmd(t_command *cmd)
 	while (cmd)
 	{
 		i = 0;
-		//printf("-----\ncmd[%d]\n", j++);
+		// printf("-----\ncmd[%d]\n", j++);
 		while (cmd->args && cmd->args[i])
 		{
-			//printf("arg[%d]:>%s<\n", i, cmd->args[i]);
+			// printf("arg[%d]:>%s<\n", i, cmd->args[i]);
 			// free(cmd->args[i]);
 			i++;
 		}
 		cmd = cmd->next;
 	}
-	//printf("-----\n");
+	// printf("-----\n");
 }
 
 size_t	ft_sstrlcpy(char *dst, const char *src, size_t dstsize)
@@ -120,21 +120,21 @@ int	ft_check_redir(char *str)
 	{
 		if (ft_strncmp(str + i, ">>", 2) == 0)
 		{
-			//printf(">>\n");
+			// printf(">>\n");
 			i++;
 		}
 		else if (str[i] == '>')
 		{
-			//printf(">\n");
+			// printf(">\n");
 		}
 		if (ft_strncmp(str + i, "<<", 2) == 0)
 		{
-			//printf("<<\n");
+			// printf("<<\n");
 			i++;
 		}
 		else if (str[i] == '<')
 		{
-			//printf("<\n");
+			// printf("<\n");
 		}
 		i++;
 	}
@@ -145,7 +145,7 @@ int	ft_check_line(char *str)
 {
 	if (ft_check_pipes(str) > -1)
 	{
-		//printf("syntax error near unexpected token `%c'\n",
+		// printf("syntax error near unexpected token `%c'\n",
 		//	str[ft_check_pipes(str)]);
 		return (0);
 	}
@@ -468,7 +468,7 @@ t_command	*ft_token(char *cmd)
 			cmd += ft_redir_len(cmd);
 		if (*cmd)
 		{
-			//printf("new cmd: %s\n", cmd);
+			// printf("new cmd: %s\n", cmd);
 			// ft_printcmd(tmp);
 			// sleep(2);
 			tmp->next = ft_calloc(1, sizeof(t_command));
@@ -510,14 +510,15 @@ int	main(int argc, char **argv, char **envp)
 		//
 		ft_exec(&global);
 		//
-		if (ft_check_line(line))
-		{
-			cmd = ft_token(line);
-			ft_printcmd(cmd);
-			// free(cmd->args);
-			ft_free_cmd(cmd);
-		}
+		// if (ft_check_line(line))
+		// {
+		// 	cmd = ft_token(line);
+		// 	ft_printcmd(cmd);
+		// 	// free(cmd->args);
+		ft_free_cmd(cmd);
+		// 	// lstclear
+		// }
 		free(line);
 	}
-	rl_clear_history();
+	// rl_clear_history();
 }

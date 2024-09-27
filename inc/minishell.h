@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/30 17:57:32 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/09/30 19:24:18 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,20 +40,13 @@
 ///				STRUCTURES				///
 ///////////////////////////////////////////
 
-typedef enum s_symbole
-{
-	NONE,
-	PIPE,
-}						t_symb;
-
 typedef struct s_command
 {
-	char *infile;   // fichier d'entree (par defaut stdin)
-	char *cmdpath;  // path absolue de la commande (/bin/ls)
-	char *cmd;      // juste la commande (ls, cat, wc etc)
-	t_symb symbole; // s'il y a un sumbole (pipe, heredoc etc)
-	char **args;    // les argument de la commande (-R, -rf etc)
-	char *outfile;  // fichier de sortie (par defaut stdout)
+	char *infile;  // fichier d'entree (par defaut stdin)
+	char *cmdpath; // path absolue de la commande (/bin/ls)
+	char *cmd;     // juste la commande (ls, cat, wc etc)
+	char **args;   // les argument de la commande (-R, -rf etc)
+	char *outfile; // fichier de sortie (par defaut stdout)
 	struct s_command	*next;
 }						t_command;
 
