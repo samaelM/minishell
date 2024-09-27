@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:22:30 by ahenault          #+#    #+#             */
-/*   Updated: 2024/09/24 18:49:41 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:20:43 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,30 +48,30 @@ int is_nb_ok(char *cmd)
 	return (nb % 256);
 }
 
-int ft_exit(t_command *command)
+int ft_exit(t_global *glob)
 {
 	printf("exit\n");
-	if(nb_args(command->args + 1) == 0)
+	if(nb_args(glob->command->args + 1) == 0)
 	{
-		free(command);
-		exit(0);
-		//exit(command->exit_value);
+		free(glob->command);
+		//exit(0);
+		exit(glob->exit_value);
 	}
-	if(is_nb(command->args[1]))
+	if(is_nb(glob->command->args[1]))
 	{	
-		printf("exit: %s: numeric argument required\n", command->args[1]);
-		free(command);
+		printf("exit: %s: numeric argument required\n", glob->command->args[1]);
+		free(glob->command);
 		exit(2);
 	}
-	if(is_nb(command->args[1]) == 0 && nb_args(command->args + 1) == 1)
+	if(is_nb(glob->command->args[1]) == 0 && nb_args(glob->command->args + 1) == 1)
 	{
-		free(command);
-		exit(is_nb_ok(command->args[1]));
+		free(glob->command);
+		exit(is_nb_ok(glob->command->args[1]));
 	}
-	//if(is_nb(command->args[1]) == 0 && nb_args(command->args + 1) >= 2)
+	//if(is_nb(glob->command->args[1]) == 0 && nb_args(glob->command->args + 1) >= 2)
 	else		
 	{
-		//command->exit_value = 1; pb de structure
+		glob->exit_value = 1;
 		printf("exit: too many arguments\n");
 	}
 	return(0);

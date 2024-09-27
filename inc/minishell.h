@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/27 20:51:01 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:19:14 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_global
 ///				EXECUTION				///
 
 int			ft_exec_cmd(int fd, char *arg, char **envp, char **path);
-int ft_exec(t_command *command, t_list *env_list);
+int ft_exec(t_global *s_global);
 
 ///				COMPARATOR				///
 
@@ -95,7 +95,7 @@ t_command	*ft_token(char *command);
 int ft_cd(t_command *command);
 int			ft_pwd(void);
 int ft_echo(t_command *command);
-int ft_exit(t_command *command);
+int ft_exit(t_global *glob);
 int ft_env(t_command *command, t_list *env_list);
 
 int ft_export(t_command *command, t_list *env_list);
