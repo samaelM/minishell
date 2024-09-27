@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/20 18:10:50 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:18:33 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ typedef struct s_command
 
 ///				EXECUTION				///
 
-int						ft_exec_cmd(int fd, char *arg, char **envp,
+int						ft_exec_cmd(int fd, char **arg, char **envp,
 							char **path);
 
 ///				COMPARATOR				///
