@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/26 19:04:16 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/09/27 20:51:01 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,25 @@ typedef enum s_symbole
 	OUTFILE,
 	AND,
 	OR
-}			t_symb;
+}			t_symb; 
 
 typedef struct s_command
 {
-	int infile;    // fichier d'entree (par defaut stdin)
+	char *infile;    // fichier d'entree (par defaut stdin)
 	char *cmdpath; // path absolue de la commande (/bin/ls)
 	char *cmd;     // juste la commande (ls, cat, wc etc)
 	// char	*options;
 	t_symb symbole; // s'il y a un sumbole (pipe, heredoc etc)
 	char **args;    // les argument de la commande (-R, -rf etc)
-	int outfile;    // fichier de sortie (par defaut stdout)
-	int exit_value; // a bouger ailleurs
+	char *outfile;    // fichier de sortie (par defaut stdout)
 }			t_command;
+
+typedef struct s_global
+{
+	t_command *command;
+	t_list *env_list;
+	int exit_value;
+}			t_global;
 
 ///////////////////////////////////////////
 ///				PROTOTYPES				///
@@ -96,7 +102,7 @@ int ft_export(t_command *command, t_list *env_list);
 int ft_unset(t_command *command, t_list *env_list);
 
 t_list *create_our_env(char **envp);
-t_list *find_var_in_env(t_command *command, t_list *env_list, char *var);
+t_list *find_var_in_env(t_list *env_list, char *var);
 
 ///				SIGNALS					///
 void		sigint_handler(int sig_num);

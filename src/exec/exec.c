@@ -6,11 +6,16 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/09/26 18:27:46 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/09/27 20:52:40 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+// int	execution(t_command *command, t_list *env_list)
+// {
+// 	return (0);
+// }
 
 int ft_exec(t_command *command, t_list *env_list)
 {
@@ -49,22 +54,24 @@ int ft_exec(t_command *command, t_list *env_list)
 		{
 			ft_unset(command, env_list);
 		}
-	//else if(*command->cmd) // espaces
-	{
-	// 	pid = fork();
-	// 	if (pid == -1)
-	//		printf("erreur fork");
-	// 	else if (pid == 0)
-	// 	{
-	// 		if (ft_strncmp(cmd, "/bin/pwd", 8) == 0)
-	// 		{
-	// 			exec_cmd(cmd, envp);
-	// 		}
-	// 		return(0);
-	// 	}
-	// else
-	// 	waitpid(pid, &status, 0);
-	}}
+		//else if()
+		{
+		//	execution(command, env_list);
+		// 	pid = fork();
+		// 	if (pid == -1)
+		//		printf("erreur fork");
+		// 	else if (pid == 0)
+		// 	{
+		// 		if (ft_strncmp(cmd, "/bin/pwd", 8) == 0)
+		// 		{
+		// 			exec_cmd(cmd, envp);
+		// 		}
+		// 		return(0);
+		// 	}
+		// else
+		// 	waitpid(pid, &status, 0);
+		}
+	}
 	//free(command->cmd);
 	// clear lst;
 	// pb de commande pwddddddddd
