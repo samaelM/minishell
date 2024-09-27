@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/23 18:42:05 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/27 14:32:02 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,42 @@ int	ft_envname_len(char *str)
 	return (i);
 }
 
-int	ft_env_len(char *str)
+// int	ft_env_len(char *str)
+// {
+// 	int		i;
+// 	char	*env_var;
+
+// 	i = ft_envname_len(str);
+// 	env_var = malloc(sizeof(char) * (i + 1));
+// 	ft_sstrlcpy(env_var, str, i + 1);
+// 	i = ft_strlen(getenv(env_var));
+// 	free(env_var);
+// 	return (i);
+// }
+
+// char	*ft_get_env(char *str)
+// {
+// 	int		i;
+// 	char	*env_var;
+// 	char	*content;
+
+// 	i = ft_envname_len(str);
+// 	env_var = malloc(sizeof(char) * (i + 1));
+// 	ft_sstrlcpy(env_var, str, i + 1);
+// 	content = getenv(env_var);
+// 	free(env_var);
+// 	return (content);
+// }
+
+int	ft_env_len_bis(char *str, int in_quote) // nouvelle
 {
 	int		i;
 	char	*env_var;
 
+	if ((in_quote && is_in_set(*str, "\" 	")) || (!in_quote && !str[0]))
+		return (1);
+	if (!in_quote && str[0] == '"')
+		return (0);
 	i = ft_envname_len(str);
 	env_var = malloc(sizeof(char) * (i + 1));
 	ft_sstrlcpy(env_var, str, i + 1);
@@ -67,16 +98,22 @@ int	ft_env_len(char *str)
 	return (i);
 }
 
-char	*ft_get_env(char *str)
+char	*ft_env_var(char *str, int in_quote) // nouvelle
 {
-	int		i;
-	char	*env_var;
-	char	*content;
+	int i;
+	char *env_var;
+	char *content;
 
+	if ((in_quote && is_in_set(*str, "\" 	")) || (!in_quote && !str[0]))
+		return ("$");
+	if (!in_quote && str[0] == '"')
+		return ("");
+	i = 0;
 	i = ft_envname_len(str);
 	env_var = malloc(sizeof(char) * (i + 1));
 	ft_sstrlcpy(env_var, str, i + 1);
 	content = getenv(env_var);
+	free(env_var);
 	return (content);
 }
 
@@ -100,7 +137,7 @@ int	ft_size_token(char *str)
 				{
 					if (str[i] == '$')
 					{
-						j += ft_env_len(str + i + 1);
+						j += ft_env_len_bis(str + i + 1, 1);
 						i += ft_envname_len(str + i + 1);
 					}
 					else
@@ -124,7 +161,7 @@ int	ft_size_token(char *str)
 		{
 			if (str[i] == '$')
 			{
-				j += ft_env_len(str + i + 1);
+				j += ft_env_len_bis(str + i + 1, 0);
 				i += ft_envname_len(str + i + 1);
 			}
 			else
@@ -157,9 +194,9 @@ int	ft_get_arg(t_command *command, int idx, char *str)
 				{
 					if (str[i] == '$')
 					{
-						ft_sstrlcpy(dest + j, ft_get_env(str + i + 1),
-							ft_env_len(str + i + 1) + 1);
-						j += ft_env_len(str + i + 1);
+						ft_sstrlcpy(dest + j, ft_env_var(str + i + 1, 1),
+							ft_env_len_bis(str + i + 1, 1) + 1);
+						j += ft_env_len_bis(str + i + 1, 1);
 						i += ft_envname_len(str + i + 1);
 					}
 					else
@@ -183,9 +220,9 @@ int	ft_get_arg(t_command *command, int idx, char *str)
 		{
 			if (str[i] == '$')
 			{
-				ft_sstrlcpy(dest + j, ft_get_env(str + i + 1), ft_env_len(str
-						+ i + 1) + 1);
-				j += ft_env_len(str + i + 1);
+				ft_sstrlcpy(dest + j, ft_env_var(str + i + 1, 0), ft_env_len_bis(str
+						+ i + 1, 0) + 1);
+				j += ft_env_len_bis(str + i + 1, 0);
 				i += ft_envname_len(str + i + 1);
 			}
 			else
@@ -259,14 +296,13 @@ t_command	*ft_token(char *cmd)
 	while (*cmd)
 	{
 		size = ft_counttoken(cmd);
-		printf("nb_t = %d\n", size);
+		// printf("nb_t = %d\n", size);
 		tmp->args = ft_calloc((size + 1), sizeof(char *));
 		i = 0;
 		while (i < size)
 		{
 			tmp->args[i] = ft_calloc((ft_size_token(cmd) + 1), sizeof(char));
 			j = ft_get_arg(tmp, i, cmd);
-			printf("%s\n", tmp->args[i]);
 			cmd = cmd + j;
 			i++;
 		}
@@ -310,8 +346,8 @@ int	main(int ac, char **av, char **envp)
 		// printf("getenv: %s\n", getenv(line));
 		// printf("getenvlen: %zu\n", ft_strlen(getenv(line)));
 		// printf("getenvlen2: %d\n", ft_env_len(line));
-		printf("nb_t = %d\n", ft_counttoken(line));
-		printf("size t0 = %d\n", ft_size_token(line));
+		// printf("nb_t = %d\n", ft_counttoken(line));
+		// printf("size t0 = %d\n", ft_size_token(line));
 		printf("line:>%s<\n", line);
 		cmd = ft_token(line);
 		while (cmd)

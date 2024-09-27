@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/23 14:58:36 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/24 14:59:10 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	ft_exec_cmd(int fd, char *arg, char **envp, char **path)
 // 			else if (pid == 0)
 // 			{
 // 				// cmd = ft_strdup("   echo 		a");
-// 				ft_exec_cmd(1, cmd, envp, ft_split(ft_find_path(envp), ':'));
+				// ft_exec_cmd(1, cmd, envp, ft_split(ft_find_path(envp), ':'));
 // 				free(cmd);
 // 			}
 // 			else
