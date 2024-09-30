@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/27 16:18:33 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:09:09 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 ///////////////////////////////////////////
 
 # define TRUE 1
+#define METACHAR " 	|<>"
 
 ///////////////////////////////////////////
 ///				STRUCTURES				///
@@ -41,21 +42,25 @@ typedef enum s_symbole
 {
 	NONE,
 	PIPE,
-	AND,
-	OR
 }						t_symb;
 
 typedef struct s_command
 {
-	int infile;    // fichier d'entree (par defaut stdin)
-	char *cmdpath; // path absolue de la commande (/bin/ls)
-	char *cmd;     // juste la commande (ls, cat, wc etc)
-	// char	*options;
-	t_symb symbole; // s'il y a un sumbole (pipe, heredoc etc)
-	char **args;    // les argument de la commande (-R, -rf etc)
-	int outfile;    // fichier de sortie (par defaut stdout)
+	char				*infile;	// fichier d'entree (par defaut stdin)
+	char				*cmdpath;	// path absolue de la commande (/bin/ls)
+	char				*cmd;		// juste la commande (ls, cat, wc etc)
+	t_symb				symbole; 	// s'il y a un sumbole (pipe, heredoc etc)
+	char 				**args;		// les argument de la commande (-R, -rf etc)
+	char				*outfile;	// fichier de sortie (par defaut stdout)
 	struct s_command	*next;
 }						t_command;
+
+typedef struct s_global
+{
+	t_command			*command;
+	t_list				*env_list;
+	int					exit_value;
+}						t_global;
 
 ///////////////////////////////////////////
 ///				PROTOTYPES				///

@@ -6,11 +6,30 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/27 20:23:30 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:07:46 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	ft_free_cmd(t_command *cmd)
+{
+	int			i;
+	t_command	*tmp;
+
+	while (cmd)
+	{
+		i = 0;
+		while (cmd->args && cmd->args[i])
+		{
+			free(cmd->args[i]);
+			i++;
+		}
+		tmp = cmd;
+		cmd = cmd->next;
+		free(cmd);
+	}
+}
 
 void	ft_printcmd(t_command *cmd)
 {
@@ -25,7 +44,7 @@ void	ft_printcmd(t_command *cmd)
 		while (cmd->args && cmd->args[i])
 		{
 			printf("arg[%d]:>%s<\n", i, cmd->args[i]);
-			free(cmd->args[i]);
+			// free(cmd->args[i]);
 			i++;
 		}
 		cmd = cmd->next;
@@ -65,6 +84,75 @@ int	is_in_set(char c, char *set)
 	return (0);
 }
 
+int	ft_check_pipes(char *str)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	i = 0;
+	while (is_in_set(str[i], " 	"))
+		i++;
+	if (str[i] == '|')
+		return (i);
+	while (str[i])
+	{
+		if (str[i] == '|')
+		{
+			j = i;
+			i++;
+			while (is_in_set(str[i], " 	"))
+				i++;
+			if (!str[i] || str[i] == '|')
+				return (j);
+		}
+		i++;
+	}
+	return (-1);
+}
+
+int	ft_check_redir(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (ft_strncmp(str + i, ">>", 2) == 0)
+		{
+			printf(">>\n");
+			i++;
+		}
+		else if (str[i] == '>')
+		{
+			printf(">\n");
+		}
+		if (ft_strncmp(str + i, "<<", 2) == 0)
+		{
+			printf("<<\n");
+			i++;
+		}
+		else if (str[i] == '<')
+		{
+			printf("<\n");
+		}
+		i++;
+	}
+	return (-1);
+}
+
+int	ft_check_line(char *str)
+{
+	if (ft_check_pipes(str) > -1)
+	{
+		printf("syntax error near unexpected token `%c'\n",
+			str[ft_check_pipes(str)]);
+		return (0);
+	}
+	ft_check_redir(str);
+	return (1);
+}
+
 int	ft_redir_len(char *str)
 {
 	int	i;
@@ -90,7 +178,7 @@ int	ft_redir_len(char *str)
 				i++;
 			i++;
 		}
-		while (str[i] && !is_in_set(str[i], " 	|"))
+		while (str[i] && !is_in_set(str[i], " 	|<>"))
 			i++;
 	}
 	while (str[i] && is_in_set(str[i], " 	"))
@@ -306,10 +394,16 @@ int	ft_counttoken(char *str)
 		while (str[i] && is_in_set(str[i], " 	"))
 			// retire les espaces/tabs du debut
 			i++;
-		if (str[i] == '|')
-			return (nb_t);
-		if (is_in_set(str[i], "<>"))
-			i += ft_redir_len(str + i);
+		while (is_in_set(str[i], "|><"))
+		{
+			if (str[i] == '|')
+				return (nb_t);
+			if (is_in_set(str[i], "<>"))
+				i += ft_redir_len(str + i);
+			while (str[i] && is_in_set(str[i], " 	"))
+				// retire les espaces/tabs du debut
+				i++;
+		}
 		if (str[i]) // si on est pas arriver a la fin,
 			// alors nb token++
 			nb_t++;
@@ -375,8 +469,8 @@ t_command	*ft_token(char *cmd)
 		if (*cmd)
 		{
 			printf("new cmd: %s\n", cmd);
-			ft_printcmd(tmp);
-			sleep(2);
+			// ft_printcmd(tmp);
+			// sleep(2);
 			tmp->next = ft_calloc(1, sizeof(t_command));
 			tmp = tmp->next;
 		}
@@ -410,11 +504,14 @@ int	main(int ac, char **av, char **envp)
 		// printf("getenvlen2: %d\n", ft_env_len(line));
 		// printf("nb_t = %d\n", ft_counttoken(line));
 		// printf("size t0 = %d\n", ft_size_token(line));
-		printf("line:>%s<\n", line);
-		cmd = ft_token(line);
-		ft_printcmd(cmd);
-		// free(cmd->args);
-		free(cmd);
+		// printf("DEBUG: line:>%s<\n", line);
+		if (ft_check_line(line))
+		{
+			cmd = ft_token(line);
+			ft_printcmd(cmd);
+			// free(cmd->args);
+			ft_free_cmd(cmd);
+		}
 		free(line);
 	}
 	rl_clear_history();
