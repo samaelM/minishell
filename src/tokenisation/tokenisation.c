@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/30 17:07:46 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/30 18:36:32 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,33 +196,6 @@ int	ft_envname_len(char *str)
 	return (i);
 }
 
-// int	ft_env_len(char *str)
-// {
-// 	int		i;
-// 	char	*env_var;
-
-// 	i = ft_envname_len(str);
-// 	env_var = malloc(sizeof(char) * (i + 1));
-// 	ft_sstrlcpy(env_var, str, i + 1);
-// 	i = ft_strlen(getenv(env_var));
-// 	free(env_var);
-// 	return (i);
-// }
-
-// char	*ft_get_env(char *str)
-// {
-// 	int		i;
-// 	char	*env_var;
-// 	char	*content;
-
-// 	i = ft_envname_len(str);
-// 	env_var = malloc(sizeof(char) * (i + 1));
-// 	ft_sstrlcpy(env_var, str, i + 1);
-// 	content = getenv(env_var);
-// 	free(env_var);
-// 	return (content);
-// }
-
 int	ft_env_len_bis(char *str, int in_quote) // nouvelle
 {
 	int i;
@@ -392,37 +365,26 @@ int	ft_counttoken(char *str)
 	while (str[i])
 	{
 		while (str[i] && is_in_set(str[i], " 	"))
-			// retire les espaces/tabs du debut
 			i++;
-		while (is_in_set(str[i], "|><"))
-		{
-			if (str[i] == '|')
-				return (nb_t);
-			if (is_in_set(str[i], "<>"))
-				i += ft_redir_len(str + i);
-			while (str[i] && is_in_set(str[i], " 	"))
-				// retire les espaces/tabs du debut
-				i++;
-		}
-		if (str[i]) // si on est pas arriver a la fin,
-			// alors nb token++
+		if (is_in_set(str[i], "<>"))
+			i += ft_redir_len(str + i);
+		if (str[i] == '|')
+			return (nb_t);
+		if (str[i])
 			nb_t++;
 		while (str[i] && !is_in_set(str[i], " 	"))
-		// tant qu'il ya pas de separateur
 		{
-			if (str[i] && str[i] == '"') // si dquote
+			if (str[i] && str[i] == '"')
 			{
 				i++;
 				while (str[i] && str[i] != '"')
-					// jusqu'a la fermeture du dquote
 					i++;
 				i++;
 			}
-			if (str[i] && str[i] == '\'') // si quote
+			if (str[i] && str[i] == '\'')
 			{
 				i++;
 				while (str[i] && str[i] != '\'')
-					// jusqu'a la fermeture du quote
 					i++;
 				i++;
 			}
@@ -462,10 +424,10 @@ t_command	*ft_token(char *cmd)
 		tmp->args[i] = 0;
 		while (*cmd && is_in_set(*cmd, " 	"))
 			cmd++;
-		if (*cmd && *cmd == '|')
-			cmd++;
 		if (*cmd && is_in_set(*cmd, "<>"))
 			cmd += ft_redir_len(cmd);
+		if (*cmd && *cmd == '|')
+			cmd++;
 		if (*cmd)
 		{
 			printf("new cmd: %s\n", cmd);
