@@ -6,159 +6,18 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/30 18:36:32 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/02 16:16:40 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	ft_free_cmd(t_command *cmd)
-{
-	int			i;
-	t_command	*tmp;
-
-	while (cmd)
-	{
-		i = 0;
-		while (cmd->args && cmd->args[i])
-		{
-			free(cmd->args[i]);
-			i++;
-		}
-		tmp = cmd;
-		cmd = cmd->next;
-		free(cmd);
-	}
-}
-
-void	ft_printcmd(t_command *cmd)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	while (cmd)
-	{
-		i = 0;
-		printf("-----\ncmd[%d]\n", j++);
-		while (cmd->args && cmd->args[i])
-		{
-			printf("arg[%d]:>%s<\n", i, cmd->args[i]);
-			// free(cmd->args[i]);
-			i++;
-		}
-		cmd = cmd->next;
-	}
-	printf("-----\n");
-}
-
-size_t	ft_sstrlcpy(char *dst, const char *src, size_t dstsize)
-{
-	size_t	i;
-
-	i = 0;
-	while (src && src[i] && i + 1 < dstsize)
-	{
-		dst[i] = src[i];
-		i++;
-	}
-	if (dstsize > 0)
-	{
-		dst[i] = '\0';
-		i++;
-	}
-	return (ft_strlen(src));
-}
-
-int	is_in_set(char c, char *set)
-{
-	int	i;
-
-	i = 0;
-	while (set && set[i])
-	{
-		if (set[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	ft_check_pipes(char *str)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	i = 0;
-	while (is_in_set(str[i], " 	"))
-		i++;
-	if (str[i] == '|')
-		return (i);
-	while (str[i])
-	{
-		if (str[i] == '|')
-		{
-			j = i;
-			i++;
-			while (is_in_set(str[i], " 	"))
-				i++;
-			if (!str[i] || str[i] == '|')
-				return (j);
-		}
-		i++;
-	}
-	return (-1);
-}
-
-int	ft_check_redir(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (ft_strncmp(str + i, ">>", 2) == 0)
-		{
-			printf(">>\n");
-			i++;
-		}
-		else if (str[i] == '>')
-		{
-			printf(">\n");
-		}
-		if (ft_strncmp(str + i, "<<", 2) == 0)
-		{
-			printf("<<\n");
-			i++;
-		}
-		else if (str[i] == '<')
-		{
-			printf("<\n");
-		}
-		i++;
-	}
-	return (-1);
-}
-
-int	ft_check_line(char *str)
-{
-	if (ft_check_pipes(str) > -1)
-	{
-		printf("syntax error near unexpected token `%c'\n",
-			str[ft_check_pipes(str)]);
-		return (0);
-	}
-	ft_check_redir(str);
-	return (1);
-}
 
 int	ft_redir_len(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (str[i] && !is_in_set(str[i], " 	|"))
+	while (str[i] && is_in_set(str[i], "<>"))
 	{
 		while (str[i] && is_in_set(str[i], "<>"))
 			i++;
@@ -178,11 +37,11 @@ int	ft_redir_len(char *str)
 				i++;
 			i++;
 		}
-		while (str[i] && !is_in_set(str[i], " 	|<>"))
+		while (str[i] && !is_in_set(str[i], " 	|<>\"'"))
+			i++;
+		while (str[i] && is_in_set(str[i], " 	"))
 			i++;
 	}
-	while (str[i] && is_in_set(str[i], " 	"))
-		i++;
 	return (i);
 }
 
@@ -445,17 +304,12 @@ int	main(int ac, char **av, char **envp)
 	char		*line;
 	t_command	*cmd;
 
-	// int			i;
-	// int			j;
 	line = NULL;
 	(void)ac;
 	(void)av;
-	// (void)cmd;
 	(void)envp;
 	while (42)
 	{
-		// i = 0;
-		// j = 0;
 		line = readline("\033[1;95mShell-et-poivre> \033[0m");
 		add_history(line);
 		// while (envp[i])
@@ -467,7 +321,7 @@ int	main(int ac, char **av, char **envp)
 		// printf("nb_t = %d\n", ft_counttoken(line));
 		// printf("size t0 = %d\n", ft_size_token(line));
 		// printf("DEBUG: line:>%s<\n", line);
-		if (ft_check_line(line))
+		if (ft_check_line_bis(line))
 		{
 			cmd = ft_token(line);
 			ft_printcmd(cmd);
