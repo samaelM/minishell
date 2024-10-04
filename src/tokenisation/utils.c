@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/02 15:39:14 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/04 14:07:19 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ void	ft_free_cmd(t_command *cmd)
 	while (cmd)
 	{
 		i = 0;
+		if (cmd->infile != 0 && cmd->infile != 1 && cmd->infile != 2)
+			close(cmd->infile);
+		if (cmd->outfile != 0 && cmd->outfile != 1 && cmd->outfile != 2)
+			close(cmd->outfile);
 		while (cmd->args && cmd->args[i])
 		{
 			free(cmd->args[i]);
@@ -42,12 +46,14 @@ void	ft_printcmd(t_command *cmd)
 	{
 		i = 0;
 		printf("-----\ncmd[%d]\n", j++);
+		printf("infile fd=%d\n", cmd->infile);
 		while (cmd->args && cmd->args[i])
 		{
 			printf("arg[%d]:>%s<\n", i, cmd->args[i]);
 			// free(cmd->args[i]);
 			i++;
 		}
+		printf("outfile fd=%d\n", cmd->outfile);
 		cmd = cmd->next;
 	}
 	printf("-----\n");

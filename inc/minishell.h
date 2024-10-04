@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/02 15:39:30 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/04 13:59:31 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,12 @@ typedef enum s_symbole
 
 typedef struct s_command
 {
-	char *infile;   // fichier d'entree (par defaut stdin)
+	int infile;     // fichier d'entree (par defaut stdin)
 	char *cmdpath;  // path absolue de la commande (/bin/ls)
 	char *cmd;      // juste la commande (ls, cat, wc etc)
 	t_symb symbole; // s'il y a un sumbole (pipe, heredoc etc)
 	char **args;    // les argument de la commande (-R, -rf etc)
-	char *outfile;  // fichier de sortie (par defaut stdout)
+	int outfile;    // fichier de sortie (par defaut stdout)
 	struct s_command	*next;
 }						t_command;
 
@@ -90,6 +90,9 @@ int						ft_check_redir(char *str);
 int						ft_check_line(char *str);
 int						ft_check_line_bis(char *str);
 int						ft_error_token(char *str);
+int						ft_size_token(char *str);
+int						ft_get_arg(char *dest, char *str);
+int						ft_redir(t_command *cmd, char *line);
 
 ///				BUILT-INS				///
 

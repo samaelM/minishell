@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/02 16:16:40 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/04 14:30:11 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,13 +150,11 @@ int	ft_size_token(char *str)
 	return (j);
 }
 
-int	ft_get_arg(t_command *command, int idx, char *str)
+int	ft_get_arg(char *dest, char *str)
 {
-	int		i;
-	int		j;
-	char	*dest;
+	int	i;
+	int	j;
 
-	dest = command->args[idx];
 	j = 0;
 	i = 0;
 	while (str[i] && is_in_set(str[i], " 	"))
@@ -276,7 +274,7 @@ t_command	*ft_token(char *cmd)
 		while (i < size)
 		{
 			tmp->args[i] = ft_calloc((ft_size_token(cmd) + 1), sizeof(char));
-			j = ft_get_arg(tmp, i, cmd);
+			j = ft_get_arg(tmp->args[i], cmd);
 			cmd = cmd + j;
 			i++;
 		}
@@ -290,8 +288,6 @@ t_command	*ft_token(char *cmd)
 		if (*cmd)
 		{
 			printf("new cmd: %s\n", cmd);
-			// ft_printcmd(tmp);
-			// sleep(2);
 			tmp->next = ft_calloc(1, sizeof(t_command));
 			tmp = tmp->next;
 		}
@@ -308,24 +304,17 @@ int	main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	(void)envp;
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
 	while (42)
 	{
 		line = readline("\033[1;95mShell-et-poivre> \033[0m");
 		add_history(line);
-		// while (envp[i])
-		// 	printf("%s\n", envp[i++]);
-		// printf("env var len: %d\n",ft_size_env_var(line, envp));
-		// printf("getenv: %s\n", getenv(line));
-		// printf("getenvlen: %zu\n", ft_strlen(getenv(line)));
-		// printf("getenvlen2: %d\n", ft_env_len(line));
-		// printf("nb_t = %d\n", ft_counttoken(line));
-		// printf("size t0 = %d\n", ft_size_token(line));
-		// printf("DEBUG: line:>%s<\n", line);
-		if (ft_check_line_bis(line))
+		if (line && ft_check_line_bis(line))
 		{
 			cmd = ft_token(line);
+			ft_redir(cmd, line);
 			ft_printcmd(cmd);
-			// free(cmd->args);
 			ft_free_cmd(cmd);
 		}
 		free(line);
