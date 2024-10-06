@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/17 17:32:29 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/09/27 16:43:11 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ char	*ft_get_cmd_path(char **paths, char *cmd)
 	return (NULL);
 }
 
-int	ft_exec_cmd(int fd, char *arg, char **envp, char **path)
+int	ft_exec_cmd(int fd, char **args, char **envp, char **path)
 {
-	char	**args;
+	// char	**args;
 	char	*cmd;
 
 	if (fd != 1)
 		return (1);
-	args = ft_split(arg, ' ');
+	// args = ft_split(arg, ' ');
 	if (args)
 	{
 		cmd = ft_get_cmd_path(path, args[0]);
@@ -83,7 +83,7 @@ int	ft_exec_cmd(int fd, char *arg, char **envp, char **path)
 // 	pid_t	pid;
 
 // 	// char	**args;
-// 	// t_command *oui;
+// 	t_command *oui;
 // 	(void)ac;
 // 	(void)av;
 // 	signal(SIGINT, sigint_handler);
@@ -92,21 +92,21 @@ int	ft_exec_cmd(int fd, char *arg, char **envp, char **path)
 // 	while ((cmd = readline("\033[1;95mShell-et-poivre> \033[0m")) != NULL)
 // 	{
 // 		add_history(cmd);
-// 		// oui = ft_token(cmd);
+// 		oui = ft_token(cmd);
 // 		// printf("%s", oui->cmd);
-// 		if (ft_strncmp(cmd, "exit", 4) == 0)
+// 		if (ft_strncmp(oui->args[0], "exit", 4) == 0)
 // 		{
 // 			free(cmd); // replace with ft_exit
 // 			break ;
 // 		}
-// 		else if (ft_strncmp(cmd, "echo", 4) == 0)
+// 		// else if (ft_strncmp(oui->args[0], "echo", 4) == 0)
+// 		// {
+// 		// 	printf("%s\n", oui->args[1]); // replace with ft_echo
+// 		// 	free(cmd);
+// 		// }
+// 		else if (ft_strncmp(oui->args[0], "cd", 2) == 0)
 // 		{
-// 			printf("%s\n", cmd + 5); // replace with ft_echo
-// 			free(cmd);
-// 		}
-// 		else if (ft_strncmp(cmd, "cd", 2) == 0)
-// 		{
-// 			chdir(cmd + 3); // replace with ft_cd
+// 			chdir(oui->args[1]); // replace with ft_cd
 // 			free(cmd);
 // 		} // mettre d'autre else if pour les autre commandes builtins
 // 		else if (*cmd)
@@ -117,7 +117,7 @@ int	ft_exec_cmd(int fd, char *arg, char **envp, char **path)
 // 			else if (pid == 0)
 // 			{
 // 				// cmd = ft_strdup("   echo 		a");
-// 				ft_exec_cmd(1, cmd, envp, ft_split(ft_find_path(envp), ':'));
+// 				ft_exec_cmd(1, oui->args, envp, ft_split(ft_find_path(envp), ':'));
 // 				free(cmd);
 // 			}
 // 			else
