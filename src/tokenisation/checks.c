@@ -42,15 +42,15 @@ int	ft_check_pipes(char *str)
 int	ft_check_redir(char *str)
 {
 	int	i;
-	int	j;
+	// // int	j;
 
-	j = 0;
+	// j = 0;
 	i = 0;
 	while (str[i])
 	{
 		while (str[i] && is_in_set(str[i], "><"))
 		{
-			j = i;
+			// j = i;
 			if (ft_strncmp(str + i, ">>", 2) == 0)
 				i += 2;
 			else if (str[i] == '>')
@@ -120,13 +120,13 @@ static char	*ft_get_token(char *str)
 int	ft_check_redir_bis(char *str)
 {
 	int	i;
-	int	j;
+	// int	j;
 
 	i = 0;
 	// while (str[i] && is_in_set(str[i], "><"))
 	// {
-	j = i;
-	if (ft_strncmp(str + i, ">>", 2) == 0)
+	// j = i;
+	if (ft_strncmp(str + i, ">"  ">", 2) == 0)
 		i += 2;
 	else if (str[i] == '>')
 		i++;

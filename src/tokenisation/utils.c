@@ -32,7 +32,7 @@ void	ft_free_cmd(t_command *cmd)
 		}
 		tmp = cmd;
 		cmd = cmd->next;
-		free(cmd);
+		free(tmp);
 	}
 }
 
