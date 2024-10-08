@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/04 20:28:12 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/07 19:06:40 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,7 @@ int	ft_exec(t_global *glob)
 {
 	if (glob->command->cmd)
 	{
-		char *var_ = malloc(sizeof(char) * (12 + ft_strlen(glob->command->cmd) + 2));
-		ft_strlcpy(var_,"_=/usr/bin/", 12);
-		ft_strlcpy(var_ + 12, glob->command->cmd, ft_strlen(glob->command->cmd));
-		//ft_strlcat(var_, glob->command->cmd, ft_strlen(glob->command->cmd));
-		change_env_var(glob, var_, find_var_in_env(glob->env, "_"));
-		
+		change_env_(glob);
 		if (ft_strcmp(glob->command->cmd, "exit") == 0)
 		{
 			ft_exit(glob);
@@ -100,7 +95,7 @@ int	ft_exec(t_global *glob)
 		}
 		else if (ft_strcmp(glob->command->cmd, "cd") == 0)
 		{
-			ft_cd(glob->command);
+			ft_cd(glob);
 		}
 		else if (ft_strcmp(glob->command->cmd, "echo") == 0)
 		{

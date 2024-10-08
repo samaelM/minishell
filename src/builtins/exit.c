@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:22:30 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/02 17:29:13 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:00:42 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int	ft_exit(t_global *glob)
 	if (nb_args(glob->command->args + 1) == 0)
 	{
 		free(glob->command);
-		// exit(0);
 		exit(glob->exit_value);
 	}
 	if (is_nb(glob->command->args[1]))

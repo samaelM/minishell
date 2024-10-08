@@ -6,11 +6,56 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 18:49:59 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/04 18:43:21 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/08 16:07:01 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void change_env_(t_global *glob)
+{
+	char *var_;
+	
+	var_ = malloc(sizeof(char) * (12 + ft_strlen(glob->command->cmd) + 2));
+	ft_strlcpy(var_,"_=/usr/bin/", 12);
+	ft_memcpy(var_+11, glob->command->cmd, ft_strlen(glob->command->cmd));
+	change_env_var(glob, var_, find_var_in_env(glob->env, "_"));
+	//printf("%s\n", var_);
+	free(var_);
+}
+
+// pb trouve var plus courte
+int find_var_in_env(char **env, char *var)
+{
+
+	int i;
+	
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], var, ft_strlen(var)) == 0) 
+		{	
+		//	printf("%s	trouve\n", env[i]);
+			return (i);
+		}
+		i++;
+	}
+	return (-1);
+}
+
+char *ft_getenv(t_global *glob, char *var)
+{
+	int line;
+	int i;
+	
+	i = 0;
+	line = find_var_in_env(glob->env, var);
+	if (line == -1)
+		return (NULL);
+	while(glob->env[line][i] && glob->env[line][i] != '=')
+		i++;
+	return (glob->env[line] + i + 1);
+}
 
 int ft_env(t_global *glob)
 {
@@ -31,6 +76,12 @@ char **create_our_env(char **envp)
 	char	**env_tab;
 
 	i = 0;
+	if(!envp) // gerer ca
+	{
+		printf("error no envp\n");
+		// free
+		exit(1);
+	}
 	while(envp[i])
 		i++;
 	env_tab = malloc(sizeof(char *) * i + 1);
@@ -45,32 +96,3 @@ char **create_our_env(char **envp)
 	env_tab[i] = NULL;
 	return (env_tab);
 }
-
-
-// int ft_env(t_command *command, t_list *env_list)
-// {
-// 	(void)command;
-// 	while (env_list)
-// 	{
-// 		printf("%s\n", (char *)env_list->content);
-// 		env_list = env_list->next;
-// 	}
-// 	return (0);
-// }
-
-// t_list *create_our_env(char **envp)
-// {
-// 	t_list	*env_list = NULL;
-// 	t_list *tmp;
-	
-// 	ft_lstadd_back(&env_list, ft_lstnew((void *)*envp));
-// 	tmp = env_list;
-// 	envp++;
-// 	while (*envp)
-// 	{
-// 		ft_lstadd_back(&env_list, ft_lstnew((void *)*envp));
-// 		env_list = env_list->next;
-//  		envp++;
-// 	}
-// 	return (tmp);
-// }

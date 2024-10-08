@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/04 20:13:09 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:23:30 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,18 +82,21 @@ t_command				*ft_token(char *command);
 
 ///				BUILT-INS				///
 
-int						ft_cd(t_command *command);
-int						ft_pwd(void);
-int						ft_echo(t_command *command);
-int						ft_exit(t_global *glob);
+int	ft_cd(t_global *glo);
+int	ft_pwd(void);
+int	ft_echo(t_command *command);
+int	ft_exit(t_global *glob);
 int ft_env(t_global *glob);
-
 int ft_export(t_global *glo);
 int ft_unset(t_global *glob);
-int change_env_var(t_global *glo, char *var, int line);
+
+///				ENV						///
 
 char **create_our_env(char **envp);
+char *ft_getenv(t_global *glob, char *var);
 int find_var_in_env(char **env, char *var);
+int change_env_var(t_global *glo, char *var, int line);
+void change_env_(t_global *glob);
 
 ///				SIGNALS					///
 void					sigint_handler(int sig_num);

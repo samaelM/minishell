@@ -6,104 +6,11 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:48:08 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/04 20:28:57 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:57:51 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-// add
-// modify
-// delete
-
-// pas de _
-
-
-// int change_env_var(t_list *env_list, char *var)
-// {
-// 	char *buf = NULL;
-
-// 	printf("%s\n", (char *)env_list->content);
-// 	ft_bzero(env_list->content, ft_strlen(env_list->content));
-// 	ft_strlcat(env_list->content, var, ft_strlen(var) + 1);
-// 	if (ft_strncmp(var, "PWD=", 4) == 0)
-// 		ft_strlcat(env_list->content, getcwd(buf, PATH_MAX), PATH_MAX + 1);
-// 	// else
-// 	// 	ft_strlcat(env_list->content, getcwd(buf, PATH_MAX), PATH_MAX + 1);
-// 	printf("%s\n", (char *)env_list->content);
-// 	return (0);
-// }
-
-// int add_env_var(t_list *env_list, char *var)
-// {
-// //	printf("%s\n", (char *)env_list->content);
-// 	ft_lstadd_back(&env_list, ft_lstnew(var));
-// 	//printf("%s\n", (char *)env_list->content);
-// 	return (0);
-// }
-
-// si tu touves avec strcmp, tu change
-// int ft_export(t_command *command, t_list *env_list)
-// {
-// 	int i = 1;
-	
-// 	// if(command->args[1] == NULL)
-// 	//	print export + var dans l'ordre ascii
-// 	while(command->args[i])
-// 	{
-// 		t_list *tmp = find_var_in_env(env_list, command->args[i]);
-// 		if(tmp != NULL)
-// 			change_env_var(tmp, command->args[i]);
-// 		else
-// 		{
-// 			printf("pas trouve la variable il faudra add\n");
-// 			// sinon tu add nvlle var
-// 			//add_env_var(tmp, command->args[i]);
-// 		}
-// 		i++;
-// 	}
-// //	printf("c ici %i\n", find_env(command, env_list, "PWD="));
-// 	return (0);
-// }
-
-// int ft_export(t_command *command)
-// {
-// 	int i = 1;
-	
-// 	// if(command->args[1] == NULL)
-// 	//	print export + var dans l'ordre ascii
-// 	while(command->args[i])
-// 	{
-// 		// t_list *tmp = find_var_in_env(env_list, command->args[i]);
-// 		// if(tmp != NULL)
-// 		// 	change_env_var(tmp, command->args[i]);
-// 		// else
-// 		// {
-// 		// 	printf("pas trouve la variable il faudra add\n");
-// 		// 	// sinon tu add nvlle var
-// 		// 	//add_env_var(tmp, command->args[i]);
-// 		// }
-// 		i++;
-// 	}
-// //	printf("c ici %i\n", find_env(command, env_list, "PWD="));
-// 	return (0);
-// }
-
-
-// int change_env_var(t_list *env_list, char *var)
-// {
-// 	char *buf = NULL;
-
-// 	printf("%s\n", (char *)env_list->content);
-// 	ft_bzero(env_list->content, ft_strlen(env_list->content));
-// 	ft_strlcat(env_list->content, var, ft_strlen(var) + 1);
-// 	if (ft_strncmp(var, "PWD=", 4) == 0)
-// 		ft_strlcat(env_list->content, getcwd(buf, PATH_MAX), PATH_MAX + 1);
-// 	// else
-// 	// 	ft_strlcat(env_list->content, getcwd(buf, PATH_MAX), PATH_MAX + 1);
-// 	printf("%s\n", (char *)env_list->content);
-// 	return (0);
-// }
 
 int add_env_var(t_global *glo, char *var)
 {
@@ -119,10 +26,10 @@ int add_env_var(t_global *glo, char *var)
 	i = 0;
 	while(glo->env[i])
 	{
-		tab[i] = ft_strdup(glo->env[i]);
+		tab[i] = ft_strdup(glo->env[i]); // a proteger
 			i++;
 	}
-	tab[i] = ft_strdup(var);
+	tab[i] = ft_strdup(var); // a proteger
 	tab[i + 1] = NULL;
 	glo->env = tab;
 	return (0);
@@ -146,7 +53,9 @@ int parse_export(char *var)
 int change_env_var(t_global *glo, char *var, int line)
 {
 	free(glo->env[line]);
-	glo->env[line] = ft_strdup(var); 
+	glo->env[line] = ft_strdup(var);
+	if(!glo->env[line])
+		return (1); 
 	return (0);
 }
 
@@ -168,21 +77,44 @@ char *ft_var_name(char *var)
 	return (new_line);
 }
 
-// int add_export_tab(t_global *glo, char *var)
-// {
-// 	// cree un tab export, ajouter export a chaque fois
-// 	// si aucun arg print export + var dans l'ordre ascii
-// }
-
-// cd home unset
-// _last cmd
-
+int print_export(t_global *glo)
+{
+	int i;
+	int size;
+	int j;
+	char *line;
+	
+	j = 0;
+	size = 0;
+	line= glo->env[0];
+	while(glo->env[size])
+		size++;
+	//while(j < size)
+	{
+		i = 0;
+		while(glo->env[i])
+		{
+			// if (ft_strncmp(line, glo->env[i], 500) > 0)
+			 	line = glo->env[i];
+			printf("export %s\n", line);
+			i++;
+		}
+		// printf("export %s\n", line);
+		j++;
+	}
+	return (0);
+}
 
 int ft_export(t_global *glo)
 {
 	int i = 1;
 	char *var_name;
-	// if(command->args[1] == NULL)
+	
+	if(glo->command->args[1] == NULL)
+	{
+		print_export(glo);
+		return (0);
+	}
 	while(glo->command->args[i])
 	{
 		if(parse_export(glo->command->args[i]) == 1)
@@ -195,7 +127,6 @@ int ft_export(t_global *glo)
 			else
 				change_env_var(glo, glo->command->args[i], is_line);
 		}
-		//add_export_tab();
 		i++;
 	}
 	return (0);

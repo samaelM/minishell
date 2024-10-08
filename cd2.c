@@ -6,38 +6,37 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:30:33 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/08 15:59:52 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/08 15:24:24 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void change_pwd(t_global *glo)
+void change_old_pwd(t_global *glo, char *geten)
 {
-	char buf[PATH_MAX];
 	char *string;
-	char *content;
 	int is_line;
 	
-	content = ft_getenv(glo, "PWD");
-	string = malloc(sizeof(char) * (8 + ft_strlen(content)));
-	if(!string)
-		return ;
+	string = malloc(sizeof(char) * (8 + ft_strlen(geten)));
 	ft_strlcpy(string,"OLDPWD=", 8);
-	if(content)
-		ft_memcpy(string+7, content, ft_strlen(content)+1);
+	ft_memcpy(string+7, geten, ft_strlen(geten));
 	is_line = find_var_in_env(glo->env, "OLDPWD");
 	if(is_line != -1)
 		change_env_var(glo, string, is_line);
 	free(string);
-	
-	if (getcwd(buf, PATH_MAX) == NULL)
-		return ;
-	string = malloc(sizeof(char) * (5 + ft_strlen(buf)));
-	if(!string)
-		return ;
+}
+
+void change_pwd(t_global *glo, char *geten)
+{
+	char buf[PATH_MAX];
+	char *string;
+	char *next;
+	int is_line;
+
+	next = getcwd(buf, PATH_MAX);
+	string = malloc(sizeof(char) * (5 + ft_strlen(next)));
 	ft_strlcpy(string,"PWD=", 5);
-	ft_memcpy(string +4, buf, ft_strlen(buf)+1);
+	ft_memcpy(string+4, next, ft_strlen(next));
 	is_line = find_var_in_env(glo->env, "PWD");
 	if(is_line != -1)
 		change_env_var(glo, string, is_line);
@@ -46,11 +45,18 @@ void change_pwd(t_global *glo)
 
 int ft_cd(t_global *glo)
 {
-	char *home;
+	// tmp si fonctionne == tmp;
+	char *tmp = ft_getenv(glo, "PWD");
+
+// change_pwd(glo);
+
 	
+			
+	char *home;
 	if(glo->command->args[1] == NULL)
 	{
-		home = ft_getenv(glo, "HOME");
+		// printf("\n%s\n", ft_getenv(glob, "HOME"));
+		home = ft_getenv(glo, "HOME"); // home no unset
 		if(!home)
 		{
 			printf("cd: HOME not set\n");
@@ -61,7 +67,10 @@ int ft_cd(t_global *glo)
 			printf("cd: %s\n", strerror(errno));
 			return (1);
 		}
+		change_old_pwd(glo, tmp);
 		change_pwd(glo);
+		printf("pwd %s\n", ft_getenv(glo ,"PWD"));
+		printf("old %s\n", ft_getenv(glo ,"OLDPWD"));
 		return (0);
 	}
 	if(glo->command->args[2])
@@ -74,6 +83,7 @@ int ft_cd(t_global *glo)
 		printf("cd: %s: %s\n", glo->command->args[1], strerror(errno));
 		return (1);
 	}
+	change_old_pwd(glo, tmp);
 	change_pwd(glo);
 	return (0);
 }
