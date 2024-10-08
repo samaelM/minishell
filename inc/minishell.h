@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/04 13:59:31 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/08 17:35:32 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,11 @@
 ///////////////////////////////////////////
 
 # include "../lib/libft/libft.h"
-# include <stdio.h>
+# include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <sys/wait.h>
@@ -33,25 +34,27 @@
 
 # define TRUE 1
 # define METACHAR " 	|<>"
+# define HEREDOC_NAME "/tmp/heredoc_poivre"
 
 ///////////////////////////////////////////
 ///				STRUCTURES				///
 ///////////////////////////////////////////
 
-typedef enum s_symbole
-{
-	NONE,
-	PIPE,
-}						t_symb;
+// typedef enum s_symbole
+// {
+// NONE,
+// PIPE,
+// }						t_symb;
 
 typedef struct s_command
 {
-	int infile;     // fichier d'entree (par defaut stdin)
-	char *cmdpath;  // path absolue de la commande (/bin/ls)
-	char *cmd;      // juste la commande (ls, cat, wc etc)
-	t_symb symbole; // s'il y a un sumbole (pipe, heredoc etc)
-	char **args;    // les argument de la commande (-R, -rf etc)
-	int outfile;    // fichier de sortie (par defaut stdout)
+	int infile;    // fichier d'entree (par defaut stdin)
+	char *cmdpath; // path absolue de la commande (/bin/ls)
+	char *cmd;     // juste la commande (ls, cat, wc etc)
+	int					is_pipe;
+	int					is_heredoc;
+	char **args; // les argument de la commande (-R, -rf etc)
+	int outfile; // fichier de sortie (par defaut stdout)
 	struct s_command	*next;
 }						t_command;
 

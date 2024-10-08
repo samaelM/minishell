@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/04 14:07:19 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:07:04 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void	ft_free_cmd(t_command *cmd)
 		i = 0;
 		if (cmd->infile != 0 && cmd->infile != 1 && cmd->infile != 2)
 			close(cmd->infile);
+		if (cmd->is_heredoc)
+			unlink(HEREDOC_NAME);
 		if (cmd->outfile != 0 && cmd->outfile != 1 && cmd->outfile != 2)
 			close(cmd->outfile);
 		while (cmd->args && cmd->args[i])
@@ -65,6 +67,8 @@ size_t	ft_sstrlcpy(char *dst, const char *src, size_t dstsize)
 	size_t	i;
 
 	i = 0;
+	if (!dst)
+		return (0);
 	while (src && src[i] && i + 1 < dstsize)
 	{
 		dst[i] = src[i];

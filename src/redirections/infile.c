@@ -6,12 +6,11 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:29:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/04 18:15:24 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/07 17:17:02 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <fcntl.h>
 
 int	ft_outfile(t_command *cmd, char *line)
 {
@@ -19,6 +18,8 @@ int	ft_outfile(t_command *cmd, char *line)
 	int		len;
 	char	*name;
 
+	if (cmd->outfile > 1)
+		close(cmd->outfile);
 	// printf("outfile\n");
 	len = 0;
 	size = ft_size_token(line + 1);
@@ -36,6 +37,8 @@ int	ft_outfile2(t_command *cmd, char *line)
 	int		len;
 	char	*name;
 
+	if (cmd->outfile > 1)
+		close(cmd->outfile);
 	// printf("outfile2\n");
 	len = 0;
 	size = ft_size_token(line + 2);
@@ -53,6 +56,14 @@ int	ft_infile(t_command *cmd, char *line)
 	int		len;
 	char	*name;
 
+	if (cmd->infile > 1)
+		close(cmd->infile);
+	if (cmd->is_heredoc)
+	{
+		// close(cmd->infile);
+		unlink("/tmp/heredoc");
+		cmd->is_heredoc = 0;
+	}
 	// printf("infile\n");
 	len = 0;
 	size = ft_size_token(line + 1);
@@ -70,16 +81,39 @@ int	ft_heredoc(t_command *cmd, char *line)
 	int		len;
 	int		size;
 	char	*lim;
-	char *buff = NULL;
+	char	*buff;
+	char	*line2;
 
+	if (cmd->infile > 1)
+		close(cmd->infile);
+	if (cmd->is_heredoc)
+	{
+		// close(cmd->infile);
+		unlink(HEREDOC_NAME);
+	}
+	buff = malloc(700 * sizeof(char));
 	len = 0;
 	size = ft_size_token(line + 2);
 	lim = ft_calloc(size, sizeof(char));
 	ft_get_arg(lim, line + 2);
-	cmd->infile = open("/tmp/", __O_TMPFILE | O_RDWR);
-	printf("%zd\n",write(cmd->infile, "hello\n", 6));
-	printf("%zd\n",read(cmd->infile, buff, 7));
+	cmd->infile = open(HEREDOC_NAME, O_CREAT | O_RDWR, 0666);
+	while (42)
+	{
+		line2 = readline(">");
+		if (ft_strncmp(lim, line2, ft_strlen(lim)) == 0
+			&& ft_strlen(lim) == ft_strlen(line2))
+			break ;
+		write(cmd->infile, line2, ft_strlen(line2));
+		write(cmd->infile, "\n", 1);
+	}
+	close(cmd->infile);
+	cmd->infile = open(HEREDOC_NAME, O_RDONLY);
+	printf("fd=%d\n", cmd->infile);
+	// printf("%zd\n",write(cmd->infile, "hello\n", 6));
+	printf("%zd\n", read(cmd->infile, buff, 700));
 	printf(">%s<\n", buff);
+	free(buff);
+	cmd->is_heredoc = 1;
 	return (len + 2);
 }
 
