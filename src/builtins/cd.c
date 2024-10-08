@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:30:33 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/08 15:59:52 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/08 18:43:16 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void change_pwd(t_global *glo)
 	char *content;
 	int is_line;
 	
-	content = ft_getenv(glo, "PWD");
+	content = ft_getenv(glo->env, "PWD");
 	string = malloc(sizeof(char) * (8 + ft_strlen(content)));
 	if(!string)
 		return ;
@@ -50,7 +50,7 @@ int ft_cd(t_global *glo)
 	
 	if(glo->command->args[1] == NULL)
 	{
-		home = ft_getenv(glo, "HOME");
+		home = ft_getenv(glo->env, "HOME");
 		if(!home)
 		{
 			printf("cd: HOME not set\n");

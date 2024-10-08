@@ -20,7 +20,9 @@ B_SRC		=	cd.c \
 
 ######	Token		#####
 T_DIR		=	tokenisation
-T_SRC		=	tokenisation.c
+T_SRC		=	tokenisation.c \
+				utils.c \
+				checks.c \
 
 ######	signals		#####
 S_DIR		=	signals
