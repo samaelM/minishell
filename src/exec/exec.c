@@ -6,44 +6,13 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/08 18:32:16 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:46:20 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	absolute_path(t_global *glo)
-{
-	(void)glo;
-	// if (execve(glo->command->cmd, glo->command->args, glo->env_list) == -1)
-	{
-		// perror(cmd[0]);
-		// close_all_fd(pipex);
-		// free(pipex.pipe);
-		// free_all(cmd);
-		// exit(1);
-	}
-}
-
-void	exec_la_cmd(t_global *glo)
-{
-	int	i;
-
-	i = 0;
-	while (glo->command->cmd[i])
-	{
-		if (glo->command->cmd[i] == '/')
-		{
-			absolute_path(glo);
-		}
-		i++;
-	}
-	// cmd_path(cmd, pipex);
-	printf("exe\n");
-	return ;
-}
-
-int	execution(t_global *glo)
+int	execution(t_global *g)
 {
 	int		status;
 	pid_t	pid;
@@ -53,9 +22,9 @@ int	execution(t_global *glo)
 		printf("erreur fork");
 	else if (pid == 0)
 	{
-		// if (glo->command->next)
+		// if (g->command->next)
 		// 	printf("pipe\n");
-		exec_la_cmd(glo);
+		exec_la_cmd(g);
 		exit(0);
 	}
 	else

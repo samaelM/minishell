@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/08 18:42:58 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/08 20:26:43 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,6 @@
 ///				STRUCTURES				///
 ///////////////////////////////////////////
 
-// typedef enum s_symbole
-// {
-// NONE,
-// PIPE,
-// }						t_symb;
-
 typedef struct s_command
 {
 	int infile;    // fichier d'entree (par defaut stdin)
@@ -73,9 +67,8 @@ typedef struct s_global
 
 ///				EXECUTION				///
 
-int						ft_exec_cmd(int fd, char *arg, char **envp,
-							char **path);
-int						ft_exec(t_global *s_global);
+int		ft_exec(t_global *s_global);
+void	exec_la_cmd(t_global *g);
 
 ///				COMPARATOR				///
 

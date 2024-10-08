@@ -38,6 +38,7 @@ R_SRC		=	pipex.c \
 ######	exec		#####
 E_DIR		=	exec
 E_SRC		=	exec.c \
+				exec_one_cmd.c \
 
 ######	All sources	#####
 SRC_DIR		=	src
