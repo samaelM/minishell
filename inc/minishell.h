@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/08 17:35:32 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:13:26 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@
 
 typedef struct s_command
 {
-	int infile;    // fichier d'entree (par defaut stdin)
-	char *cmdpath; // path absolue de la commande (/bin/ls)
-	char *cmd;     // juste la commande (ls, cat, wc etc)
-	int					is_pipe;
-	int					is_heredoc;
-	char **args; // les argument de la commande (-R, -rf etc)
-	int outfile; // fichier de sortie (par defaut stdout)
+	int infile;     // fichier d'entree (par defaut stdin)
+	char *cmdpath;  // path absolue de la commande (/bin/ls)
+	char *cmd;      // juste la commande (ls, cat, wc etc)
+	int is_pipe;    //
+	int is_heredoc; //
+	char **args;    // les argument de la commande (-R, -rf etc)
+	int outfile;    // fichier de sortie (par defaut stdout)
 	struct s_command	*next;
 }						t_command;
 

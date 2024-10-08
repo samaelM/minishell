@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:29:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/07 17:17:02 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:10:05 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	ft_outfile(t_command *cmd, char *line)
 	len = 0;
 	size = ft_size_token(line + 1);
 	name = ft_calloc(size, sizeof(char));
+	if (!name) // protection
+		return (-1);
 	len = ft_get_arg(name, line + 1);
 	cmd->outfile = open(name, O_CREAT | O_TRUNC | O_RDWR, 0666);
 	if (cmd->outfile == -1)
@@ -43,6 +45,8 @@ int	ft_outfile2(t_command *cmd, char *line)
 	len = 0;
 	size = ft_size_token(line + 2);
 	name = ft_calloc(size, sizeof(char));
+	if (!name) // protection
+		return (-1);
 	len = ft_get_arg(name, line + 2);
 	cmd->outfile = open(name, O_CREAT | O_APPEND | O_RDWR, 0666);
 	if (cmd->outfile == -1)
@@ -68,6 +72,8 @@ int	ft_infile(t_command *cmd, char *line)
 	len = 0;
 	size = ft_size_token(line + 1);
 	name = ft_calloc(size, sizeof(char));
+	if (!name) // protection
+		return (-1);
 	len = ft_get_arg(name, line + 1);
 	cmd->infile = open(name, O_RDONLY);
 	if (cmd->infile == -1)
@@ -92,9 +98,13 @@ int	ft_heredoc(t_command *cmd, char *line)
 		unlink(HEREDOC_NAME);
 	}
 	buff = malloc(700 * sizeof(char));
+	if (!buff) // protection
+		return (-1);
 	len = 0;
 	size = ft_size_token(line + 2);
 	lim = ft_calloc(size, sizeof(char));
+	if (!lim) // protection
+		return (-1);
 	ft_get_arg(lim, line + 2);
 	cmd->infile = open(HEREDOC_NAME, O_CREAT | O_RDWR, 0666);
 	while (42)
@@ -119,10 +129,13 @@ int	ft_heredoc(t_command *cmd, char *line)
 
 int	ft_redir(t_command *cmd, char *line)
 {
-	int i = 0;
+	int	i;
+
+	if (!cmd)
+		return (0);
+	i = 0;
 	while (line[i])
 	{
-		// printf("redir: %c %d\n", line[i], i);
 		if (ft_strncmp(line + i, ">>", 2) == 0)
 			i += ft_outfile2(cmd, line + i);
 		else if (line[i] == '>')
@@ -138,7 +151,6 @@ int	ft_redir(t_command *cmd, char *line)
 			i++;
 			cmd = cmd->next;
 		}
-		// i++;
 	}
 	return (1);
 }

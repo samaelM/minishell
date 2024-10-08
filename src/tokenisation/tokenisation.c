@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/08 18:15:12 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:43:20 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,17 @@ int	ft_envname_len(char *str)
 }
 
 //	calcule la taille de la var finale
-int	ft_env_len_bis(char *str, int in_quote)
+int	ft_env_len_bis(char *str)
 {
 	int		i;
 	char	*env_var;
 
-	(void)in_quote;
 	if ((!ft_isalnum(*str)) || (!str[0]))
 		return (1);
 	i = ft_envname_len(str);
 	// env_var = NULL;
 	env_var = malloc(sizeof(char) * (i + 1));
-	if (!env_var)
+	if (!env_var) // protection
 		return (0);
 	ft_sstrlcpy(env_var, str, i + 1);
 	i = ft_strlen(getenv(env_var));
@@ -90,26 +89,27 @@ int	ft_env_len_bis(char *str, int in_quote)
 	return (i);
 }
 
-char	*ft_env_var(char *str, int in_quote)
+char	*ft_env_var(char *str)
 {
 	int		i;
 	char	*env_var;
 	char	*content;
 
-	(void)in_quote;
 	if ((!ft_isalnum(*str)) || (!str[0]))
 		return ("$");
 	i = 0;
 	i = ft_envname_len(str);
 	env_var = malloc(sizeof(char) * (i + 1));
 	// env_var = NULL;
-	if (!env_var)
+	if (!env_var) // protection
 		return (NULL);
 	ft_sstrlcpy(env_var, str, i + 1);
 	content = getenv(env_var);
 	free(env_var);
 	return (content);
 }
+
+// int ft_envvarcpy(char* dest)
 
 int	ft_size_token(char *str)
 {
@@ -131,7 +131,7 @@ int	ft_size_token(char *str)
 				{
 					if (str[i] == '$')
 					{
-						j += ft_env_len_bis(str + i + 1, 1);
+						j += ft_env_len_bis(str + i + 1);
 						i += ft_envname_len(str + i + 1);
 					}
 					else
@@ -148,7 +148,7 @@ int	ft_size_token(char *str)
 		{
 			if (str[i] == '$')
 			{
-				j += ft_env_len_bis(str + i + 1, 0);
+				j += ft_env_len_bis(str + i + 1);
 				i += ft_envname_len(str + i + 1);
 			}
 			else
@@ -181,9 +181,9 @@ int	ft_get_arg(char *dest, char *str)
 				{
 					if (str[i] == '$')
 					{
-						ft_sstrlcpy(dest + j, ft_env_var(str + i + 1, 1),
-							ft_env_len_bis(str + i + 1, 1) + 1);
-						j += ft_env_len_bis(str + i + 1, 1);
+						ft_sstrlcpy(dest + j, ft_env_var(str + i + 1),
+							ft_env_len_bis(str + i + 1) + 1);
+						j += ft_env_len_bis(str + i + 1);
 						i += ft_envname_len(str + i + 1);
 					}
 					else
@@ -207,9 +207,9 @@ int	ft_get_arg(char *dest, char *str)
 		{
 			if (str[i] == '$')
 			{
-				ft_sstrlcpy(dest + j, ft_env_var(str + i + 1, 0),
-					ft_env_len_bis(str + i + 1, 0) + 1);
-				j += ft_env_len_bis(str + i + 1, 0);
+				ft_sstrlcpy(dest + j, ft_env_var(str + i + 1),
+					ft_env_len_bis(str + i + 1) + 1);
+				j += ft_env_len_bis(str + i + 1);
 				i += ft_envname_len(str + i + 1);
 			}
 			else
@@ -260,8 +260,9 @@ int	ft_set_args(char **args, char **cmd, int *j, int size)
 	i = 0;
 	while (i < size)
 	{
-		printf("size=%d\n", ft_size_token(*cmd));
 		args[i] = ft_calloc((ft_size_token(*cmd) + 1), sizeof(char));
+		if (!args[i])
+			return (0);
 		*j = ft_get_arg(args[i], *cmd);
 		*cmd = *cmd + *j;
 		i++;
@@ -279,12 +280,17 @@ t_command	*ft_token(char *cmd)
 
 	j = 0;
 	command = ft_calloc(1, sizeof(t_command));
+	if (!command)
+		return (NULL);
 	tmp = command;
 	while (*cmd)
 	{
 		size = ft_counttoken(cmd);
 		tmp->args = ft_calloc((size + 1), sizeof(char *));
-		ft_set_args(tmp->args, &cmd, &j, size);
+		if (!tmp->args)
+			return (free(command), NULL);
+		if (!ft_set_args(tmp->args, &cmd, &j, size))
+			return (ft_free_cmd(command), NULL);
 		while (*cmd && is_in_set(*cmd, " 	"))
 			cmd++;
 		if (*cmd && is_in_set(*cmd, "<>"))
@@ -294,6 +300,8 @@ t_command	*ft_token(char *cmd)
 		if (*cmd)
 		{
 			tmp->next = ft_calloc(1, sizeof(t_command));
+			if (!tmp->next)
+				return (ft_free_cmd(command), NULL);
 			tmp = tmp->next;
 		}
 	}

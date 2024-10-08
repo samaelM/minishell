@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:43:39 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/02 16:14:51 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:02:17 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	ft_check_pipes_bis(char *str)
 	while (is_in_set(str[i], " 	"))
 		i++;
 	if (!str[i] || str[i] == '|')
-		return (ft_error_token(ft_strdup("|")));
+		return (ft_error_token("|"));
 	i++;
 	return (i);
 }
@@ -137,7 +137,7 @@ int	ft_check_redir_bis(char *str)
 	while (str[i] && is_in_set(str[i], " 	"))
 		i++;
 	if (!str[i])
-		return (ft_error_token(ft_strdup("newline")));
+		return (ft_error_token("newline"));
 	if (is_in_set(str[i], "><|"))
 		return (ft_error_token(ft_get_token(str + i)));
 	// }
@@ -153,7 +153,7 @@ int	ft_check_line_bis(char *str)
 	while (str[i] && is_in_set(str[i], " 	"))
 		i++;
 	if (str[i] == '|')
-		return (ft_error_token(ft_strdup("|")), 0); // error
+		return (ft_error_token("|"), 0); // error
 	while (str[i])
 	{
 		j = 0;

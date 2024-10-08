@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/08 18:07:04 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/08 19:12:53 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	ft_free_cmd(t_command *cmd)
 			free(cmd->args[i]);
 			i++;
 		}
+		if (cmd->args)
+			free(cmd->args);
 		tmp = cmd;
 		cmd = cmd->next;
 		free(tmp);
@@ -99,7 +101,5 @@ int	is_in_set(char c, char *set)
 int	ft_error_token(char *str)
 {
 	printf("syntax error near unexpected token `%s'\n", str);
-	if (str)
-		free(str);
 	return (-1);
 }
