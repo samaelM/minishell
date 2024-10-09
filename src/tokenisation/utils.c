@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/08 19:12:53 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/09 15:56:26 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,9 @@ int	ft_error_token(char *str)
 {
 	printf("syntax error near unexpected token `%s'\n", str);
 	return (-1);
+}
+
+void perr(char *str)
+{
+	printf("%s\n", str);
 }

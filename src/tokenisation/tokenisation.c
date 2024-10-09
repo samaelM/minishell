@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/08 19:43:20 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/09 17:47:28 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	ft_env_len_bis(char *str)
 	// env_var = NULL;
 	env_var = malloc(sizeof(char) * (i + 1));
 	if (!env_var) // protection
-		return (0);
+		return (perr(ERR_ALLOC), -1);
 	ft_sstrlcpy(env_var, str, i + 1);
 	i = ft_strlen(getenv(env_var));
 	free(env_var);
@@ -102,7 +102,7 @@ char	*ft_env_var(char *str)
 	env_var = malloc(sizeof(char) * (i + 1));
 	// env_var = NULL;
 	if (!env_var) // protection
-		return (NULL);
+		return (perr(ERR_ALLOC), NULL);
 	ft_sstrlcpy(env_var, str, i + 1);
 	content = getenv(env_var);
 	free(env_var);
@@ -262,7 +262,7 @@ int	ft_set_args(char **args, char **cmd, int *j, int size)
 	{
 		args[i] = ft_calloc((ft_size_token(*cmd) + 1), sizeof(char));
 		if (!args[i])
-			return (0);
+			return (perr(ERR_ALLOC), 0);
 		*j = ft_get_arg(args[i], *cmd);
 		*cmd = *cmd + *j;
 		i++;
@@ -288,7 +288,7 @@ t_command	*ft_token(char *cmd)
 		size = ft_counttoken(cmd);
 		tmp->args = ft_calloc((size + 1), sizeof(char *));
 		if (!tmp->args)
-			return (free(command), NULL);
+			return (perr(ERR_ALLOC), free(command), NULL);
 		if (!ft_set_args(tmp->args, &cmd, &j, size))
 			return (ft_free_cmd(command), NULL);
 		while (*cmd && is_in_set(*cmd, " 	"))
@@ -300,8 +300,9 @@ t_command	*ft_token(char *cmd)
 		if (*cmd)
 		{
 			tmp->next = ft_calloc(1, sizeof(t_command));
+			// tmp->next = NULL;
 			if (!tmp->next)
-				return (ft_free_cmd(command), NULL);
+				return (perr(ERR_ALLOC), ft_free_cmd(command), NULL);
 			tmp = tmp->next;
 		}
 	}
@@ -322,7 +323,8 @@ int	main(int ac, char **av, char **envp)
 	while (42)
 	{
 		line = readline("\033[1;95mpoivre-et-Shell> \033[0m");
-		add_history(line);
+		if (*line)
+			add_history(line);
 		if (line && ft_check_line_bis(line))
 		{
 			cmd = ft_token(line);
