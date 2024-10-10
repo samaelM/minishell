@@ -6,333 +6,148 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/09 17:47:28 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:22:24 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_skipquotes(char *str, char q)
+void	ft_get_size_qtoken(char *str, int *idx, int *size)
 {
-	int	i;
-
-	i = 0;
-	if (str[i] && str[i] == q)
+	while (str[*idx] && is_in_set(str[*idx], "\"'"))
 	{
-		i++;
-		while (str[i] && str[i] != q)
-			i++;
-		i++;
-	}
-	return (i);
-}
-
-int	ft_redir_len(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && is_in_set(str[i], "<>"))
-	{
-		while (str[i] && is_in_set(str[i], "<>"))
-			i++;
-		while (str[i] && is_in_set(str[i], " 	"))
-			i++;
-		if (str[i] && str[i] == '"')
+		if (str[*idx] && str[*idx] == '"')
 		{
-			i++;
-			while (str[i] && str[i] != '"')
-				i++;
-			i++;
+			(*idx)++;
+			while (str[*idx] && str[*idx] != '"')
+			{
+				if (str[*idx] == '$')
+				{
+					*size += ft_env_len_bis(str + (*idx) + 1);
+					*idx += ft_envname_len(str + (*idx) + 1);
+				}
+				else
+					(*size)++;
+				(*idx)++;
+			}
+			(*idx)++;
 		}
-		if (str[i] && str[i] == '\'')
-		{
-			i++;
-			while (str[i] && str[i] != '\'')
-				i++;
-			i++;
-		}
-		while (str[i] && !is_in_set(str[i], " 	|<>\"'"))
-			i++;
-		while (str[i] && is_in_set(str[i], " 	"))
-			i++;
+		if (str[*idx] && str[*idx] == '\'')
+			*size += ft_skipquotes(str + (*idx), '\'') - 2;
+		*idx += ft_skipquotes(str + (*idx), '\'');
 	}
-	return (i);
 }
-
-int	ft_envname_len(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && ft_isalnum(str[i]))
-		i++;
-	return (i);
-}
-
-//	calcule la taille de la var finale
-int	ft_env_len_bis(char *str)
-{
-	int		i;
-	char	*env_var;
-
-	if ((!ft_isalnum(*str)) || (!str[0]))
-		return (1);
-	i = ft_envname_len(str);
-	// env_var = NULL;
-	env_var = malloc(sizeof(char) * (i + 1));
-	if (!env_var) // protection
-		return (perr(ERR_ALLOC), -1);
-	ft_sstrlcpy(env_var, str, i + 1);
-	i = ft_strlen(getenv(env_var));
-	free(env_var);
-	return (i);
-}
-
-char	*ft_env_var(char *str)
-{
-	int		i;
-	char	*env_var;
-	char	*content;
-
-	if ((!ft_isalnum(*str)) || (!str[0]))
-		return ("$");
-	i = 0;
-	i = ft_envname_len(str);
-	env_var = malloc(sizeof(char) * (i + 1));
-	// env_var = NULL;
-	if (!env_var) // protection
-		return (perr(ERR_ALLOC), NULL);
-	ft_sstrlcpy(env_var, str, i + 1);
-	content = getenv(env_var);
-	free(env_var);
-	return (content);
-}
-
-// int ft_envvarcpy(char* dest)
 
 int	ft_size_token(char *str)
 {
-	int	i;
-	int	j;
+	int	idx;
+	int	size;
 
-	j = 0;
-	i = 0;
-	while (str[i] && is_in_set(str[i], " 	"))
-		i++;
-	while (str[i] && !is_in_set(str[i], " 	|<>"))
+	size = 0;
+	idx = 0;
+	while (str[idx] && is_in_set(str[idx], " 	"))
+		idx++;
+	while (str[idx] && !is_in_set(str[idx], " 	|<>"))
 	{
-		while (str[i] && is_in_set(str[i], "\"'"))
+		ft_get_size_qtoken(str, &idx, &size);
+		while (str[idx] && !is_in_set(str[idx], "\"' 	|<>"))
 		{
-			if (str[i] && str[i] == '"')
+			if (str[idx] == '$')
 			{
-				i++;
-				while (str[i] && str[i] != '"')
-				{
-					if (str[i] == '$')
-					{
-						j += ft_env_len_bis(str + i + 1);
-						i += ft_envname_len(str + i + 1);
-					}
-					else
-						j++;
-					i++;
-				}
-				i++;
-			}
-			if (str[i] && str[i] == '\'')
-				j += ft_skipquotes(str + i, '\'') - 2;
-			i += ft_skipquotes(str + i, '\'');
-		}
-		while (str[i] && !is_in_set(str[i], "\"' 	|<>"))
-		{
-			if (str[i] == '$')
-			{
-				j += ft_env_len_bis(str + i + 1);
-				i += ft_envname_len(str + i + 1);
+				size += ft_env_len_bis(str + idx + 1);
+				idx += ft_envname_len(str + idx + 1);
 			}
 			else
-				j++;
-			i++;
+				size++;
+			idx++;
 		}
-		while (str[i] && is_in_set(str[i], "<>"))
-			i += ft_redir_len(str + i);
+		while (str[idx] && is_in_set(str[idx], "<>"))
+			idx += ft_redir_len(str + idx);
 	}
-	return (j);
-}
-
-int	ft_get_arg(char *dest, char *str)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	i = 0;
-	while (str[i] && is_in_set(str[i], " 	"))
-		i++;
-	while (str[i] && !is_in_set(str[i], " 	|"))
-	{
-		while (str[i] && is_in_set(str[i], "\"'"))
-		{
-			if (str[i] && str[i] == '"')
-			{
-				i++;
-				while (str[i] && str[i] != '"')
-				{
-					if (str[i] == '$')
-					{
-						ft_sstrlcpy(dest + j, ft_env_var(str + i + 1),
-							ft_env_len_bis(str + i + 1) + 1);
-						j += ft_env_len_bis(str + i + 1);
-						i += ft_envname_len(str + i + 1);
-					}
-					else
-						dest[j++] = str[i];
-					i++;
-				}
-				i++;
-			}
-			if (str[i] && str[i] == '\'')
-			{
-				i++;
-				while (str[i] && str[i] != '\'')
-				{
-					dest[j++] = str[i];
-					i++;
-				}
-				i++;
-			}
-		}
-		while (str[i] && !is_in_set(str[i], "\"' 	|<>"))
-		{
-			if (str[i] == '$')
-			{
-				ft_sstrlcpy(dest + j, ft_env_var(str + i + 1),
-					ft_env_len_bis(str + i + 1) + 1);
-				j += ft_env_len_bis(str + i + 1);
-				i += ft_envname_len(str + i + 1);
-			}
-			else
-				dest[j++] = str[i];
-			i++;
-		}
-		while (str[i] && is_in_set(str[i], "<>"))
-			i += ft_redir_len(str + i);
-	}
-	dest[j] = 0;
-	return (i);
+	return (size);
 }
 
 int	ft_counttoken(char *str)
 {
-	int	i;
+	int	idx;
 	int	nb_t;
 
-	i = 0;
+	idx = 0;
 	nb_t = 0;
-	while (str[i])
+	while (str[idx])
 	{
-		while (str[i] && is_in_set(str[i], " 	"))
-			i++;
-		if (is_in_set(str[i], "<>"))
-			i += ft_redir_len(str + i);
-		if (str[i] == '|')
+		while (str[idx] && is_in_set(str[idx], " 	"))
+			idx++;
+		if (is_in_set(str[idx], "<>"))
+			idx += ft_redir_len(str + idx);
+		if (str[idx] == '|')
 			return (nb_t);
-		if (str[i])
+		if (str[idx])
 			nb_t++;
-		while (str[i] && !is_in_set(str[i], " 	"))
+		while (str[idx] && !is_in_set(str[idx], " 	"))
 		{
-			i += ft_skipquotes(str + i, '"');
-			i += ft_skipquotes(str + i, '\'');
-			if (str[i] && str[i] == '|')
+			idx += ft_skipquotes(str + idx, '"');
+			idx += ft_skipquotes(str + idx, '\'');
+			if (str[idx] && str[idx] == '|')
 				return (nb_t);
-			while (str[i] && !is_in_set(str[i], "\"' 	|"))
-				i++;
+			while (str[idx] && !is_in_set(str[idx], "\"' 	|"))
+				idx++;
 		}
 	}
 	return (nb_t);
 }
 
-int	ft_set_args(char **args, char **cmd, int *j, int size)
+int	ft_set_args(char **args, char **cmd, int *pos, int size)
 {
-	int	i;
+	int	idx;
 
-	i = 0;
-	while (i < size)
+	idx = 0;
+	while (idx < size)
 	{
-		args[i] = ft_calloc((ft_size_token(*cmd) + 1), sizeof(char));
-		if (!args[i])
+		args[idx] = ft_calloc((ft_size_token(*cmd) + 1), sizeof(char));
+		if (!args[idx])
 			return (perr(ERR_ALLOC), 0);
-		*j = ft_get_arg(args[i], *cmd);
-		*cmd = *cmd + *j;
-		i++;
+		*pos = ft_get_arg(args[idx], *cmd);
+		*cmd = *cmd + *pos;
+		idx++;
 	}
-	args[i] = 0;
+	args[idx] = 0;
 	return (1);
 }
 
-t_command	*ft_token(char *cmd)
+t_command	*ft_token(char *line)
 {
-	t_command	*command;
+	t_command	*cmd;
 	t_command	*tmp;
-	int			j;
+	int			pos;
 	int			size;
 
-	j = 0;
-	command = ft_calloc(1, sizeof(t_command));
-	if (!command)
+	pos = 0;
+	cmd = ft_calloc(1, sizeof(t_command));
+	if (!cmd)
 		return (NULL);
-	tmp = command;
-	while (*cmd)
+	tmp = cmd;
+	while (*line)
 	{
-		size = ft_counttoken(cmd);
+		size = ft_counttoken(line);
 		tmp->args = ft_calloc((size + 1), sizeof(char *));
 		if (!tmp->args)
-			return (perr(ERR_ALLOC), free(command), NULL);
-		if (!ft_set_args(tmp->args, &cmd, &j, size))
-			return (ft_free_cmd(command), NULL);
-		while (*cmd && is_in_set(*cmd, " 	"))
-			cmd++;
-		if (*cmd && is_in_set(*cmd, "<>"))
-			cmd += ft_redir_len(cmd);
-		if (*cmd && *cmd == '|')
-			cmd++;
-		if (*cmd)
+			return (perr(ERR_ALLOC), free(cmd), NULL);
+		if (!ft_set_args(tmp->args, &line, &pos, size))
+			return (ft_free_cmd(cmd), NULL);
+		while (*line && is_in_set(*line, " 	"))
+			line++;
+		if (*line && is_in_set(*line, "<>"))
+			line += ft_redir_len(line);
+		if (*line && *line == '|')
+			line++;
+		if (*line)
 		{
 			tmp->next = ft_calloc(1, sizeof(t_command));
-			// tmp->next = NULL;
 			if (!tmp->next)
-				return (perr(ERR_ALLOC), ft_free_cmd(command), NULL);
+				return (perr(ERR_ALLOC), ft_free_cmd(cmd), NULL);
 			tmp = tmp->next;
 		}
 	}
-	return (command);
-}
-
-int	main(int ac, char **av, char **envp)
-{
-	char		*line;
-	t_command	*cmd;
-
-	line = NULL;
-	(void)ac;
-	(void)av;
-	(void)envp;
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, sigquit_handler);
-	while (42)
-	{
-		line = readline("\033[1;95mpoivre-et-Shell> \033[0m");
-		if (*line)
-			add_history(line);
-		if (line && ft_check_line_bis(line))
-		{
-			cmd = ft_token(line);
-			ft_redir(cmd, line);
-			ft_printcmd(cmd);
-			ft_free_cmd(cmd);
-		}
-		free(line);
-	}
-	rl_clear_history();
+	return (cmd);
 }

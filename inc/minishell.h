@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/09 16:23:03 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:24:31 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,15 @@ a malloc failure"
 ///				STRUCTURES				///
 ///////////////////////////////////////////
 
-// typedef enum s_symbole
-// {
-// NONE,
-// PIPE,
-// }						t_symb;
-
 typedef struct s_command
 {
-	int infile;     // fichier d'entree (par defaut stdin)
-	char *cmdpath;  // path absolue de la commande (/bin/ls)
-	char *cmd;      // juste la commande (ls, cat, wc etc)
-	int is_pipe;    //
-	int is_heredoc; //
-	char **args;    // les argument de la commande (-R, -rf etc)
-	int outfile;    // fichier de sortie (par defaut stdout)
+	int					infile;
+	char				*cmdpath;
+	char				*cmd;
+	int					is_pipe;
+	int					is_heredoc;
+	char				**args;
+	int					outfile;
 	struct s_command	*next;
 }						t_command;
 
@@ -92,14 +86,22 @@ int						ft_pipex(void);
 t_command				*ft_token(char *command);
 void					ft_free_cmd(t_command *cmd);
 void					ft_printcmd(t_command *cmd);
-int						ft_check_pipes(char *str);
-int						ft_check_redir(char *str);
 int						ft_check_line(char *str);
-int						ft_check_line_bis(char *str);
-int						ft_error_token(char *str);
 int						ft_size_token(char *str);
 int						ft_get_arg(char *dest, char *str);
 int						ft_redir(t_command *cmd, char *line);
+int						ft_envname_len(char *str);
+int						ft_env_len_bis(char *str);
+char					*ft_env_var(char *str);
+int						ft_skipquotes(char *str, char quote);
+int						ft_redir_len(char *str);
+
+///				REDIRECTION				///
+
+int						ft_heredoc(t_command *cmd, char *line);
+int						ft_infile(t_command *cmd, char *line);
+int						ft_outfile(t_command *cmd, char *line);
+int						ft_outfile2(t_command *cmd, char *line);
 
 ///				BUILT-INS				///
 

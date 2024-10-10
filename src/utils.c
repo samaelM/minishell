@@ -6,11 +6,11 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/09 15:56:26 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:28:02 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../inc/minishell.h"
 
 /*				cmd manipulation				*/
 void	ft_free_cmd(t_command *cmd)
@@ -54,7 +54,6 @@ void	ft_printcmd(t_command *cmd)
 		while (cmd->args && cmd->args[i])
 		{
 			printf("arg[%d]:>%s<\n", i, cmd->args[i]);
-			// free(cmd->args[i]);
 			i++;
 		}
 		printf("outfile fd=%d\n", cmd->outfile);
@@ -62,7 +61,6 @@ void	ft_printcmd(t_command *cmd)
 	}
 	printf("-----\n");
 }
-/*												*/
 
 size_t	ft_sstrlcpy(char *dst, const char *src, size_t dstsize)
 {
@@ -98,13 +96,7 @@ int	is_in_set(char c, char *set)
 	return (0);
 }
 
-int	ft_error_token(char *str)
-{
-	printf("syntax error near unexpected token `%s'\n", str);
-	return (-1);
-}
-
-void perr(char *str)
+void	perr(char *str)
 {
 	printf("%s\n", str);
 }

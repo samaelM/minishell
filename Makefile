@@ -21,8 +21,10 @@ B_SRC		=	cd.c \
 ######	Token		#####
 T_DIR		=	tokenisation
 T_SRC		=	tokenisation.c \
-				utils.c \
-				checks.c \
+				t_env.c \
+				t_utils.c \
+				t_checks.c \
+				ft_get_arg.c \
 
 ######	signals		#####
 S_DIR		=	signals
@@ -31,6 +33,7 @@ S_SRC		=	signals_handlers.c \
 ######	redirection	#####
 R_DIR		=	redirections
 R_SRC		=	pipex.c \
+				redir.c \
 				infile.c \
 				outfile.c \
 				here_doc.c \
@@ -42,6 +45,7 @@ E_SRC		=	exec.c \
 ######	All sources	#####
 SRC_DIR		=	src
 SRC			=	main.c \
+				utils.c \
 				ft_watermark.c \
 				${addprefix ${B_DIR}/,${B_SRC}} \
 				${addprefix ${T_DIR}/,${T_SRC}} \

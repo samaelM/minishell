@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/27 16:43:11 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/10 16:10:45 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,10 @@ char	*ft_get_cmd_path(char **paths, char *cmd)
 
 int	ft_exec_cmd(int fd, char **args, char **envp, char **path)
 {
-	// char	**args;
 	char	*cmd;
 
 	if (fd != 1)
 		return (1);
-	// args = ft_split(arg, ' ');
 	if (args)
 	{
 		cmd = ft_get_cmd_path(path, args[0]);
@@ -127,3 +125,31 @@ int	ft_exec_cmd(int fd, char **args, char **envp, char **path)
 // 	}
 // 	return (0);
 // }
+
+int	main(int ac, char **av, char **envp)
+{
+	char		*line;
+	t_command	*cmd;
+
+	line = NULL;
+	(void)ac;
+	(void)av;
+	(void)envp;
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
+	while (42)
+	{
+		line = readline("\033[1;95mpoivre-et-Shell> \033[0m");
+		if (*line)
+			add_history(line);
+		if (line && ft_check_line(line))
+		{
+			cmd = ft_token(line);
+			ft_redir(cmd, line);
+			ft_printcmd(cmd);
+			ft_free_cmd(cmd);
+		}
+		free(line);
+	}
+	rl_clear_history();
+}
