@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/08 20:25:55 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/10 18:59:46 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,10 +312,12 @@ int	main(int argc, char **argv, char **envp)
 	global.env = create_our_env(envp);
 	global.exit_value = 0;
 	signal(SIGINT, sigint_handler);
-	//signal(SIGQUIT, sigquit_handler);
+	signal(SIGQUIT, sigquit_handler);
 	while (42)
 	{
 		line = readline("\033[1;95mPoivre-et-Shell> \033[0m");
+		if(line == NULL)
+			signal_ctrD(&global);
 		add_history(line);
 		if (line && ft_check_line_bis(line))
 		{
@@ -331,3 +333,6 @@ int	main(int argc, char **argv, char **envp)
 		free(line);
 	}
 }
+
+
+// not found 127

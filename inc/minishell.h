@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/08 20:26:43 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/10 18:31:13 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ void change_env_(t_global *glob);
 ///				SIGNALS					///
 void					sigint_handler(int sig_num);
 void					sigquit_handler(int sig_num);
+void	signal_ctrD(t_global *g);
 
 ///				OTHER					///
 void					ft_watermark(void);

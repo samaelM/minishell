@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:47:56 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/09 14:48:01 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/10 19:07:37 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,17 @@ void	sigquit_handler(int signum)
 	signal(SIGQUIT, sigquit_handler);
 	(void)signum;
 	exit(0);
+}
+
+void	signal_ctrD(t_global *g)
+{
+	printf("exit\n");
+	int i = 0;
+	while(g->env[i])
+	{
+		free(g->env[i]);
+		i++;
+	}
+	free(g->env);
+	exit(g->exit_value);
 }
