@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/10 16:24:31 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/11 12:53:49 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_command
 typedef struct s_global
 {
 	t_command			*command;
-	t_list				*env_list;
+	char				**env;
 	int					exit_value;
 }						t_global;
 

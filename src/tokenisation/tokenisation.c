@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/10 16:22:24 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/10 17:21:35 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,39 +115,53 @@ int	ft_set_args(char **args, char **cmd, int *pos, int size)
 	return (1);
 }
 
+int	ft_fillcmd(t_command *cmd, char **line, int *pos)
+{
+	int	size;
+
+	size = ft_counttoken(*line);
+	cmd->args = ft_calloc((size + 1), sizeof(char *));
+	if (!cmd->args)
+		return (0);
+	if (!ft_set_args(cmd->args, line, pos, size))
+		return (0);
+	while (**line && is_in_set(**line, " 	"))
+		(*line)++;
+	if (**line && is_in_set(**line, "<>"))
+		*line += ft_redir_len(*line);
+	if (**line && **line == '|')
+		(*line)++;
+	if (**line)
+	{
+		cmd->next = ft_calloc(1, sizeof(t_command));
+		if (!cmd->next)
+			return (0);
+	}
+	return (1);
+}
+
 t_command	*ft_token(char *line)
 {
 	t_command	*cmd;
 	t_command	*tmp;
 	int			pos;
-	int			size;
 
-	pos = 0;
 	cmd = ft_calloc(1, sizeof(t_command));
 	if (!cmd)
 		return (NULL);
 	tmp = cmd;
+	pos = 0;
 	while (*line)
 	{
-		size = ft_counttoken(line);
-		tmp->args = ft_calloc((size + 1), sizeof(char *));
-		if (!tmp->args)
-			return (perr(ERR_ALLOC), free(cmd), NULL);
-		if (!ft_set_args(tmp->args, &line, &pos, size))
-			return (ft_free_cmd(cmd), NULL);
-		while (*line && is_in_set(*line, " 	"))
-			line++;
-		if (*line && is_in_set(*line, "<>"))
-			line += ft_redir_len(line);
-		if (*line && *line == '|')
-			line++;
-		if (*line)
-		{
-			tmp->next = ft_calloc(1, sizeof(t_command));
-			if (!tmp->next)
-				return (perr(ERR_ALLOC), ft_free_cmd(cmd), NULL);
+		if (!ft_fillcmd(tmp, &line, &pos))
+			return (perr(ERR_ALLOC), ft_free_cmd(cmd), NULL);
+		if (tmp->next)
 			tmp = tmp->next;
-		}
 	}
 	return (cmd);
 }
+
+// sans compter readline
+// mc = 1
+// cm = n + 2
+// pc = n + 2 + 2p + 2e + r + M
