@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:47:56 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 16:09:39 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:34:43 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	sigint_handler(int signum)
 
 void	sigquit_handler(int signum)
 {
-	printf("\n\b\b\b\b");
+	// printf("\n\b\b\b\b");
 	rl_on_new_line();
 	if (wait(NULL) == -1)
 		rl_redisplay();

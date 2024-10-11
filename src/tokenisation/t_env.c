@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:09:11 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 20:08:00 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:40:47 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,10 @@ int	ft_env_len_bis(t_global *global, char *str)
 			return (perr(ERR_ALLOC), -1);
 		len = ft_strlen(exit_status);
 		free(exit_status);
-		printf("trucbis=%d\n", len+1);
-		return (len + 1);
+		return (len+1);
 	}
 	if ((!ft_isalnum(*str)) || (!str[0]))
 		return (1);
-	printf("pb\n");
 	len = ft_envname_len(str);
 	env_var = malloc(sizeof(char) * (len + 1));
 	if (!env_var)
