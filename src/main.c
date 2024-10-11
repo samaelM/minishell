@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 15:59:15 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/11 19:53:08 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,11 +139,11 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	line = NULL;
 	global.env = create_our_env(envp);
+		global.exit_value = 102;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
 	while (42)
 	{
-		global.exit_value = 0;
 		g_sig = 0;
 		line = readline("\033[1;95mpoivre-et-Shell> \033[0m");
 		if (line == NULL)
@@ -153,9 +153,9 @@ int	main(int ac, char **av, char **envp)
 		if (line && ft_check_line(line))
 		{
 			cmd = ft_token(line, &global);
-			ft_redir(cmd, line);
+			ft_redir(&global, line);
 			// ft_printcmd(cmd);
-			global.command = cmd;
+			// global.command = cmd;
 			if (cmd->args)
 				global.command->cmd = cmd->args[0];
 			ft_exec(&global);

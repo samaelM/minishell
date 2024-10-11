@@ -6,23 +6,36 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:19:14 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/10 16:26:40 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:03:14 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	ft_tokencpy(char *dest, char *src, int *pos)
+static int	ft_tokencpy(t_global *global, char *dest, char *src, int *pos)
 {
-	int	idx;
+	int		idx;
+	char	*exit_stat;
 
 	idx = 0;
 	if (src[idx] == '$')
 	{
-		ft_sstrlcpy(dest + (*pos), ft_env_var(src + idx + 1), ft_env_len_bis(src
-				+ idx + 1) + 1);
-		(*pos) += ft_env_len_bis(src + idx + 1);
-		idx += ft_envname_len(src + idx + 1);
+		if (src[idx + 1] == '?')
+		{
+			exit_stat = ft_itoa(global->exit_value);
+			ft_sstrlcpy(dest + (*pos), exit_stat, ft_strlen(exit_stat) + 1);
+			(*pos) += ft_strlen(exit_stat) + 1;
+			free(exit_stat);
+			idx++;
+		}
+		else
+		{
+			printf("pb\n");
+			ft_sstrlcpy(dest + (*pos), ft_env_var(global, src + idx + 1),
+				ft_env_len_bis(global, src + idx + 1) + 1);
+			(*pos) += ft_env_len_bis(global, src + idx + 1);
+			idx += ft_envname_len(src + idx + 1);
+		}
 	}
 	else
 		dest[(*pos)++] = src[idx];
@@ -30,7 +43,7 @@ static int	ft_tokencpy(char *dest, char *src, int *pos)
 	return (idx);
 }
 
-int	ft_get_arg(char *dest, char *str)
+int	ft_get_arg(t_global *global, char *dest, char *str)
 {
 	int	idx;
 	int	pos;
@@ -45,7 +58,7 @@ int	ft_get_arg(char *dest, char *str)
 		{
 			idx++;
 			while (str[idx] && str[idx] != '"')
-				idx += ft_tokencpy(dest, str + idx, &pos);
+				idx += ft_tokencpy(global, dest, str + idx, &pos);
 			idx++;
 		}
 		if (str[idx] && str[idx] == '\'')
@@ -56,7 +69,7 @@ int	ft_get_arg(char *dest, char *str)
 			idx++;
 		}
 		while (str[idx] && !is_in_set(str[idx], "\"' 	|<>"))
-			idx += ft_tokencpy(dest, str + idx, &pos);
+			idx += ft_tokencpy(global, dest, str + idx, &pos);
 		while (str[idx] && is_in_set(str[idx], "<>"))
 			idx += ft_redir_len(str + idx);
 	}

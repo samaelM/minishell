@@ -6,13 +6,13 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 16:06:35 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:06:36 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_get_size_qtoken(char *str, int *idx, int *size)
+void	ft_get_size_qtoken(t_global *global, char *str, int *idx, int *size)
 {
 	while (str[*idx] && is_in_set(str[*idx], "\"'"))
 	{
@@ -23,7 +23,7 @@ void	ft_get_size_qtoken(char *str, int *idx, int *size)
 			{
 				if (str[*idx] == '$')
 				{
-					*size += ft_env_len_bis(str + (*idx) + 1);
+					*size += ft_env_len_bis(global, str + (*idx) + 1);
 					*idx += ft_envname_len(str + (*idx) + 1);
 				}
 				else
@@ -38,7 +38,7 @@ void	ft_get_size_qtoken(char *str, int *idx, int *size)
 	}
 }
 
-int	ft_size_token(char *str)
+int	ft_size_token(t_global *global, char *str)
 {
 	int	idx;
 	int	size;
@@ -49,12 +49,12 @@ int	ft_size_token(char *str)
 		idx++;
 	while (str[idx] && !is_in_set(str[idx], " 	|<>"))
 	{
-		ft_get_size_qtoken(str, &idx, &size);
+		ft_get_size_qtoken(global, str, &idx, &size);
 		while (str[idx] && !is_in_set(str[idx], "\"' 	|<>"))
 		{
 			if (str[idx] == '$')
 			{
-				size += ft_env_len_bis(str + idx + 1);
+				size += ft_env_len_bis(global, str + idx + 1);
 				idx += ft_envname_len(str + idx + 1);
 			}
 			else
@@ -97,17 +97,19 @@ int	ft_counttoken(char *str)
 	return (nb_t);
 }
 
-int	ft_set_args(char **args, char **cmd, int *pos, int size)
+int	ft_set_args(t_global *global, char **cmd, int *pos, int size)
 {
 	int	idx;
+	char **args = global->tmp->args;
 
 	idx = 0;
 	while (idx < size)
 	{
-		args[idx] = ft_calloc((ft_size_token(*cmd) + 1), sizeof(char));
+		printf("size=%d\n", ft_size_token(global, *cmd) + 1);
+		args[idx] = ft_calloc((ft_size_token(global, *cmd) + 1), sizeof(char));
 		if (!args[idx])
 			return (perr(ERR_ALLOC), 0);
-		*pos = ft_get_arg(args[idx], *cmd);
+		*pos = ft_get_arg(global, args[idx], *cmd);
 		*cmd = *cmd + *pos;
 		idx++;
 	}
@@ -115,15 +117,17 @@ int	ft_set_args(char **args, char **cmd, int *pos, int size)
 	return (1);
 }
 
-int	ft_fillcmd(t_command *cmd, char **line, int *pos)
+int	ft_fillcmd(t_global *global, char **line, int *pos)
 {
-	int	size;
+	int			size;
+	t_command	*cmd;
 
+	cmd = global->tmp;
 	size = ft_counttoken(*line);
 	cmd->args = ft_calloc((size + 1), sizeof(char *));
 	if (!cmd->args)
 		return (0);
-	if (!ft_set_args(cmd->args, line, pos, size))
+	if (!ft_set_args(global, line, pos, size))
 		return (0);
 	while (**line && is_in_set(**line, " 	"))
 		(*line)++;
@@ -143,21 +147,21 @@ int	ft_fillcmd(t_command *cmd, char **line, int *pos)
 t_command	*ft_token(char *line, t_global *global)
 {
 	t_command	*cmd;
-	t_command	*tmp;
 	int			pos;
-	(void)global;
 
+	// t_command	*tmp;
 	cmd = ft_calloc(1, sizeof(t_command));
 	if (!cmd)
 		return (NULL);
-	tmp = cmd;
+	global->command = cmd;
+	global->tmp = cmd;
 	pos = 0;
 	while (*line)
 	{
-		if (!ft_fillcmd(tmp, &line, &pos))
+		if (!ft_fillcmd(global, &line, &pos))
 			return (perr(ERR_ALLOC), ft_free_cmd(cmd), NULL);
-		if (tmp->next)
-			tmp = tmp->next;
+		if (global->tmp->next)
+			global->tmp = global->tmp->next;
 	}
 	return (cmd);
 }

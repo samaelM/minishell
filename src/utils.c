@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 12:59:44 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:04:08 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,17 @@ void	ft_printcmd(t_command *cmd)
 	while (cmd)
 	{
 		i = 0;
-		//printf("-----\ncmd[%d]\n", j++);
-		//printf("infile fd=%d\n", cmd->infile);
+		printf("-----\ncmd[%d]\n", j++);
+		printf("infile fd=%d\n", cmd->infile);
 		while (cmd->args && cmd->args[i])
 		{
 			printf("arg[%d]:>%s<\n", i, cmd->args[i]);
 			i++;
 		}
-	//	printf("outfile fd=%d\n", cmd->outfile);
+		printf("outfile fd=%d\n", cmd->outfile);
 		cmd = cmd->next;
 	}
-	//printf("-----\n");
+	printf("-----\n");
 }
 
 size_t	ft_sstrlcpy(char *dst, const char *src, size_t dstsize)
