@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/08 19:46:20 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:52:19 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,12 @@ int	execution(t_global *g)
 		exit(0);
 	}
 	else
+	{
 		waitpid(pid, &status, 0);
+		g->exit_value = status;
+		if (g_sig)
+			g->exit_value = 128 + g_sig;
+	}
 	return (0);
 }
 
@@ -41,7 +46,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 		return (1);
 	while ((s1[i] || s2[i]))
 	{
-		
 		if (s1[i] != s2[i])
 			return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
 		i++;

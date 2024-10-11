@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 13:01:24 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/11 15:54:11 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 
 # include "../lib/libft/libft.h"
 # include <errno.h>
-# include <linux/limits.h>
 # include <fcntl.h>
+# include <linux/limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -71,8 +71,8 @@ typedef struct s_global
 
 ///				EXECUTION				///
 
-int		ft_exec(t_global *s_global);
-void	exec_la_cmd(t_global *g);
+int						ft_exec(t_global *s_global);
+void					exec_la_cmd(t_global *g);
 
 ///				COMPARATOR				///
 
@@ -85,7 +85,7 @@ int						ft_pipex(void);
 
 ///				TOKENISATION			///
 
-t_command				*ft_token(char *command);
+t_command				*ft_token(char *command, t_global *global);
 void					ft_free_cmd(t_command *cmd);
 void					ft_printcmd(t_command *cmd);
 int						ft_check_line(char *str);
@@ -107,29 +107,30 @@ int						ft_outfile2(t_command *cmd, char *line);
 
 ///				BUILT-INS				///
 
-int	ft_cd(t_global *glo);
-int	ft_pwd(void);
-int	ft_echo(t_command *command);
-int	ft_exit(t_global *glob);
-int ft_env(t_global *glob);
-int ft_export(t_global *glo);
-int ft_unset(t_global *glob);
+int						ft_cd(t_global *glo);
+int						ft_pwd(void);
+int						ft_echo(t_command *command);
+int						ft_exit(t_global *glob);
+int						ft_env(t_global *glob);
+int						ft_export(t_global *glo);
+int						ft_unset(t_global *glob);
 
 ///				ENV						///
 
-char **create_our_env(char **envp);
-char *ft_getenv(char **env, char *var);
-int find_var_in_env(char **env, char *var);
-int change_env_var(t_global *glo, char *var, int line);
-void change_env_(t_global *glob);
+char					**create_our_env(char **envp);
+char					*ft_getenv(char **env, char *var);
+int						find_var_in_env(char **env, char *var);
+int						change_env_var(t_global *glo, char *var, int line);
+void					change_env_(t_global *glob);
 
 ///				SIGNALS					///
 void					sigint_handler(int sig_num);
 void					sigquit_handler(int sig_num);
-void	signal_ctrD(t_global *g);
+void					signal_ctrD(t_global *g);
 
 ///				OTHER					///
 void					ft_watermark(void);
+extern int						g_sig;
 
 ///				UTILS					///
 size_t					ft_sstrlcpy(char *dst, const char *src, size_t dstsize);

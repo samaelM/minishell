@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 13:01:13 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:06:35 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,11 +140,12 @@ int	ft_fillcmd(t_command *cmd, char **line, int *pos)
 	return (1);
 }
 
-t_command	*ft_token(char *line)
+t_command	*ft_token(char *line, t_global *global)
 {
 	t_command	*cmd;
 	t_command	*tmp;
 	int			pos;
+	(void)global;
 
 	cmd = ft_calloc(1, sizeof(t_command));
 	if (!cmd)
