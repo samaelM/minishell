@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:47:56 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 12:53:16 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/11 12:59:01 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	signal_ctrD(t_global *g)
 {
 	printf("exit\n");
 	int i = 0;
-	while (g->env[i])
+	while(g->env[i])
 	{
 		free(g->env[i]);
 		i++;

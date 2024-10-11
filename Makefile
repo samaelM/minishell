@@ -41,6 +41,7 @@ R_SRC		=	pipex.c \
 ######	exec		#####
 E_DIR		=	exec
 E_SRC		=	exec.c \
+				exec_one_cmd.c \
 
 ######	All sources	#####
 SRC_DIR		=	src
@@ -93,8 +94,19 @@ RLFLAGS		=	-lreadline
 
 all : $(NAME)
 
+RED = \033[0;31m
+YELLOW = \033[0;33m
+WHITE = \033[0m
+BOLD = \033[1m
+FLASH = \033[6m
+BANDE = \033[7m
+
 $(NAME): $(LIBFT) $(OBJETS)
 	cc $(OBJETS) $(LIBFT) -o $(NAME) $(CFLAGS) $(RLFLAGS)
+	@echo "${RED}${BOLD}	COMPILE"
+	@echo "  /\_/\   "
+	@echo " ( o.o )  "
+	@echo "  > ^ <   ${WHITE}"
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}

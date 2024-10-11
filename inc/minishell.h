@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 12:53:49 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:01:24 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 ///////////////////////////////////////////
 
 # include "../lib/libft/libft.h"
+# include <errno.h>
+# include <linux/limits.h>
 # include <fcntl.h>
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -69,8 +71,8 @@ typedef struct s_global
 
 ///				EXECUTION				///
 
-int						ft_exec_cmd(int fd, char **arg, char **envp,
-							char **path);
+int		ft_exec(t_global *s_global);
+void	exec_la_cmd(t_global *g);
 
 ///				COMPARATOR				///
 
@@ -105,17 +107,26 @@ int						ft_outfile2(t_command *cmd, char *line);
 
 ///				BUILT-INS				///
 
-int						ft_cd(void);
-int						ft_echo(void);
-int						ft_env(void);
-int						ft_exit(void);
-int						ft_export(void);
-int						ft_pwd(void);
-int						ft_unset(void);
+int	ft_cd(t_global *glo);
+int	ft_pwd(void);
+int	ft_echo(t_command *command);
+int	ft_exit(t_global *glob);
+int ft_env(t_global *glob);
+int ft_export(t_global *glo);
+int ft_unset(t_global *glob);
+
+///				ENV						///
+
+char **create_our_env(char **envp);
+char *ft_getenv(char **env, char *var);
+int find_var_in_env(char **env, char *var);
+int change_env_var(t_global *glo, char *var, int line);
+void change_env_(t_global *glob);
 
 ///				SIGNALS					///
 void					sigint_handler(int sig_num);
 void					sigquit_handler(int sig_num);
+void	signal_ctrD(t_global *g);
 
 ///				OTHER					///
 void					ft_watermark(void);
