@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:22:30 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/08 16:00:42 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/10 19:20:35 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,24 +53,36 @@ int	is_nb_ok(char *cmd)
 	return (nb % 256);
 }
 
+void ft_free_glob(t_global *glob)
+{
+	int i = 0;
+	while(glob->env[i])
+	{
+		free(glob->env[i]);
+		i++;
+	}
+	free(glob->env);
+	ft_free_cmd(glob->command);
+}
+
 int	ft_exit(t_global *glob)
 {
 	printf("exit\n");
 	if (nb_args(glob->command->args + 1) == 0)
 	{
-		free(glob->command);
+		ft_free_glob(glob);
 		exit(glob->exit_value);
 	}
 	if (is_nb(glob->command->args[1]))
 	{
 		printf("exit: %s: numeric argument required\n", glob->command->args[1]);
-		free(glob->command);
+		ft_free_glob(glob);
 		exit(2);
 	}
 	if (is_nb(glob->command->args[1]) == 0 && nb_args(glob->command->args
 			+ 1) == 1)
 	{
-		free(glob->command);
+		ft_free_glob(glob);
 		exit(is_nb_ok(glob->command->args[1]));
 	}
 	// if(is_nb(glob->command->args[1]) == 0 && nb_args(glob->command->args

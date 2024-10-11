@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:48:08 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/08 17:57:51 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/10 19:27:29 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char *ft_var_name(char *var)
 	int i = 0;
 	while(var[i] && var[i] != '=')
 		i++;
-	char *new_line = malloc(sizeof(char) * i + 1);
+	char *new_line = malloc(sizeof(char) * (i + 1));
 	if(!new_line)
 		return NULL;
 	i = 0;

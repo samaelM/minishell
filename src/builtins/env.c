@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 18:49:59 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/08 18:44:30 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/10 19:22:45 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char **create_our_env(char **envp)
 	}
 	while(envp[i])
 		i++;
-	env_tab = malloc(sizeof(char *) * i + 1);
+	env_tab = malloc(sizeof(char *) * (i + 1));
 	if (!env_tab)
 		return (NULL);
 	i = 0;
