@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/11 15:52:19 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:03:36 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,39 +57,39 @@ int	ft_exec(t_global *glob)
 {
 	if (glob->command->cmd)
 	{
-		change_env_(glob);
+	//	change_env_(glob);
 		if (ft_strcmp(glob->command->cmd, "exit") == 0)
 		{
-			ft_exit(glob);
+			glob->exit_value = ft_exit(glob);
 		}
 		else if (ft_strcmp(glob->command->cmd, "pwd") == 0)
 		{
-			ft_pwd();
+			glob->exit_value = ft_pwd();
 		}
 		else if (ft_strcmp(glob->command->cmd, "cd") == 0)
 		{
-			ft_cd(glob);
+			glob->exit_value = ft_cd(glob);
 		}
 		else if (ft_strcmp(glob->command->cmd, "echo") == 0)
 		{
-			ft_echo(glob->command);
+			glob->exit_value = ft_echo(glob->command);
 		}
 		else if (ft_strcmp(glob->command->cmd, "env") == 0)
 		{
-			ft_env(glob);
+			glob->exit_value = ft_env(glob);
 		}
 		else if (ft_strcmp(glob->command->cmd, "export") == 0)
 		{
-			ft_export(glob);
+			glob->exit_value = ft_export(glob);
 		}
 		else if (ft_strcmp(glob->command->cmd, "unset") == 0)
 		{
-			ft_unset(glob);
+			glob->exit_value = ft_unset(glob);
 		}
-		else
-		{
-			execution(glob);
-		}
+		// else
+		// {
+		// 	execution(glob);
+		// }
 	}
 	return (0);
 }

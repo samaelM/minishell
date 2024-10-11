@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_handlers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:47:56 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 16:09:39 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/11 17:50:11 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,10 @@ void	sigquit_handler(int signum)
 		write(STDERR_FILENO, "Quit (core dumped)\n", 20);
 	g_sig = signum;
 }
+
 void	signal_ctrD(t_global *g)
 {
 	printf("exit\n");
-	int i = 0;
-	while (g->env[i])
-	{
-		free(g->env[i]);
-		i++;
-	}
-	free(g->env);
+	ft_free_env(g);
 	exit(g->exit_value);
 }

@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 16:32:52 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/11 18:46:45 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	line = NULL;
 	global.env = create_our_env(envp);
+	if(!global.env)
+		return (1);
 	global.exit_value = 0;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);

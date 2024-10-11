@@ -6,11 +6,17 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 16:28:36 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/11 19:01:13 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	ft_free_glob(t_global *glob)
+{
+	ft_free_env(glob);
+	ft_free_cmd(glob->command);
+}
 
 /*				cmd manipulation				*/
 void	ft_free_cmd(t_command *cmd)
@@ -38,6 +44,17 @@ void	ft_free_cmd(t_command *cmd)
 		cmd = cmd->next;
 		free(tmp);
 	}
+}
+
+void	ft_free_env(t_global *g)
+{
+	int i = 0;
+	while (g->env[i])
+	{
+		free(g->env[i]);
+		i++;
+	}
+	free(g->env);
 }
 
 void	ft_printcmd(t_command *cmd)

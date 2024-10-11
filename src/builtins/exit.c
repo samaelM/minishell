@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:22:30 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/10 19:20:35 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:03:15 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,13 @@ int	is_nb(char *cmd)
 	return (0);
 }
 
-int	is_nb_ok(char *cmd)
+int	is_nb_ok(t_global *glob, char *cmd)
 {
 	int	nb;
 
 	nb = ft_atoi(cmd);
-	// printf("nb %i\n", nb);
-	return (nb % 256);
-}
-
-void ft_free_glob(t_global *glob)
-{
-	int i = 0;
-	while(glob->env[i])
-	{
-		free(glob->env[i]);
-		i++;
-	}
-	free(glob->env);
-	ft_free_cmd(glob->command);
+	ft_free_glob(glob);
+	exit (nb % 256); // tester avec 5555555555555555555
 }
 
 int	ft_exit(t_global *glob)
@@ -82,17 +70,10 @@ int	ft_exit(t_global *glob)
 	if (is_nb(glob->command->args[1]) == 0 && nb_args(glob->command->args
 			+ 1) == 1)
 	{
-		ft_free_glob(glob);
-		exit(is_nb_ok(glob->command->args[1]));
+		is_nb_ok(glob, glob->command->args[1]);
 	}
 	// if(is_nb(glob->command->args[1]) == 0 && nb_args(glob->command->args
 	//		+ 1) >= 2)
-	else
-	{
-		glob->exit_value = 1;
-		printf("exit: too many arguments\n");
-	}
-	return (0);
+	printf("exit: too many arguments\n");
+	return (1);
 }
-
-// free(cmd);
