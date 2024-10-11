@@ -6,11 +6,13 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/09/30 18:02:00 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:32:52 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int		g_sig = 0;
 
 #define MAX_CMD_LENGTH 100
 
@@ -75,55 +77,39 @@ int	ft_exec_cmd(int fd, char *arg, char **envp, char **path)
 	exit(EXIT_FAILURE); // qu'est ce que j'ai foutu????
 	return (0);
 }
+int	main(int argc, char **argv, char **envp)
+{
+	char		*line;
+	t_command	*cmd;
+	t_global	global;
 
-// int	main(int ac, char **av, char **envp)
-// {
-// 	char	*cmd;
-// 	int		status;
-// 	pid_t	pid;
-
-// 	// char	**args;
-// 	// t_command *oui;
-// 	(void)ac;
-// 	(void)av;
-// 	signal(SIGINT, sigint_handler);
-// 	signal(SIGQUIT, sigquit_handler);
-// 	ft_watermark();
-// 	while ((cmd = readline("\033[1;95mShell-et-poivre> \033[0m")) != NULL)
-// 	{
-// 		add_history(cmd);
-// 		// oui = ft_token(cmd);
-// 		// printf("%s", oui->cmd);
-// 		if (ft_strncmp(cmd, "exit", 4) == 0)
-// 		{
-// 			free(cmd); // replace with ft_exit
-// 			break ;
-// 		}
-// 		else if (ft_strncmp(cmd, "echo", 4) == 0)
-// 		{
-// 			printf("%s\n", cmd + 5); // replace with ft_echo
-// 			free(cmd);
-// 		}
-// 		else if (ft_strncmp(cmd, "cd", 2) == 0)
-// 		{
-// 			chdir(cmd + 3); // replace with ft_cd
-// 			free(cmd);
-// 		} // mettre d'autre else if pour les autre commandes builtins
-// 		else if (*cmd)
-// 		{
-// 			pid = fork();
-// 			if (pid == -1)
-// 				printf("fork");
-// 			else if (pid == 0)
-// 			{
-// 				// cmd = ft_strdup("   echo 		a");
-// 				ft_exec_cmd(1, cmd, envp, ft_split(ft_find_path(envp), ':'));
-// 				free(cmd);
-// 			}
-// 			else
-// 				waitpid(pid, &status, 0);
-// 			free(cmd);
-// 		}
-// 	}
-// 	return (0);
-// }
+	(void)argc;
+	(void)argv;
+	line = NULL;
+	global.env = create_our_env(envp);
+	global.exit_value = 0;
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, sigquit_handler);
+	while (42)
+	{
+		line = readline("\033[1;95mPoivre-et-Shell> \033[0m");
+		if(line == NULL)
+			signal_ctrD(&global);
+		if (*line)
+			add_history(line);
+		if (line && ft_check_line(line))
+		{
+			cmd = ft_token(line, &global);
+			ft_redir(cmd, line);
+			global.command = cmd;
+			if(cmd->args)
+				global.command->cmd = cmd->args[0];
+			ft_exec(&global);
+			ft_printcmd(cmd);
+			ft_free_cmd(cmd);
+		}
+		printf("\033[0;33mexit status: %d\n", global.exit_value);
+		free(line);
+	}
+	rl_clear_history();
+}

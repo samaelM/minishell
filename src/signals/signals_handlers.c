@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_handlers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:47:56 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/10 19:07:37 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/11 16:09:39 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,29 @@
 
 void	sigint_handler(int signum)
 {
-	signal(SIGINT, sigint_handler);
-	printf("\r\n");
+	printf("\n");
+	rl_replace_line("", 0);
 	rl_on_new_line();
-	// rl_replace_line("", 0);
-	rl_redisplay();
-	(void)signum;
+	if (wait(NULL) == -1)
+		rl_redisplay();
+	g_sig = signum;
 }
 
 void	sigquit_handler(int signum)
 {
-	ft_printf("\nbye bye!\n");
-	signal(SIGQUIT, sigquit_handler);
-	(void)signum;
-	exit(0);
+	printf("\n\b\b\b\b");
+	rl_on_new_line();
+	if (wait(NULL) == -1)
+		rl_redisplay();
+	else
+		write(STDERR_FILENO, "Quit (core dumped)\n", 20);
+	g_sig = signum;
 }
-
 void	signal_ctrD(t_global *g)
 {
 	printf("exit\n");
 	int i = 0;
-	while(g->env[i])
+	while (g->env[i])
 	{
 		free(g->env[i]);
 		i++;
