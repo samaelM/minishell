@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:09:11 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 20:40:47 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:05:21 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_env_len_bis(t_global *global, char *str)
 			return (perr(ERR_ALLOC), -1);
 		len = ft_strlen(exit_status);
 		free(exit_status);
-		return (len+1);
+		return (len);
 	}
 	if ((!ft_isalnum(*str)) || (!str[0]))
 		return (1);

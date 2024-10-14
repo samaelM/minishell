@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:19:14 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 20:03:14 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:04:01 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	ft_tokencpy(t_global *global, char *dest, char *src, int *pos)
 		{
 			exit_stat = ft_itoa(global->exit_value);
 			ft_sstrlcpy(dest + (*pos), exit_stat, ft_strlen(exit_stat) + 1);
-			(*pos) += ft_strlen(exit_stat) + 1;
+			(*pos) += ft_strlen(exit_stat);
 			free(exit_stat);
 			idx++;
 		}
