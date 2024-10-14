@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/14 15:20:01 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:44:33 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,12 @@ int	ft_exec_cmd(int fd, char *arg, char **envp, char **path)
 int	main(int ac, char **av, char **envp)
 {
 	char		*line;
-	t_command	*cmd;
 	t_global	global;
 
 	(void)ac;
 	(void)av;
-	line = NULL;
 	global.env = create_our_env(envp);
-	global.exit_value = 102;
+	global.exit_value = 0;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
 	while (42)
@@ -101,10 +99,11 @@ int	main(int ac, char **av, char **envp)
 			add_history(line);
 		if (line && ft_check_line(line))
 		{
-			cmd = ft_token(line, &global);
+			ft_token(line, &global);
 			ft_redir(&global, line);
+			// ft_printcmd(cmd);
 			ft_exec(&global);
-			ft_free_cmd(cmd);
+			ft_free_cmd(global.command);
 		}
 		// printf("exit status: %d\n", global.exit_value);
 		free(line);

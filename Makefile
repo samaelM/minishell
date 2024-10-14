@@ -106,10 +106,11 @@ $(NAME): $(LIBFT) $(OBJETS)
 	@echo -n "${RED}[COMPILING]${WHITE}${NAME}"
 	@cc $(OBJETS) $(LIBFT) -o $(NAME) $(CFLAGS) $(RLFLAGS)
 	@echo "\e[2K\r${GREEN}[OK]${WHITE}${NAME}"
-	@echo " ${RED}${BOLD}COMPILED!"
-	@echo "   /\_/\   "
-	@echo "  ( o.o )  "
-	@echo "   > ^ <   ${WHITE}"
+	@echo "${RED}${BOLD}     COMPILED!"
+	@echo "   /\/\    /\_/\   "
+	@echo "  ( owo)  ( o.o )  "
+	@echo "  / >*<\   > ^ <   "
+	@echo "   Maël   Anaëlle${WHITE}"
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
@@ -130,3 +131,5 @@ fclean: clean
 re: fclean all
 
 .PHONY : all clean fclean re
+
+

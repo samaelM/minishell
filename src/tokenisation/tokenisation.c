@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/14 15:19:17 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:05:05 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ t_command	*ft_token(char *line, t_global *global)
 			global->tmp = global->tmp->next;
 	}
 	if (cmd->args)
-		global->command->cmd = cmd->args[0];
+		cmd->cmd = cmd->args[0];
 	return (cmd);
 }
 

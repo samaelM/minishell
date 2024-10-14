@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:43:39 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/10 16:14:48 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:37:12 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int	ft_check_pipes(char *str)
 {
 	int	idx;
 
+	if (*str != '|')
+		return (0);
 	idx = 1;
 	while (is_in_set(str[idx], " 	"))
 		idx++;
@@ -48,6 +50,8 @@ static int	ft_check_redir(char *str)
 {
 	int	idx;
 
+	if (!*str || !is_in_set(*str, "><"))
+		return (0);
 	idx = 0;
 	if (ft_strncmp(str + idx, ">>", 2) == 0)
 		idx += 2;
@@ -67,7 +71,6 @@ static int	ft_check_redir(char *str)
 	return (idx);
 }
 
-// need protection
 int	ft_check_line(char *str)
 {
 	int	idx;
@@ -80,24 +83,18 @@ int	ft_check_line(char *str)
 		return (ft_error_token("|"), 0);
 	while (str[idx])
 	{
-		pos = 0;
-		while (str[idx] && is_in_set(str[idx], " 	"))
+		while (str[idx] && !is_in_set(str[idx], "><|\"'"))
 			idx++;
-		if (str[idx] == '"')
-			while (str[idx] && str[idx] != '"')
-				idx++;
-		if (str[idx] == '|')
-			pos = ft_check_pipes(str + idx);
+		idx += ft_skipquotes(str + idx, '"');
+		idx += ft_skipquotes(str + idx, '\'');
+		pos = ft_check_pipes(str + idx);
 		if (pos == -1)
 			return (0);
 		idx += pos;
-		pos = 0;
-		if (is_in_set(str[idx], "><"))
-			pos = ft_check_redir(str + idx);
+		pos = ft_check_redir(str + idx);
 		if (pos == -1)
 			return (0);
 		idx += pos;
-		idx++;
 	}
 	return (1);
 }

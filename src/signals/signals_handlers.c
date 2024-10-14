@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:47:56 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/14 15:14:11 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:58:56 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ void	sigquit_handler(int signum)
 {
 	rl_on_new_line();
 	if (wait(NULL) == -1)
+	{
+		printf("\e[2K\r");
 		rl_redisplay();
+	}
 	else
 		write(STDERR_FILENO, "Quit (core dumped)\n", 20);
 	g_sig = signum;
