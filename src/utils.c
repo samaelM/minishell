@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 19:01:13 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:17:23 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,20 @@ void	ft_free_env(t_global *g)
 		i++;
 	}
 	free(g->env);
+}
+
+// c la meme qu'en haut
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
 
 void	ft_printcmd(t_command *cmd)

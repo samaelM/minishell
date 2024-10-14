@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:30:33 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 17:24:35 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/14 19:32:18 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ int	change_pwd(t_global *glo)
 
 	if (getcwd(buf, PATH_MAX) == NULL)
 	{
-		printf("erreur getcwd\n");
+		printf("erreur getcwd qd change var\n");
 		return (1);
 	}
 	string = malloc(sizeof(char) * (5 + ft_strlen(buf)));
 	if (!string)
 	{
-		printf("erreur malloc\n");
+		printf("erreur malloc qd change var\n");
 		return (1);
 	}
 	ft_strlcpy(string, "PWD=", 5);
-	ft_memcpy(string +4, buf, ft_strlen(buf)+1);
+	ft_memcpy(string + 4, buf, ft_strlen(buf) + 1);
 	is_line = find_var_in_env(glo->env, "PWD");
 	if (is_line != -1)
 		change_env_var(glo, string, is_line);
@@ -48,7 +48,7 @@ int	change_pwd_vars(t_global *glo)
 	string = malloc(sizeof(char) * (8 + ft_strlen(content)));
 	if (!string)
 	{
-		printf("erreur malloc\n");
+		printf("erreur malloc qd change var\n");
 		return (1);
 	}
 	ft_strlcpy(string, "OLDPWD=", 8);

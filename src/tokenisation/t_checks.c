@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_checks.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:43:39 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/10 16:14:48 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/14 17:30:23 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ int	ft_check_line(char *str)
 		if (pos == -1)
 			return (0);
 		idx += pos;
-		idx++;
+		if (str[idx])
+			idx++;
 	}
 	return (1);
 }
