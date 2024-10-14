@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 19:53:08 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:20:01 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,57 +78,6 @@ int	ft_exec_cmd(int fd, char *arg, char **envp, char **path)
 	return (0);
 }
 
-// int	main(int ac, char **av, char **envp)
-// {
-// 	char	*cmd;
-// 	int		status;
-// 	pid_t	pid;
-
-// 	// char	**args;
-// 	// t_command *oui;
-// 	(void)ac;
-// 	(void)av;
-// 	signal(SIGINT, sigint_handler);
-// 	signal(SIGQUIT, sigquit_handler);
-// 	ft_watermark();
-// 	while ((cmd = readline("\033[1;95mShell-et-poivre> \033[0m")) != NULL)
-// 	{
-// 		add_history(cmd);
-// 		// oui = ft_token(cmd);
-// 		// printf("%s", oui->cmd);
-// 		if (ft_strncmp(cmd, "exit", 4) == 0)
-// 		{
-// 			free(cmd); // replace with ft_exit
-// 			break ;
-// 		}
-// 		else if (ft_strncmp(cmd, "echo", 4) == 0)
-// 		{
-// 			printf("%s\n", cmd + 5); // replace with ft_echo
-// 			free(cmd);
-// 		}
-// 		else if (ft_strncmp(cmd, "cd", 2) == 0)
-// 		{
-// 			chdir(cmd + 3); // replace with ft_cd
-// 			free(cmd);
-// 		} // mettre d'autre else if pour les autre commandes builtins
-// 		else if (*cmd)
-// 		{
-// 			pid = fork();
-// 			if (pid == -1)
-// 				printf("fork");
-// 			else if (pid == 0)
-// 			{
-// 				// cmd = ft_strdup("   echo 		a");
-// 				ft_exec_cmd(1, cmd, envp, ft_split(ft_find_path(envp), ':'));
-// 				free(cmd);
-// 			}
-// 			else
-// 				waitpid(pid, &status, 0);
-// 			free(cmd);
-// 		}
-// 	}
-// 	return (0);
-// }
 int	main(int ac, char **av, char **envp)
 {
 	char		*line;
@@ -139,13 +88,13 @@ int	main(int ac, char **av, char **envp)
 	(void)av;
 	line = NULL;
 	global.env = create_our_env(envp);
-		global.exit_value = 102;
+	global.exit_value = 102;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
 	while (42)
 	{
 		g_sig = 0;
-		line = readline("\033[1;95mpoivre-et-Shell> \033[0m");
+		line = readline("\033[1;95mPoivre-echelle> \033[0m");
 		if (line == NULL)
 			signal_ctrD(&global);
 		if (*line)
@@ -154,14 +103,10 @@ int	main(int ac, char **av, char **envp)
 		{
 			cmd = ft_token(line, &global);
 			ft_redir(&global, line);
-			// ft_printcmd(cmd);
-			// global.command = cmd;
-			if (cmd->args)
-				global.command->cmd = cmd->args[0];
 			ft_exec(&global);
 			ft_free_cmd(cmd);
 		}
-		printf("exit status: %d\n", global.exit_value);
+		// printf("exit status: %d\n", global.exit_value);
 		free(line);
 	}
 	rl_clear_history();

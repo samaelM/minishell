@@ -95,6 +95,7 @@ RLFLAGS		=	-lreadline
 all : $(NAME)
 
 RED = \033[0;31m
+GREEN = \e[0;32m
 YELLOW = \033[0;33m
 WHITE = \033[0m
 BOLD = \033[1m
@@ -102,24 +103,28 @@ FLASH = \033[6m
 BANDE = \033[7m
 
 $(NAME): $(LIBFT) $(OBJETS)
-	cc $(OBJETS) $(LIBFT) -o $(NAME) $(CFLAGS) $(RLFLAGS)
-	@echo "${RED}${BOLD}	COMPILE"
-	@echo "  /\_/\   "
-	@echo " ( o.o )  "
-	@echo "  > ^ <   ${WHITE}"
+	@echo -n "${RED}[COMPILING]${WHITE}${NAME}"
+	@cc $(OBJETS) $(LIBFT) -o $(NAME) $(CFLAGS) $(RLFLAGS)
+	@echo "\e[2K\r${GREEN}[OK]${WHITE}${NAME}"
+	@echo " ${RED}${BOLD}COMPILED!"
+	@echo "   /\_/\   "
+	@echo "  ( o.o )  "
+	@echo "   > ^ <   ${WHITE}"
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
-	cc $(CFLAGS) -c -o $@ $< -g
+	@echo -n "${RED}[COMPILING]${WHITE}$<"
+	@cc $(CFLAGS) -c -o $@ $< -g
+	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 $(LIBFT): $(LIBFT_INC)
-	make -C $(LIBFT_DIR)
+	@make -sC $(LIBFT_DIR)
 
 clean:
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@make -C $(LIBFT_DIR) fclean
+	@make -sC $(LIBFT_DIR) fclean
 	@rm -rf $(NAME)
 
 re: fclean all

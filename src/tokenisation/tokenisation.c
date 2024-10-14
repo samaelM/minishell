@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 20:38:07 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:19:17 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,14 @@ int	ft_counttoken(char *str)
 
 int	ft_set_args(t_global *global, char **cmd, int *pos, int size)
 {
-	int	idx;
-	char **args = global->tmp->args;
+	int		idx;
+	char	**args;
 
+	args = global->tmp->args;
 	idx = 0;
 	while (idx < size)
 	{
-		printf("size=%d\n", ft_size_token(global, *cmd) + 1);
+		// printf("size=%d\n", ft_size_token(global, *cmd) + 1);
 		args[idx] = ft_calloc((ft_size_token(global, *cmd) + 1), sizeof(char));
 		if (!args[idx])
 			return (perr(ERR_ALLOC), 0);
@@ -149,7 +150,6 @@ t_command	*ft_token(char *line, t_global *global)
 	t_command	*cmd;
 	int			pos;
 
-	// t_command	*tmp;
 	cmd = ft_calloc(1, sizeof(t_command));
 	if (!cmd)
 		return (NULL);
@@ -163,6 +163,8 @@ t_command	*ft_token(char *line, t_global *global)
 		if (global->tmp->next)
 			global->tmp = global->tmp->next;
 	}
+	if (cmd->args)
+		global->command->cmd = cmd->args[0];
 	return (cmd);
 }
 

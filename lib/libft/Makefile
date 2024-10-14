@@ -15,11 +15,23 @@ FILES = ft_strdup.c ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c 
 
 OBJ = ${FILES:.c=.o}
 
-.c.o:		 
-	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
+RED = \033[0;31m
+GREEN = \e[0;32m
+YELLOW = \033[0;33m
+WHITE = \033[0m
+BOLD = \033[1m
+FLASH = \033[6m
+BANDE = \033[7m
+
+.c.o:
+	@echo -n "${RED}[COMPILING]${WHITE}$<"
+	@${CC} $(CFLAGS) -c -o $@ $< -g
+	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${NAME}: ${OBJ}
-	$(AR) rcs ${NAME} ${OBJ}
+	@echo -n "${RED}[COMPILING]${WHITE}${NAME}"
+	@$(AR) rcs ${NAME} ${OBJ}
+	@echo "\e[2K\r${GREEN}[OK]${WHITE}${NAME}"
 
 all: $(NAME)
 
