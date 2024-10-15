@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:48:08 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/15 16:58:56 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:22:23 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,18 +93,21 @@ int	print_export(t_global *glo)
 	i = 0;
 	while (glo->env[i])
 	{
-		var_name = ft_var_name(glo->env[i]);
-		if (!var_name)
-			return (1);
-		var_content = ft_var_content(glo->env[i]);
-		if (!var_content)
+		if (ft_strncmp(glo->env[i], "_", 1) != 0)
 		{
+			var_name = ft_var_name(glo->env[i]);
+			if (!var_name)
+				return (1);
+			var_content = ft_var_content(glo->env[i]);
+			if (!var_content)
+			{
+				free(var_name);
+				return (1);
+			}
+			printf("export %s=\"%s\"\n", var_name, var_content);
 			free(var_name);
-			return (1);
+			free(var_content);
 		}
-		printf("export %s=\"%s\"\n", var_name, var_content);
-		free(var_name);
-		free(var_content);
 		i++;
 	}
 	return (0);

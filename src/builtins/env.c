@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 18:49:59 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/15 17:09:21 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:14:29 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,45 @@ int	ft_env(t_global *glob)
 	return (0);
 }
 
+char	*coller_deux_strings(char *s1, char *s2)
+{
+	char	*string;
+	int		size_s1;
+	int		size_s2;
+
+	size_s1 = ft_strlen(s1);
+	size_s2 = ft_strlen(s2);
+	string = malloc(sizeof(char) * (size_s1 + size_s2));
+	if (!string)
+	{
+		printf("erreur malloc\n");
+		return (NULL);
+	}
+	ft_strlcpy(string, s1, size_s1 + 1);
+	ft_strlcat(string, s2, size_s1 + size_s2 + 1);
+	printf("string %s\n", string);
+	return (string);
+}
+
 char	**create_env_i(void)
 {
 	char	**env_tab;
 
-	env_tab = NULL;
-	// env_tab = malloc(sizeof(char *) * 2);
-	// if (!env_tab)
-	// {
-	// 	printf("erreur malloc\n");
-	// 	return (NULL);
-	// }
-	// env_tab[0] = ft_strdup("SHL");
-	// env_tab[1] = NULL;
-	// glo->env = env_tab;
-	// change_pwd(glo);
-	//	env_tab[2] = "SHLVL";
+	env_tab = malloc(sizeof(char *) * 4);
+	if (!env_tab)
+	{
+		printf("erreur malloc\n");
+		return (NULL);
+	}
+	env_tab[0] = ft_strdup(coller_deux_strings("PWD=", ft_getcwd()));
+	env_tab[1] = ft_strdup(coller_deux_strings("SHLVL=", "1"));
+	env_tab[2] = ft_strdup(coller_deux_strings("_=", "/minishell"));
+	if (!env_tab[0] || !env_tab[1] || !env_tab[2])
+	{
+		free_tab(env_tab);
+		exit(1);
+	}
+	env_tab[3] = NULL;
 	return (env_tab);
 }
 
