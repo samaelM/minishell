@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/14 17:13:35 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:09:06 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,14 @@ int	ft_exec_cmd(int fd, char *arg, char **envp, char **path)
 }
 int	main(int argc, char **argv, char **envp)
 {
-	char		*line;
-	t_command	*cmd;
-	t_global	global;
+	char *line;
+	t_command *cmd;
+	t_global global;
 
 	(void)argc;
 	(void)argv;
 	global.env = create_our_env(envp);
-	if(!global.env)
+	if (!global.env)
 		return (1);
 	line = NULL;
 	global.exit_value = 0;
@@ -95,7 +95,7 @@ int	main(int argc, char **argv, char **envp)
 	while (42)
 	{
 		line = readline("\033[1;95mPoivre-et-Shell> \033[0m");
-		if(line == NULL)
+		if (line == NULL)
 			signal_ctrD(&global);
 		if (*line)
 			add_history(line);
@@ -104,7 +104,7 @@ int	main(int argc, char **argv, char **envp)
 			cmd = ft_token(line, &global);
 			ft_redir(cmd, line);
 			global.command = cmd;
-			if(cmd->args)
+			if (cmd->args)
 				global.command->cmd = cmd->args[0];
 			ft_exec(&global);
 			ft_printcmd(cmd);

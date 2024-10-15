@@ -1,7 +1,24 @@
 ENV - i
 
+bash-5.1$ env
+PWD=/home/ahenault/minishell/moi
+SHLVL=1
+_=/usr/bin/env
+bash-5.1$ cd /goinfre/
+bash-5.1$ env
+PWD=/goinfre
+SHLVL=1
+_=/usr/bin/env
+OLDPWD=/home/ahenault/minishell/moi
+
+shhlvl=2
+
+Export : print pas _ ?
+
 EXIT :
 free readline
 exit n, tester avec 5555555555555555555
 
 cmd not found 127
+
+ptit leak sur cd

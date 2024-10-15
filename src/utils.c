@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/14 17:17:23 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:07:44 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ void	ft_free_cmd(t_command *cmd)
 
 void	ft_free_env(t_global *g)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (g->env[i])
 	{
 		free(g->env[i]);
@@ -80,17 +82,17 @@ void	ft_printcmd(t_command *cmd)
 	while (cmd)
 	{
 		i = 0;
-		//printf("-----\ncmd[%d]\n", j++);
-		//printf("infile fd=%d\n", cmd->infile);
+		// printf("-----\ncmd[%d]\n", j++);
+		// printf("infile fd=%d\n", cmd->infile);
 		while (cmd->args && cmd->args[i])
 		{
 			printf("\033[1;94marg[%d]:>%s<\033[0m\n", i, cmd->args[i]);
 			i++;
 		}
-	//	printf("outfile fd=%d\n", cmd->outfile);
+		//	printf("outfile fd=%d\n", cmd->outfile);
 		cmd = cmd->next;
 	}
-	//printf("-----\n");
+	// printf("-----\n");
 }
 
 size_t	ft_sstrlcpy(char *dst, const char *src, size_t dstsize)

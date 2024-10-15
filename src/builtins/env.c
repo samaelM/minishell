@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 18:49:59 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/14 19:35:25 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/15 17:09:21 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,18 @@ char	**create_env_i(void)
 {
 	char	**env_tab;
 
-	// int		i;
-	// env_tab = malloc(sizeof(char *) * 4);
+	env_tab = NULL;
+	// env_tab = malloc(sizeof(char *) * 2);
 	// if (!env_tab)
 	// {
 	// 	printf("erreur malloc\n");
 	// 	return (NULL);
 	// }
-	// i = 0;
-	// while (i < 4)
-	// {
-	// 	env_tab[i] = "d";
-	// 	i++;
-	// }
-	// env_tab[i] = NULL;
+	// env_tab[0] = ft_strdup("SHL");
+	// env_tab[1] = NULL;
+	// glo->env = env_tab;
+	// change_pwd(glo);
+	//	env_tab[2] = "SHLVL";
 	return (env_tab);
 }
 
@@ -51,7 +49,7 @@ char	**create_our_env(char **envp)
 	int		i;
 	char	**env_tab;
 
-	if (envp[0] == NULL) // gerer ca
+	if (envp[0] == NULL)
 	{
 		printf("error no envp\n");
 		return (create_env_i());
