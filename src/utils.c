@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/15 13:13:42 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:19:43 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,5 @@ int	is_in_set(char c, char *set)
 
 void	perr(char *str)
 {
-	printf("%s\n", str);
+	write(STDERR_FILENO, str, ft_strlen(str));
 }

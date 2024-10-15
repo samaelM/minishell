@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:19:14 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/14 15:09:22 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/15 14:09:42 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static int	ft_tokencpy(t_global *global, char *dest, char *src, int *pos)
 		}
 		else
 		{
-			// printf("pb\n");
 			ft_sstrlcpy(dest + (*pos), ft_env_var(global, src + idx + 1),
 				ft_env_len_bis(global, src + idx + 1) + 1);
 			(*pos) += ft_env_len_bis(global, src + idx + 1);

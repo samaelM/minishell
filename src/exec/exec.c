@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/15 13:13:55 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:16:58 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ int	ft_exec(t_global *glob)
 		{
 			glob->exit_value = ft_unset(glob);
 		}
-		// else
-		// {
-		// 	execution(glob);
-		// }
+		else
+		{
+			execution(glob);
+		}
 	}
 	return (0);
 }

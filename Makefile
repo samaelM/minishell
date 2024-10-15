@@ -90,23 +90,28 @@ CFLAGS		=	-Wall -Wextra -Werror
 RLFLAGS		=	-lreadline
 
 ###########################
+######  ANSI COLORS  ######
+###########################
+
+RED = \033[0;31m
+GREEN = \033[0;32m
+YELLOW = \033[0;33m
+WHITE = \033[0m
+BOLD = \033[1m
+FLASH = \033[6m
+BANDE = \033[7m #comme moi
+
+###########################
 ######     RULES     ######
 ###########################
 
 all : $(NAME)
 
-RED = \033[0;31m
-GREEN = \e[0;32m
-YELLOW = \033[0;33m
-WHITE = \033[0m
-BOLD = \033[1m
-FLASH = \033[6m
-BANDE = \033[7m
 
 $(NAME): $(LIBFT) $(OBJETS)
 	@echo -n "${RED}[COMPILING]${WHITE}${NAME}"
 	@cc $(OBJETS) $(LIBFT) -o $(NAME) $(CFLAGS) $(RLFLAGS)
-	@echo "\e[2K\r${GREEN}[OK]${WHITE}${NAME}"
+	@echo "\033[2K\r${GREEN}[OK]${WHITE}${NAME}"
 	@echo "${RED}${BOLD}     COMPILED!"
 	@echo "   /\/\    /\_/\   "
 	@echo "  ( owo)  ( o.o )  "
