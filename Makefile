@@ -99,6 +99,7 @@ YELLOW = \033[0;33m
 WHITE = \033[0m
 BOLD = \033[1m
 FLASH = \033[6m
+RESET = \033[0m
 BANDE = \033[7m #comme moi
 
 ###########################
@@ -107,15 +108,16 @@ BANDE = \033[7m #comme moi
 
 all : $(NAME)
 
-
 $(NAME): $(LIBFT) $(OBJETS)
 	@echo -n "${RED}[COMPILING]${WHITE}${NAME}"
 	@cc $(OBJETS) $(LIBFT) -o $(NAME) $(CFLAGS) $(RLFLAGS)
 	@echo "\033[2K\r${GREEN}[OK]${WHITE}${NAME}"
-	@echo "${RED}${BOLD}     COMPILED!"
-	@echo "   /\/\    /\_/\   "
-	@echo "  ( owo)  ( o.o )  "
-	@echo "  / >*<\   > ^ <   "
+	@echo "${RED}${BOLD}    ___________  "
+	@echo "   ( COMPILED! )   "
+	@echo "    ͞ v ͞ ͞ ͞ ͞ ͞ ͞ v ͞  "
+	@echo "   /\/\    /\_/\ "
+	@echo "  ( ${FLASH}o${RED}${BOLD}w${FLASH}o${RED}${BOLD})  ( ${FLASH}o${RED}${BOLD}.${FLASH}o${RED}${BOLD} )"
+	@echo "  / >*<\   > ^ < "
 	@echo "   Maël   Anaëlle${WHITE}"
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c $(MS_INC)
