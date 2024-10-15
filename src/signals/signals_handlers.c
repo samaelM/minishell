@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:47:56 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/14 18:51:51 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:14:00 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	sigquit_handler(int signum)
 		write(STDERR_FILENO, "Quit (core dumped)\n", 20);
 	g_sig = signum;
 }
+
 void	signal_ctrD(t_global *g)
 {
 	printf("exit\n");

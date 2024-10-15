@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:48:08 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/08 17:57:51 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:36:58 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,18 @@ int add_env_var(t_global *glo, char *var)
 	i = 0;
 	while(glo->env[i])
 	{
-		tab[i] = ft_strdup(glo->env[i]); // a proteger
-			i++;
-	}
-	tab[i] = ft_strdup(var); // a proteger
-	tab[i + 1] = NULL;
-	glo->env = tab;
-	return (0);
-}
-
-int parse_export(char *var)
-{
-	int i = 0;
-	if((var[i] >= 'a' && var[i] <= 'z') || (var[i] >= 'A' && var[i] <= 'Z'))
-		i++;
-	while (i != 0 && var[i])
-	{
-		if(var[i] == '=')
+		tab[i] = ft_strdup(glo->env[i]);
+		free(glo->env[i]);
+		if(!tab[i])
 			return (1);
 		i++;
 	}
-	printf("export: `%s': not a valid identifier\n", var);
+	tab[i] = ft_strdup(var);
+	if(!tab[i])
+		return (1);
+	tab[i + 1] = NULL;
+	free(glo->env);
+	glo->env = tab;
 	return (0);
 }
 
@@ -59,56 +50,38 @@ int change_env_var(t_global *glo, char *var, int line)
 	return (0);
 }
 
-char *ft_var_name(char *var)
+int parse_export(char *var)
 {
 	int i = 0;
-	while(var[i] && var[i] != '=')
+	if((var[i] >= 'a' && var[i] <= 'z') || (var[i] >= 'A' && var[i] <= 'Z'))
 		i++;
-	char *new_line = malloc(sizeof(char) * i + 1);
-	if(!new_line)
-		return NULL;
-	i = 0;
-	while(var[i] && var[i] != '=')
+	while (i != 0 && var[i])
 	{
-		new_line[i] = var[i];
+		if(var[i] == '=')
+			return (0);
 		i++;
 	}
-	new_line[i] = '\0';
-	return (new_line);
+	printf("export: `%s': not a valid identifier\n", var);
+	return (1);
 }
 
-int print_export(t_global *glo)
+void print_export(t_global *glo)
 {
 	int i;
-	int size;
-	int j;
-	char *line;
 	
-	j = 0;
-	size = 0;
-	line= glo->env[0];
-	while(glo->env[size])
-		size++;
-	//while(j < size)
+	i = 0;
+	while(glo->env[i])
 	{
-		i = 0;
-		while(glo->env[i])
-		{
-			// if (ft_strncmp(line, glo->env[i], 500) > 0)
-			 	line = glo->env[i];
-			printf("export %s\n", line);
-			i++;
-		}
-		// printf("export %s\n", line);
-		j++;
+		printf("export %s\n", glo->env[i]);
+		i++;
 	}
-	return (0);
 }
 
 int ft_export(t_global *glo)
 {
 	int i = 1;
 	char *var_name;
+	int return_value = 0;
 	
 	if(glo->command->args[1] == NULL)
 	{
@@ -117,18 +90,20 @@ int ft_export(t_global *glo)
 	}
 	while(glo->command->args[i])
 	{
-		if(parse_export(glo->command->args[i]) == 1)
+		if(parse_export(glo->command->args[i]) == 0)
 		{
 			var_name = ft_var_name(glo->command->args[i]);
 			int is_line = find_var_in_env(glo->env, var_name);
 			free(var_name);
-			if(is_line == -1)
-				add_env_var(glo, glo->command->args[i]);
-			else
-				change_env_var(glo, glo->command->args[i], is_line);
+			if(is_line == -1 && add_env_var(glo, glo->command->args[i]) == 1)
+				return(1);
+			if(is_line != -1 && change_env_var(glo, glo->command->args[i], is_line) == 1)
+				return(1);
 		}
+		else
+			return_value = 1;
 		i++;
 	}
-	return (0);
+	return (return_value);
 }
 

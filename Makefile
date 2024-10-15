@@ -12,6 +12,7 @@ NAME 		= minishell
 B_DIR		=	builtins
 B_SRC		=	cd.c \
 				env.c \
+				env_utils.c \
 				echo.c \
 				unset.c \
 				export.c \

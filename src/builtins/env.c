@@ -3,59 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 18:49:59 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/11 13:46:00 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/11 20:38:18 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void change_env_(t_global *glob)
-{
-	char *var_;
-	
-	var_ = malloc(sizeof(char) * (12 + ft_strlen(glob->command->cmd) + 2));
-	ft_strlcpy(var_,"_=/usr/bin/", 12);
-	ft_memcpy(var_+11, glob->command->cmd, ft_strlen(glob->command->cmd));
-	change_env_var(glob, var_, find_var_in_env(glob->env, "_"));
-	//printf("%s\n", var_);
-	free(var_);
-}
-
-// pb trouve var plus courte
-int find_var_in_env(char **env, char *var)
-{
-
-	int i;
-	
-	i = 0;
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], var, ft_strlen(var)) == 0) 
-		{	
-		//	printf("%s	trouve\n", env[i]);
-			return (i);
-		}
-		i++;
-	}
-	return (-1);
-}
-
-char *ft_getenv(char **env, char *var)
-{
-	int line;
-	int i;
-	
-	i = 0;
-	line = find_var_in_env(env, var);
-	if (line == -1)
-		return (NULL);
-	while(env[line][i] && env[line][i] != '=')
-		i++;
-	return (env[line] + i + 1);
-}
 
 int ft_env(t_global *glob)
 {
@@ -70,29 +25,59 @@ int ft_env(t_global *glob)
 	return (0);
 }
 
+char **create_env_i(void)
+{
+	char **env_tab;
+	int i;
+	
+	env_tab = malloc(sizeof(char *) * 4);
+	if (!env_tab)
+	{
+		printf("erreur malloc\n");
+		return (NULL);
+	}
+	i = 0;
+	while (i < 4)
+	{
+		env_tab[i] = "d";
+		i++;
+	}
+	env_tab[i] = NULL;
+	return (env_tab);
+}
+
 char **create_our_env(char **envp)
 {
 	int i;
 	char	**env_tab;
 
-	i = 0;
-	if(!envp) // gerer ca
+	if(envp[0] == NULL) // gerer ca
 	{
 		printf("error no envp\n");
-		// free
-		exit(1);
+		return (create_env_i());
 	}
+	i = 0;
 	while(envp[i])
 		i++;
 	env_tab = malloc(sizeof(char *) * (i + 1));
 	if (!env_tab)
+	{
+		printf("erreur malloc\n");
 		return (NULL);
+	}
 	i = 0;
 	while (envp[i])
 	{
 		env_tab[i] = ft_strdup(envp[i]);
- 		i++;
+		if(!env_tab[i])
+		{
+			printf("erreur strdup\n");
+			return (NULL);
+		}
+		i++;
 	}
 	env_tab[i] = NULL;
 	return (env_tab);
 }
+
+

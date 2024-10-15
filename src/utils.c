@@ -6,11 +6,17 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/11 20:04:08 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/15 13:13:42 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	ft_free_glob(t_global *glob)
+{
+	ft_free_env(glob);
+	ft_free_cmd(glob->command);
+}
 
 /*				cmd manipulation				*/
 void	ft_free_cmd(t_command *cmd)
@@ -40,6 +46,17 @@ void	ft_free_cmd(t_command *cmd)
 	}
 }
 
+void	ft_free_env(t_global *g)
+{
+	int i = 0;
+	while (g->env[i])
+	{
+		free(g->env[i]);
+		i++;
+	}
+	free(g->env);
+}
+
 void	ft_printcmd(t_command *cmd)
 {
 	int	i;
@@ -53,7 +70,7 @@ void	ft_printcmd(t_command *cmd)
 		printf("infile fd=%d\n", cmd->infile);
 		while (cmd->args && cmd->args[i])
 		{
-			printf("arg[%d]:>%s<\n", i, cmd->args[i]);
+			printf("\033[1;94marg[%d]:>%s<\033[0m\n", i, cmd->args[i]);
 			i++;
 		}
 		printf("outfile fd=%d\n", cmd->outfile);

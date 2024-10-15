@@ -1,0 +1,16 @@
+ENV - i
+
+EXIT :
+free readline
+exit n, tester avec 5555555555555555555
+
+EXPORT:
+parse_export
+pb trouve var plus courte
+_ = bash au debut
+leaks sur export et utils
+
+
+malloc :
+exit pour erreur ENV
+sinon return 1
