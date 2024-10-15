@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/15 13:17:43 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:12:34 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	main(int ac, char **av, char **envp)
 	while (42)
 	{
 		g_sig = 0;
-		line = readline("\033[1;95mPoivre-echelle> \033[0m");
+		line = readline("\033[0;31mPoivre-echelle> \033[0;33m");
+		write(STDIN_FILENO, "\033[0m", 5);
 		if (line == NULL)
 			signal_ctrD(&global);
 		if (*line)

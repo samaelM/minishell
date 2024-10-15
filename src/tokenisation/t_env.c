@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:09:11 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/14 15:05:21 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:18:29 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_envname_len(char *str)
 	idx = 0;
 	if (*str == '?')
 		return (1);
-	while (str[idx] && ft_isalnum(str[idx]))
+	while (str[idx] && (ft_isalnum(str[idx]) || str[idx] == '_'))
 		idx++;
 	return (idx);
 }

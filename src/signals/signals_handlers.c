@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:47:56 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/15 13:14:00 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:07:00 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ void	signal_ctrD(t_global *g)
 		free(g->env[i++]);
 	free(g->env);
 
-	// rl_clear_history();
+	rl_clear_history();
 	exit(g->exit_value);
 }
