@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:21:21 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/10 16:21:51 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/15 20:21:31 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	ft_skipquotes(char *str, char quote)
 		idx++;
 		while (str[idx] && str[idx] != quote)
 			idx++;
-		idx++;
+		if (str[idx])
+			idx++;
 	}
 	return (idx);
 }

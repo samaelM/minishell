@@ -6,14 +6,16 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/14 17:05:05 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:55:44 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_get_size_qtoken(t_global *global, char *str, int *idx, int *size)
+int	ft_get_size_qtoken(t_global *global, char *str, int *idx, int *size)
 {
+	int	env_len;
+
 	while (str[*idx] && is_in_set(str[*idx], "\"'"))
 	{
 		if (str[*idx] && str[*idx] == '"')
@@ -23,25 +25,33 @@ void	ft_get_size_qtoken(t_global *global, char *str, int *idx, int *size)
 			{
 				if (str[*idx] == '$')
 				{
-					*size += ft_env_len_bis(global, str + (*idx) + 1);
+					env_len = ft_env_len_bis(global, str + (*idx) + 1);
+					// printf("step 6\n, %d", env_len);
+					if (env_len == -1)
+						return (0);
+					*size += env_len;
 					*idx += ft_envname_len(str + (*idx) + 1);
 				}
 				else
 					(*size)++;
 				(*idx)++;
 			}
-			(*idx)++;
+			if (str[*idx])
+				(*idx)++;
 		}
 		if (str[*idx] && str[*idx] == '\'')
 			*size += ft_skipquotes(str + (*idx), '\'') - 2;
 		*idx += ft_skipquotes(str + (*idx), '\'');
 	}
+	return (1);
 }
 
 int	ft_size_token(t_global *global, char *str)
 {
+		// printf("step 5\n");
 	int	idx;
 	int	size;
+	int	env_len;
 
 	size = 0;
 	idx = 0;
@@ -49,12 +59,16 @@ int	ft_size_token(t_global *global, char *str)
 		idx++;
 	while (str[idx] && !is_in_set(str[idx], " 	|<>"))
 	{
-		ft_get_size_qtoken(global, str, &idx, &size);
+		if (!ft_get_size_qtoken(global, str, &idx, &size))
+			return (-1);
 		while (str[idx] && !is_in_set(str[idx], "\"' 	|<>"))
 		{
 			if (str[idx] == '$')
 			{
-				size += ft_env_len_bis(global, str + idx + 1);
+				env_len = ft_env_len_bis(global, str + idx + 1);
+				if (env_len == -1)
+					return (-1);
+				size += env_len;
 				idx += ft_envname_len(str + idx + 1);
 			}
 			else
@@ -99,18 +113,25 @@ int	ft_counttoken(char *str)
 
 int	ft_set_args(t_global *global, char **cmd, int *pos, int size)
 {
+		// printf("step 4\n");
 	int		idx;
 	char	**args;
+	int		sizetk;
 
 	args = global->tmp->args;
 	idx = 0;
 	while (idx < size)
 	{
-		// printf("size=%d\n", ft_size_token(global, *cmd) + 1);
-		args[idx] = ft_calloc((ft_size_token(global, *cmd) + 1), sizeof(char));
+		sizetk = ft_size_token(global, *cmd);
+		printf("size_tk = %d\n", sizetk);
+		if (sizetk == -1)
+			return (0);
+		args[idx] = ft_calloc(sizetk + 1, sizeof(char));
 		if (!args[idx])
 			return (perr(ERR_ALLOC), 0);
 		*pos = ft_get_arg(global, args[idx], *cmd);
+		if (*pos == -1)
+			return (0);
 		*cmd = *cmd + *pos;
 		idx++;
 	}
@@ -120,14 +141,16 @@ int	ft_set_args(t_global *global, char **cmd, int *pos, int size)
 
 int	ft_fillcmd(t_global *global, char **line, int *pos)
 {
+	// printf("step 3\n");
 	int			size;
 	t_command	*cmd;
 
 	cmd = global->tmp;
 	size = ft_counttoken(*line);
+	printf("nb_token = %d\n", size);
 	cmd->args = ft_calloc((size + 1), sizeof(char *));
 	if (!cmd->args)
-		return (0);
+		return (perr(ERR_ALLOC), 0);
 	if (!ft_set_args(global, line, pos, size))
 		return (0);
 	while (**line && is_in_set(**line, " 	"))
@@ -140,26 +163,27 @@ int	ft_fillcmd(t_global *global, char **line, int *pos)
 	{
 		cmd->next = ft_calloc(1, sizeof(t_command));
 		if (!cmd->next)
-			return (0);
+			return (perr(ERR_ALLOC), 0);
 	}
 	return (1);
 }
 
 t_command	*ft_token(char *line, t_global *global)
 {
+	// printf("step 2\n");
 	t_command	*cmd;
 	int			pos;
 
 	cmd = ft_calloc(1, sizeof(t_command));
 	if (!cmd)
-		return (NULL);
+		return (perr(ERR_ALLOC), NULL);
 	global->command = cmd;
 	global->tmp = cmd;
 	pos = 0;
 	while (*line)
 	{
 		if (!ft_fillcmd(global, &line, &pos))
-			return (perr(ERR_ALLOC), ft_free_cmd(cmd), NULL);
+			return (NULL);
 		if (global->tmp->next)
 			global->tmp = global->tmp->next;
 	}
