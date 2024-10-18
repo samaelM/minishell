@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/18 21:13:47 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/18 21:51:42 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 			// ft_printcmd(global.command);
 			ft_free_cmd(global.command);
 		}
-		// printf("exit status: %d\n", global.exit_value);
+		printf("\033[0;33mexit status: %d\n", global.exit_value);
 		free(line);
 	}
 }

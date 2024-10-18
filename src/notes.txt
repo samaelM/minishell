@@ -4,3 +4,8 @@ exit n, tester avec 5555555555555555555
 
 cmd not found 127
 
+
+
+
+/bi/ls 
+exit status 256 != 127
