@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/15 21:24:16 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/16 17:57:46 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,5 +143,6 @@ void					perr(char *str);
 void					ft_free_env(t_global *g);
 void					free_tab(char **tab);
 void					ft_free_glob(t_global *glob);
+int						ft_strcmp(const char *s1, const char *s2);
 
 #endif

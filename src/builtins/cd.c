@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:30:33 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/15 21:09:59 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:47:51 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ char	*ft_getcwd(void)
 
 	cwd = malloc(PATH_MAX);
 	if (!cwd)
+	{
+		printf("erreur malloc\n");
 		return (NULL);
+	}
 	if (getcwd(cwd, PATH_MAX) == NULL)
 	{
 		printf("erreur getcwd qd change var\n");
+		free(cwd);
 		return (NULL);
 	}
 	return (cwd);
@@ -40,11 +44,11 @@ int	change_pwd(t_global *glo)
 	if (!string)
 	{
 		printf("erreur malloc qd change var\n");
+		free(cwd);
 		return (1);
 	}
 	ft_strlcpy(string, "PWD=", 5);
 	ft_strlcat(string, cwd, (5 + ft_strlen(cwd)));
-	// ft_memcpy(string + 4, buf, ft_strlen(buf) + 1);
 	is_line = find_var_in_env(glo->env, "PWD");
 	if (is_line != -1)
 		change_env_var(glo, string, is_line);
@@ -64,11 +68,11 @@ int	change_pwd_vars(t_global *glo, char *cwd)
 	if (!string)
 	{
 		printf("erreur malloc qd change var\n");
+		free(cwd);
 		return (1);
 	}
 	ft_strlcpy(string, "OLDPWD=", 9);
 	ft_strlcat(string, cwd, 9 + ft_strlen(cwd));
-	//	ft_memcpy(string + 7, cwd, ft_strlen(cwd) + 1);
 	is_line = find_var_in_env(glo->env, "OLDPWD");
 	if (is_line != -1)
 		change_env_var(glo, string, is_line);

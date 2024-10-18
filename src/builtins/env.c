@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 18:49:59 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/15 21:14:29 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/18 19:28:06 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,20 @@ char	**create_env_i(void)
 	return (env_tab);
 }
 
+char	*change_shlvl(char *var)
+{
+	char	*content;
+	int		i;
+
+	// printf("content %s\n", var);
+	content = ft_var_content(var);
+	// printf("content %s\n", content);
+	i = ft_atoi(content) + 1;
+	// printf("i %i\n", i);
+	var = coller_deux_strings("SHLVL=", ft_itoa(i));
+	return (var);
+}
+
 char	**create_our_env(char **envp)
 {
 	int		i;
@@ -89,12 +103,17 @@ char	**create_our_env(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		env_tab[i] = ft_strdup(envp[i]);
-		if (!env_tab[i])
+		if (ft_strncmp(envp[i], "SHLVL=", 6) == 0)
+			env_tab[i] = change_shlvl(envp[i]);
+		else
 		{
-			printf("erreur strdup\n");
-			free_tab(env_tab);
-			return (NULL);
+			env_tab[i] = ft_strdup(envp[i]);
+			if (!env_tab[i])
+			{
+				printf("erreur strdup\n");
+				free_tab(env_tab);
+				return (NULL);
+			}
 		}
 		i++;
 	}

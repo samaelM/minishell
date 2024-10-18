@@ -1,6 +1,4 @@
-
 shhlvl=2
-
 
 EXIT :
 free readline

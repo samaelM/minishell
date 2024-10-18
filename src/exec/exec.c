@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/15 17:18:26 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:53:35 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ int	ft_exec(t_global *glob)
 		{
 			glob->exit_value = ft_unset(glob);
 		}
-		// else
-		// {
-		// 	execution(glob);
-		// }
+		else
+		{
+			execution(glob);
+		}
 	}
 	return (0);
 }
