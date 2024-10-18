@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 19:12:25 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/17 17:34:17 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/18 20:43:45 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,34 +68,35 @@ char	*ft_var_name(char *var)
 	return (new_line);
 }
 
-char	*ft_var_content(char *var)
-{
-	int		var_name;
-	int		i;
-	char	*new_line;
+// 		remplace par ft_getenv
+// char	*ft_var_content(char *var)
+// {
+// 	int		var_name;
+// 	int		i;
+// 	char	*new_line;
 
-	var_name = 0;
-	i = 0;
-	while (var[var_name] && var[var_name] != '=')
-		var_name++;
-	var_name++;
-	while (var[var_name + i])
-		i++;
-	new_line = malloc(sizeof(char) * (i + 1));
-	if (!new_line)
-	{
-		printf("erreur malloc\n");
-		return (NULL);
-	}
-	i = 0;
-	while (var[var_name + i])
-	{
-		new_line[i] = var[var_name + i];
-		i++;
-	}
-	new_line[i] = '\0';
-	return (new_line);
-}
+// 	var_name = 0;
+// 	i = 0;
+// 	while (var[var_name] && var[var_name] != '=')
+// 		var_name++;
+// 	var_name++;
+// 	while (var[var_name + i])
+// 		i++;
+// 	new_line = malloc(sizeof(char) * (i + 1));
+// 	if (!new_line)
+// 	{
+// 		printf("erreur malloc\n");
+// 		return (NULL);
+// 	}
+// 	i = 0;
+// 	while (var[var_name + i])
+// 	{
+// 		new_line[i] = var[var_name + i];
+// 		i++;
+// 	}
+// 	new_line[i] = '\0';
+// 	return (new_line);
+// }
 
 int	find_var_in_env(char **env, char *var)
 {
