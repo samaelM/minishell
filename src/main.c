@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/16 16:49:03 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:53:59 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
+	ft_bzero(&global, sizeof(t_global));
 	global.env = create_our_env(envp);
 	global.exit_value = 0;
 	signal(SIGINT, sigint_handler);
@@ -39,7 +40,7 @@ int	main(int ac, char **av, char **envp)
 			// printf("step 1\n");
 			if (ft_token(line, &global) && ft_redir(&global, line))
 				ft_exec(&global);
-			ft_printcmd(global.command);
+			// ft_printcmd(global.command);
 			ft_free_cmd(global.command);
 		}
 		// printf("exit status: %d\n", global.exit_value);

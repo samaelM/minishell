@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/15 14:19:43 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:53:28 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	ft_free_cmd(t_command *cmd)
 {
 	int			i;
 	t_command	*tmp;
-
 	while (cmd)
 	{
 		i = 0;

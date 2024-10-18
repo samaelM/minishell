@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/16 17:55:44 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/18 13:53:45 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int	ft_set_args(t_global *global, char **cmd, int *pos, int size)
 	while (idx < size)
 	{
 		sizetk = ft_size_token(global, *cmd);
-		printf("size_tk = %d\n", sizetk);
+		// printf("size_tk = %d\n", sizetk);
 		if (sizetk == -1)
 			return (0);
 		args[idx] = ft_calloc(sizetk + 1, sizeof(char));
@@ -147,7 +147,7 @@ int	ft_fillcmd(t_global *global, char **line, int *pos)
 
 	cmd = global->tmp;
 	size = ft_counttoken(*line);
-	printf("nb_token = %d\n", size);
+	// printf("nb_token = %d\n", size);
 	cmd->args = ft_calloc((size + 1), sizeof(char *));
 	if (!cmd->args)
 		return (perr(ERR_ALLOC), 0);
@@ -175,6 +175,7 @@ t_command	*ft_token(char *line, t_global *global)
 	int			pos;
 
 	cmd = ft_calloc(1, sizeof(t_command));
+	// cmd = NULL;
 	if (!cmd)
 		return (perr(ERR_ALLOC), NULL);
 	global->command = cmd;
