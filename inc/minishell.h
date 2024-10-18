@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/18 17:58:41 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/18 18:28:33 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 ///				MACROS					///
 ///////////////////////////////////////////
 
-# define TRUE 1
 # define METACHAR " 	|<>"
 # define HEREDOC_NAME "/tmp/heredoc_poivre"
 # define ERR_ALLOC \
