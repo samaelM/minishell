@@ -1,5 +1,3 @@
-shhlvl=2
-
 EXIT :
 free readline
 exit n, tester avec 5555555555555555555
