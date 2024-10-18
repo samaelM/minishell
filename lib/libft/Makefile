@@ -24,14 +24,14 @@ FLASH = \033[6m
 BANDE = \033[7m
 
 .c.o:
-	@echo -n "${RED}[COMPILING]${WHITE}$<"
+	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@${CC} $(CFLAGS) -c -o $@ $< -g
-	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
+	# @echo -n "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${NAME}: ${OBJ}
 	@echo -n "${RED}[COMPILING]${WHITE}${NAME}"
 	@$(AR) rcs ${NAME} ${OBJ}
-	@echo "\e[2K\r${GREEN}[OK]${WHITE}${NAME}"
+	@echo "\e[2K\r${GREEN}[DONE!]${WHITE}${NAME}"
 
 all: $(NAME)
 

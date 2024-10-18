@@ -6,11 +6,11 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:43:39 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/14 17:37:12 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:51:38 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../inc/tokenisation.h"
 
 static int	ft_error_token(char *str)
 {

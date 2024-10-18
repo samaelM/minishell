@@ -6,11 +6,11 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:09:11 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/16 17:54:08 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:51:35 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../inc/tokenisation.h"
 
 int	ft_envname_len(char *str)
 {

@@ -6,11 +6,11 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/18 13:53:28 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:26:06 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	ft_free_glob(t_global *glob)
 {

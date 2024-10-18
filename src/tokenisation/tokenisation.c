@@ -6,11 +6,11 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/18 13:53:45 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:51:18 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../inc/tokenisation.h"
 
 int	ft_get_size_qtoken(t_global *global, char *str, int *idx, int *size)
 {

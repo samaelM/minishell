@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/15 14:19:36 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:58:41 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,9 @@ int						ft_pipex(void);
 ///				TOKENISATION			///
 
 t_command				*ft_token(char *command, t_global *global);
-void					ft_free_cmd(t_command *cmd);
-void					ft_printcmd(t_command *cmd);
 int						ft_check_line(char *str);
-int						ft_size_token(t_global *global, char *str);
 int						ft_get_arg(t_global *global, char *dest, char *str);
-int						ft_envname_len(char *str);
-int						ft_env_len_bis(t_global *global, char *str);
-char					*ft_env_var(t_global *global, char *str);
-int						ft_skipquotes(char *str, char quote);
-int						ft_redir_len(char *str);
+int						ft_size_token(t_global *global, char *str);
 
 ///				REDIRECTION				///
 
@@ -141,5 +134,8 @@ int						is_in_set(char c, char *set);
 void					perr(char *str);
 void					ft_free_env(t_global *g);
 void					ft_free_glob(t_global *glob);
+int						ft_skipquotes(char *str, char quote);
+void					ft_printcmd(t_command *cmd);
+void					ft_free_cmd(t_command *cmd);
 
 #endif

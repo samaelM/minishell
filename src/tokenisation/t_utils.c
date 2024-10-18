@@ -6,11 +6,11 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:21:21 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/15 20:21:31 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:51:27 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../inc/tokenisation.h"
 
 int	ft_skipquotes(char *str, char quote)
 {
