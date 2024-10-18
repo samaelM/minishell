@@ -6,35 +6,43 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:11:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/10 14:12:19 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/16 15:13:06 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_redir(t_command *cmd, char *line)
+int	ft_redir(t_global *global, char *line)
 {
 	int	i;
+	int	tmp;
 
-	if (!cmd)
+	if (!global->command)
 		return (0);
+	global->tmp = global->command;
 	i = 0;
+	tmp = 0;
 	while (line[i])
 	{
 		if (ft_strncmp(line + i, ">>", 2) == 0)
-			i += ft_outfile2(cmd, line + i);
+			tmp += ft_outfile2(global, line + i);
 		else if (line[i] == '>')
-			i += ft_outfile(cmd, line + i);
+			tmp += ft_outfile(global, line + i);
 		else if (ft_strncmp(line + i, "<<", 2) == 0)
-			i += ft_heredoc(cmd, line + i);
+			tmp += ft_heredoc(global, line + i);
 		else if (line[i] == '<')
-			i += ft_infile(cmd, line + i);
-		while (line[i] && !is_in_set(line[i], "><|"))
+			tmp += ft_infile(global, line + i);
+		if (tmp < 0)
+			return (0);
+		i += tmp;
+		while (line[i] && !is_in_set(line[i], "><|'\""))
 			i++;
+		i += ft_skipquotes(line + i, '"');
+		i += ft_skipquotes(line + i, '\'');
 		if (line[i] == '|')
 		{
 			i++;
-			cmd = cmd->next;
+			global->tmp = global->tmp->next;
 		}
 	}
 	return (1);

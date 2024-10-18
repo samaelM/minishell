@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:48:08 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/18 20:18:33 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/18 21:14:26 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ int	parse_export(char *var)
 	int	i;
 
 	i = 0;
-	if (ft_isalpha(var[i]))
+	if (ft_isalpha(var[i]) || var[i] == '_')
 	{
 		while (var[i])
 		{
 			if (var[i] == '=')
 				return (0);
-			if (ft_isalnum(var[i]) == 0)
+			if (ft_isalnum(var[i]) == 0 && var[i] != '_')
 				break ;
 			i++;
 		}

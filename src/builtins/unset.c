@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:36 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/15 21:18:16 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/18 21:09:26 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	ft_unset(t_global *glob)
 		else
 			unset_this_line(glob->env, find_var_in_env(glob->env,
 					glob->command->args[i]));
-		ft_env(glob);
 		i++;
 	}
 	return (0);

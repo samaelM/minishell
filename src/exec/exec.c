@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/18 20:27:53 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/18 21:08:02 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 int	ft_exec(t_global *glob)
 {
-	if (glob->command->cmd)
+	if (glob->command && glob->command->cmd)
 	{
 		change_env_(glob);
 		if (ft_strcmp(glob->command->cmd, "exit") == 0)

@@ -90,39 +90,54 @@ CFLAGS		=	-Wall -Wextra -Werror
 RLFLAGS		=	-lreadline
 
 ###########################
+######  ANSI COLORS  ######
+###########################
+
+RED = \033[0;31m
+GREEN = \033[0;32m
+YELLOW = \033[0;33m
+WHITE = \033[0m
+BOLD = \033[1m
+FLASH = \033[6m
+RESET = \033[0m
+BANDE = \033[7m #comme moi
+
+###########################
 ######     RULES     ######
 ###########################
 
 all : $(NAME)
 
-RED = \033[0;31m
-YELLOW = \033[0;33m
-WHITE = \033[0m
-BOLD = \033[1m
-FLASH = \033[6m
-BANDE = \033[7m
-
 $(NAME): $(LIBFT) $(OBJETS)
-	cc $(OBJETS) $(LIBFT) -o $(NAME) $(CFLAGS) $(RLFLAGS)
-	@echo "${RED}${BOLD}	COMPILE"
-	@echo "  /\_/\   "
-	@echo " ( o.o )  "
-	@echo "  > ^ <   ${WHITE}"
+	@echo -n "${RED}[COMPILING]${WHITE}${NAME}"
+	@cc $(OBJETS) $(LIBFT) -o $(NAME) $(CFLAGS) $(RLFLAGS)
+	@echo "\033[2K\r${GREEN}[OK]${WHITE}${NAME}"
+	@echo "${RED}${BOLD}    ___________  "
+	@echo "   ( COMPILED! )   "
+	@echo "    ͞ v ͞ ͞ ͞ ͞ ͞ ͞ v ͞  "
+	@echo "   /\/\    /\_/\ "
+	@echo "  ( ${FLASH}o${RED}${BOLD}w${FLASH}o${RED}${BOLD})  ( ${FLASH}o${RED}${BOLD}.${FLASH}o${RED}${BOLD} )"
+	@echo "  / >*<\   > ^ < "
+	@echo "   Maël   Anaëlle${WHITE}"
 
 ${OBJ_DIR}/%.o: ${SRC_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
-	cc $(CFLAGS) -c -o $@ $< -g
+	@echo -n "${RED}[COMPILING]${WHITE}$<"
+	@cc $(CFLAGS) -c -o $@ $< -g
+	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 $(LIBFT): $(LIBFT_INC)
-	make -C $(LIBFT_DIR)
+	@make -sC $(LIBFT_DIR)
 
 clean:
 	@rm -rf $(OBJ_DIR)
 
 fclean: clean
-	@make -C $(LIBFT_DIR) fclean
+	@make -sC $(LIBFT_DIR) fclean
 	@rm -rf $(NAME)
 
 re: fclean all
 
 .PHONY : all clean fclean re
+
+

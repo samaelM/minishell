@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/16 17:57:46 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/18 21:02:32 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define ERR_ALLOC \
 	"an error has occured\
 , it may be related with \
-a malloc failure"
+a malloc failure\n"
 
 ///////////////////////////////////////////
 ///				STRUCTURES				///
@@ -61,6 +61,7 @@ typedef struct s_command
 typedef struct s_global
 {
 	t_command			*command;
+	t_command			*tmp;
 	char				**env;
 	int					exit_value;
 }						t_global;
@@ -89,21 +90,21 @@ t_command				*ft_token(char *command, t_global *global);
 void					ft_free_cmd(t_command *cmd);
 void					ft_printcmd(t_command *cmd);
 int						ft_check_line(char *str);
-int						ft_size_token(char *str);
-int						ft_get_arg(char *dest, char *str);
-int						ft_redir(t_command *cmd, char *line);
+int						ft_size_token(t_global *global, char *str);
+int						ft_get_arg(t_global *global, char *dest, char *str);
 int						ft_envname_len(char *str);
-int						ft_env_len_bis(char *str);
-char					*ft_env_var(char *str);
+int						ft_env_len_bis(t_global *global, char *str);
+char					*ft_env_var(t_global *global, char *str);
 int						ft_skipquotes(char *str, char quote);
 int						ft_redir_len(char *str);
 
 ///				REDIRECTION				///
 
-int						ft_heredoc(t_command *cmd, char *line);
-int						ft_infile(t_command *cmd, char *line);
-int						ft_outfile(t_command *cmd, char *line);
-int						ft_outfile2(t_command *cmd, char *line);
+int						ft_redir(t_global *global, char *line);
+int						ft_heredoc(t_global *global, char *line);
+int						ft_infile(t_global *global, char *line);
+int						ft_outfile(t_global *global, char *line);
+int						ft_outfile2(t_global *global, char *line);
 
 ///				BUILT-INS				///
 
