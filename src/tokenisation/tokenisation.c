@@ -6,11 +6,11 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/18 13:53:45 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/18 21:19:23 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../inc/tokenisation.h"
 
 int	ft_get_size_qtoken(t_global *global, char *str, int *idx, int *size)
 {
@@ -123,7 +123,7 @@ int	ft_set_args(t_global *global, char **cmd, int *pos, int size)
 	while (idx < size)
 	{
 		sizetk = ft_size_token(global, *cmd);
-		// printf("size_tk = %d\n", sizetk);
+		printf("size_tk = %d\n", sizetk);
 		if (sizetk == -1)
 			return (0);
 		args[idx] = ft_calloc(sizetk + 1, sizeof(char));

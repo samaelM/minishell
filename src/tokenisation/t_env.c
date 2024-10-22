@@ -6,11 +6,11 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:09:11 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/18 21:15:45 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:39:33 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../inc/tokenisation.h"
 
 int	ft_envname_len(char *str)
 {
@@ -24,7 +24,6 @@ int	ft_envname_len(char *str)
 	return (idx);
 }
 
-// need protection
 int	ft_env_len_bis(t_global *global, char *str)
 {
 	int		len;
@@ -40,7 +39,7 @@ int	ft_env_len_bis(t_global *global, char *str)
 		free(exit_status);
 		return (len);
 	}
-	if ((!ft_isalnum(*str)) || (!str[0]))
+	if (((!ft_isalnum(*str)) && *str != '_') || !*str)
 		return (1);
 	len = ft_envname_len(str);
 	env_var = malloc(sizeof(char) * (len + 1));
@@ -52,14 +51,13 @@ int	ft_env_len_bis(t_global *global, char *str)
 	return (len);
 }
 
-// need protection
 char	*ft_env_var(t_global *global, char *str)
 {
 	int		len;
 	char	*env_var;
 	char	*content;
 
-	if ((!ft_isalnum(*str)) || (!str[0]))
+	if (((!ft_isalnum(*str)) && *str != '_') || !*str)
 		return ("$");
 	len = ft_envname_len(str);
 	env_var = malloc(sizeof(char) * (len + 1));

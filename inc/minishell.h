@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/18 21:02:32 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/22 15:39:27 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@
 ///				MACROS					///
 ///////////////////////////////////////////
 
-# define TRUE 1
 # define METACHAR " 	|<>"
 # define HEREDOC_NAME "/tmp/heredoc_poivre"
 # define ERR_ALLOC \
@@ -87,16 +86,9 @@ int						ft_pipex(void);
 ///				TOKENISATION			///
 
 t_command				*ft_token(char *command, t_global *global);
-void					ft_free_cmd(t_command *cmd);
-void					ft_printcmd(t_command *cmd);
 int						ft_check_line(char *str);
-int						ft_size_token(t_global *global, char *str);
 int						ft_get_arg(t_global *global, char *dest, char *str);
-int						ft_envname_len(char *str);
-int						ft_env_len_bis(t_global *global, char *str);
-char					*ft_env_var(t_global *global, char *str);
-int						ft_skipquotes(char *str, char quote);
-int						ft_redir_len(char *str);
+int						ft_size_token(t_global *global, char *str);
 
 ///				REDIRECTION				///
 
@@ -145,5 +137,8 @@ void					ft_free_env(t_global *g);
 void					free_tab(char **tab);
 void					ft_free_glob(t_global *glob);
 int						ft_strcmp(const char *s1, const char *s2);
+int						ft_skipquotes(char *str, char quote);
+void					ft_printcmd(t_command *cmd);
+void					ft_free_cmd(t_command *cmd);
 
 #endif

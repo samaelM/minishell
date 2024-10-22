@@ -6,11 +6,11 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:19:14 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/16 17:48:19 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/18 17:51:40 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../inc/tokenisation.h"
 
 static int	ft_tokencpy(t_global *global, char *dest, char *src, int *pos)
 {
