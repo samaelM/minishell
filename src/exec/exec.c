@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/18 21:54:56 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:18:44 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	execution(t_global *g)
 	else
 	{
 		waitpid(pid, &status, 0);
-		g->exit_value = status;
+		// if (WIFEXITED(status))
+		// 	g->exit_value = WEXITSTATUS(status);
 		if (g_sig)
 			g->exit_value = 128 + g_sig;
 	}
