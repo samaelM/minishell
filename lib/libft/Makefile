@@ -26,7 +26,7 @@ BANDE = \033[7m
 .c.o:
 	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@${CC} $(CFLAGS) -c -o $@ $< -g
-	# @echo -n "\e[2K\r${GREEN}[OK]${WHITE}$<"
+	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${NAME}: ${OBJ}
 	@echo -n "${RED}[COMPILING]${WHITE}${NAME}"

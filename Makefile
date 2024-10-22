@@ -143,33 +143,37 @@ ${OBJ_DIR}/${MAIN_DIR}/%.o: src/main/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
 	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
+	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${OBJ_DIR}/${T_DIR}/%.o: src/${T_DIR}/%.c $(MS_INC) $(T_INC)
 	@mkdir -p ${dir $@}
 	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
+	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${OBJ_DIR}/${B_DIR}/%.o: src/${B_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
 	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
+	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${OBJ_DIR}/${S_DIR}/%.o: src/${S_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
 	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
+	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${OBJ_DIR}/${R_DIR}/%.o: src/${R_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
 	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
+	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${OBJ_DIR}/${E_DIR}/%.o: src/${E_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
 	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
-
-# @echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
+	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 $(LIBFT): $(LIBFT_INC)
 	@make -sC $(LIBFT_DIR)
