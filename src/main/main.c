@@ -6,13 +6,26 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/18 17:25:57 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:41:14 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 int	g_sig = 0;
+
+int ft_readfile(int fd)
+{
+	char *line;
+	while (42)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break;
+		printf("%s", line);
+	}
+	return 1;
+}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -40,6 +53,8 @@ int	main(int ac, char **av, char **envp)
 			// printf("step 1\n");
 			if (ft_token(line, &global) && ft_redir(&global, line))
 				ft_exec(&global);
+			// ft_readfile(global.command->infile);
+			
 			// ft_printcmd(global.command);
 			ft_free_cmd(global.command);
 		}

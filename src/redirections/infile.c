@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:29:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/16 16:42:01 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:39:45 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	ft_outfile2(t_global *global, char *line)
 		close(cmd->outfile);
 	len = 0;
 	name_size = ft_size_token(global, line + 2);
-	if (name_size==-1)
+	if (name_size == -1)
 		return (-1);
 	name = ft_calloc(name_size + 1, sizeof(char));
 	if (!name)
@@ -112,47 +112,114 @@ int	ft_infile(t_global *global, char *line)
 }
 
 // need protection
-int	ft_heredoc(t_global *global, char *line)
-{
-	int			len;
-	int			size;
-	char		*lim;
-	char		*buff;
-	char		*line2;
-	t_command	*cmd;
+// int	ft_heredoc(t_global *global, char *line)
+// {
+// 	int			len;
+// 	int			size;
+// 	char		*lim;
+// 	char		*buff;
+// 	char		*line2;
+// 	t_command	*cmd;
 
-	cmd = global->tmp;
-	if (cmd->infile > 1)
-		close(cmd->infile);
-	if (cmd->is_heredoc)
-		unlink(HEREDOC_NAME);
-	buff = malloc(700 * sizeof(char));
-	if (!buff)
-		return (-1);
-	len = 0;
+// 	cmd = global->tmp;
+// 	if (cmd->infile > 1)
+// 		close(cmd->infile);
+// 	if (cmd->is_heredoc)
+// 		unlink(HEREDOC_NAME);
+// 	buff = malloc(700 * sizeof(char));
+// 	if (!buff)
+// 		return (-1);
+// 	len = 0;
+// 	size = ft_size_token(global, line + 2);
+// 	if (size == -1)
+// 		return (-1);
+// 	lim = ft_calloc(size + 1, sizeof(char));
+// 	if (!lim)
+// 		return (perr(ERR_ALLOC), -1);
+// 	ft_get_arg(global, lim, line + 2);
+// 	cmd->infile = open(HEREDOC_NAME, O_CREAT | O_RDWR, 0666);
+// 	while (42)
+// 	{
+// 		line2 = readline(">");
+// 		if (ft_strncmp(lim, line2, ft_strlen(lim)) == 0
+// 			&& ft_strlen(lim) == ft_strlen(line2))
+// 			break ;
+// 		write(cmd->infile, line2, ft_strlen(line2));
+// 		write(cmd->infile, "\n", 1);
+// 	}
+// 	close(cmd->infile);
+// 	cmd->infile = open(HEREDOC_NAME, O_RDONLY);
+// 	printf("fd=%d\n", cmd->infile);
+// 	printf("%zd\n", read(cmd->infile, buff, 700));
+// 	printf(">%s<\n", buff);
+// 	free(buff);
+// 	cmd->is_heredoc = 1;
+// 	return (len + 2);
+// }
+
+char	*ft_get_lim(t_global *global, char *line)
+{
+	char	*lim;
+	int		size;
+
 	size = ft_size_token(global, line + 2);
 	if (size == -1)
-		return (-1);
+		return (NULL);
 	lim = ft_calloc(size + 1, sizeof(char));
 	if (!lim)
-		return (perr(ERR_ALLOC), -1);
+		return (perr(ERR_ALLOC), NULL);
 	ft_get_arg(global, lim, line + 2);
-	cmd->infile = open(HEREDOC_NAME, O_CREAT | O_RDWR, 0666);
-	while (42)
+	return (lim);
+}
+
+ssize_t write_all(int fd, const void *buffer, size_t count) {
+    const char *buf = buffer;
+    size_t total_written = 0;
+
+    while (total_written < count) {
+        ssize_t bytes_written = write(fd, buf + total_written, count - total_written);
+
+        if (bytes_written > 0) {
+            total_written += bytes_written;
+        } else if (bytes_written == -1) {
+            if (errno == EAGAIN || errno == EWOULDBLOCK) {
+                // The pipe is full, wait and try again
+                // For non-blocking fd, consider using select/poll/epoll here
+                continue;
+            } else {
+                // Another error occurred
+                return -1;
+            }
+        }
+    }
+
+    return total_written;
+}
+
+int	ft_heredoc(t_global *global, char *line)
+{
+	char	*lim;
+	char	*here_line;
+	int		fd[2];
+
+	lim = ft_get_lim(global, line);
+	if (!lim)
+		return (-1);
+	if (pipe(fd) == -1)
+		return (-1);
+	while (1)
 	{
-		line2 = readline(">");
-		if (ft_strncmp(lim, line2, ft_strlen(lim)) == 0
-			&& ft_strlen(lim) == ft_strlen(line2))
+		here_line = readline("> ");
+		if (!here_line)
+			return (-1);
+		if (ft_strncmp(here_line, lim, ft_strlen(lim)) == 0
+			&& here_line[ft_strlen(lim)] == 0)
 			break ;
-		write(cmd->infile, line2, ft_strlen(line2));
-		write(cmd->infile, "\n", 1);
+		write_all(fd[1], here_line, ft_strlen(here_line));
+		write(fd[1], "\n", 1);
 	}
-	close(cmd->infile);
-	cmd->infile = open(HEREDOC_NAME, O_RDONLY);
-	printf("fd=%d\n", cmd->infile);
-	printf("%zd\n", read(cmd->infile, buff, 700));
-	printf(">%s<\n", buff);
-	free(buff);
-	cmd->is_heredoc = 1;
-	return (len + 2);
+	free(lim);
+	close(fd[1]);
+	global->command->infile = fd[0];
+	return (2);
 }
