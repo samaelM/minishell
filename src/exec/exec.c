@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/22 17:18:44 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:58:24 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,39 @@ int	execution(t_global *g)
 {
 	int		status;
 	pid_t	pid;
+	int		fd[2];
 
-	pid = fork();
-	if (pid == -1)
-		printf("erreur fork");
-	else if (pid == 0)
+	while (g->command)
 	{
-		// if (g->command->next)
-		// 	printf("pipe\n");
-		exec_la_cmd(g);
-		exit(0);
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		// if (WIFEXITED(status))
-		// 	g->exit_value = WEXITSTATUS(status);
-		if (g_sig)
-			g->exit_value = 128 + g_sig;
+		if (pipe(fd) == -1)
+			perror("pipe");
+		pid = fork();
+		if (pid == -1)
+			printf("erreur fork");
+		else if (pid == 0) // fils
+		{
+			if (g->command->infile != -1)
+				dup2(g->command->infile, 0);
+			// else
+			// 	dup2(fd[0], 0);
+			if (g->command->outfile != -1)
+				dup2(g->command->outfile, 1);
+			// else
+			// 	dup2(fd[1], 1);
+			exec_la_cmd(g);
+		}
+		else // pere
+		{
+			waitpid(pid, &status, 0);
+			// if (WIFEXITED(status))
+			// 	g->exit_value = WEXITSTATUS(status);
+			if (g_sig)
+				g->exit_value = 128 + g_sig;
+		}
+		if (g->command->next)
+			g->command = g->command->next;
+		else
+			break ;
 	}
 	return (0);
 }
