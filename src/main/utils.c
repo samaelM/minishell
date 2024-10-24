@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/18 17:26:06 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:38:31 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	ft_free_cmd(t_command *cmd)
 	while (cmd)
 	{
 		i = 0;
-		if (cmd->infile != 0 && cmd->infile != 1 && cmd->infile != 2)
+		if (cmd->infile > 2)
 			close(cmd->infile);
 		if (cmd->is_heredoc)
 			unlink(HEREDOC_NAME);
-		if (cmd->outfile != 0 && cmd->outfile != 1 && cmd->outfile != 2)
+		if (cmd->outfile > 2)
 			close(cmd->outfile);
 		while (cmd->args && cmd->args[i])
 		{

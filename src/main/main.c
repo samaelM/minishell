@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/23 13:41:14 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:36:46 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int ac, char **av, char **envp)
 				ft_exec(&global);
 			// ft_readfile(global.command->infile);
 			
-			// ft_printcmd(global.command);
+			ft_printcmd(global.command);
 			ft_free_cmd(global.command);
 		}
 		// printf("exit status: %d\n", global.exit_value);

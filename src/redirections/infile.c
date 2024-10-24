@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:29:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/23 13:39:45 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:31:54 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,28 +172,27 @@ char	*ft_get_lim(t_global *global, char *line)
 	return (lim);
 }
 
-ssize_t write_all(int fd, const void *buffer, size_t count) {
-    const char *buf = buffer;
-    size_t total_written = 0;
+ssize_t	write_all(int fd, const void *buffer, size_t count)
+{
+	const char	*buf = buffer;
+	size_t		total_written;
+	ssize_t		bytes_written;
 
-    while (total_written < count) {
-        ssize_t bytes_written = write(fd, buf + total_written, count - total_written);
-
-        if (bytes_written > 0) {
-            total_written += bytes_written;
-        } else if (bytes_written == -1) {
-            if (errno == EAGAIN || errno == EWOULDBLOCK) {
-                // The pipe is full, wait and try again
-                // For non-blocking fd, consider using select/poll/epoll here
-                continue;
-            } else {
-                // Another error occurred
-                return -1;
-            }
-        }
-    }
-
-    return total_written;
+	total_written = 0;
+	while (total_written < count)
+	{
+		bytes_written = write(fd, buf + total_written, count - total_written);
+		if (bytes_written > 0)
+			total_written += bytes_written;
+		else if (bytes_written == -1)
+		{
+			if (errno == EAGAIN || errno == EWOULDBLOCK)
+				continue ;
+			else
+				return (-1);
+		}
+	}
+	return (total_written);
 }
 
 int	ft_heredoc(t_global *global, char *line)
