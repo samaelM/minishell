@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:29:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/24 12:31:54 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/25 19:16:16 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,9 +163,9 @@ char	*ft_get_lim(t_global *global, char *line)
 	int		size;
 
 	size = ft_size_token(global, line + 2);
-	if (size == -1)
 		return (NULL);
 	lim = ft_calloc(size + 1, sizeof(char));
+	if (size == -1)
 	if (!lim)
 		return (perr(ERR_ALLOC), NULL);
 	ft_get_arg(global, lim, line + 2);
@@ -216,6 +216,7 @@ int	ft_heredoc(t_global *global, char *line)
 			break ;
 		write_all(fd[1], here_line, ft_strlen(here_line));
 		write(fd[1], "\n", 1);
+		free(here_line);
 	}
 	free(lim);
 	close(fd[1]);

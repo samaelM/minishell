@@ -27,3 +27,5 @@ bash: /usr/local/sbin/..: Is a directory
 126
 
 ^C 130
+lim pour heredoc doit pas prendre en compte les var env
+si lim n'est pas entre quote, expend les env var
