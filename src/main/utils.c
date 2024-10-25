@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/24 13:38:31 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/25 18:04:38 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,29 @@ void	ft_free_cmd(t_command *cmd)
 
 void	ft_free_env(t_global *g)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (g->env[i])
 	{
 		free(g->env[i]);
 		i++;
 	}
 	free(g->env);
+}
+
+// c la meme qu'en haut
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
 
 void	ft_printcmd(t_command *cmd)

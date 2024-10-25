@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/15 13:16:58 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:18:44 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	execution(t_global *g)
 	else
 	{
 		waitpid(pid, &status, 0);
-		g->exit_value = status;
+		// if (WIFEXITED(status))
+		// 	g->exit_value = WEXITSTATUS(status);
 		if (g_sig)
 			g->exit_value = 128 + g_sig;
 	}
@@ -57,7 +58,7 @@ int	ft_exec(t_global *glob)
 {
 	if (glob->command && glob->command->cmd)
 	{
-	//	change_env_(glob);
+		change_env_(glob);
 		if (ft_strcmp(glob->command->cmd, "exit") == 0)
 		{
 			glob->exit_value = ft_exit(glob);

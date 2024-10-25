@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:11:41 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/11 17:20:54 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/15 21:27:26 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	ft_pwd(void)
 		printf("Error pwd\n");
 		return (1);
 	}
-	else
-		printf("%s\n", buf);
+	printf("%s\n", buf);
 	return (0);
 }

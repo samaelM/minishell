@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/22 18:47:14 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/25 18:07:01 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ char					*ft_getenv(char **env, char *var);
 int						find_var_in_env(char **env, char *var);
 int						change_env_var(t_global *glo, char *var, int line);
 void					change_env_(t_global *glob);
+char					*ft_var_content(char *var);
+char					*ft_getcwd(void);
 
 ///				SIGNALS					///
 void					sigint_handler(int sig_num);
@@ -132,7 +134,9 @@ size_t					ft_sstrlcpy(char *dst, const char *src, size_t dstsize);
 int						is_in_set(char c, char *set);
 void					perr(char *str);
 void					ft_free_env(t_global *g);
+void					free_tab(char **tab);
 void					ft_free_glob(t_global *glob);
+int						ft_strcmp(const char *s1, const char *s2);
 int						ft_skipquotes(char *str, char quote);
 void					ft_printcmd(t_command *cmd);
 void					ft_free_cmd(t_command *cmd);
