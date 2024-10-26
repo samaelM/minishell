@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/25 18:07:01 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/26 20:07:40 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_global
 	t_command			*tmp;
 	char				**env;
 	int					exit_value;
+	int					pipe[2];
 }						t_global;
 
 ///////////////////////////////////////////

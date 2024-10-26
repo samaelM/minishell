@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/25 18:04:38 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/26 20:51:55 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_free_glob(t_global *glob)
 {
-	ft_free_env(glob);
+	free_tab(glob->env);
 	ft_free_cmd(glob->command);
 }
 
@@ -23,6 +23,7 @@ void	ft_free_cmd(t_command *cmd)
 {
 	int			i;
 	t_command	*tmp;
+
 	while (cmd)
 	{
 		i = 0;
@@ -45,18 +46,18 @@ void	ft_free_cmd(t_command *cmd)
 	}
 }
 
-void	ft_free_env(t_global *g)
-{
-	int	i;
+// void	ft_free_env(t_global *g)
+// {
+// 	int	i;
 
-	i = 0;
-	while (g->env[i])
-	{
-		free(g->env[i]);
-		i++;
-	}
-	free(g->env);
-}
+// 	i = 0;
+// 	while (g->env[i])
+// 	{
+// 		free(g->env[i]);
+// 		i++;
+// 	}
+// 	free(g->env);
+// }
 
 // c la meme qu'en haut
 void	free_tab(char **tab)
@@ -81,17 +82,17 @@ void	ft_printcmd(t_command *cmd)
 	while (cmd)
 	{
 		i = 0;
-		printf("-----\ncmd[%d]\n", j++);
-		printf("infile fd=%d\n", cmd->infile);
+		//	printf("-----\ncmd[%d]\n", j++);
+		printf("\033[1;94minfile fd=%d\n", cmd->infile);
 		while (cmd->args && cmd->args[i])
 		{
-			printf("\033[1;94marg[%d]:>%s<\033[0m\n", i, cmd->args[i]);
+			// printf("\033[1;94marg[%d]:>%s<\033[0m\n", i, cmd->args[i]);
 			i++;
 		}
-		printf("outfile fd=%d\n", cmd->outfile);
+		printf("outfile fd=%d\033[0m\n", cmd->outfile);
 		cmd = cmd->next;
 	}
-	printf("-----\n");
+	// printf("-----\n");
 }
 
 size_t	ft_sstrlcpy(char *dst, const char *src, size_t dstsize)

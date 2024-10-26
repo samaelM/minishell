@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:34:17 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/18 21:54:30 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/26 20:48:05 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	absolute_path(t_global *g)
 {
-	if (execve(g->command->cmd, g->command->args, g->env) == -1)
+	if (execve(g->command->args[0], g->command->args, g->env) == -1)
 	{
-		perror(g->command->cmd);
+		perror(g->command->args[0]);
 		ft_free_glob(g);
 		exit(1);
 	}
@@ -66,7 +66,7 @@ void	cmd_path(t_global *g)
 	char	**all_paths;
 
 	all_paths = get_all_paths(g->env);
-	path = get_path(all_paths, g->command->cmd);
+	path = get_path(all_paths, g->command->args[0]);
 	if (!path)
 	{
 		free_tab(all_paths);
@@ -85,12 +85,13 @@ void	cmd_path(t_global *g)
 
 void	exec_la_cmd(t_global *g)
 {
+	//	ft_putstr_fd("eeeeeuh", 2);
 	int i;
 
 	i = 0;
-	while (g->command->cmd[i])
+	while (g->command->args[0][i])
 	{
-		if (g->command->cmd[i] == '/')
+		if (g->command->args[0][i] == '/')
 			absolute_path(g);
 		i++;
 	}
