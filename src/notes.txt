@@ -10,7 +10,22 @@ cmd not found 127
 /bi/ls 
 exit status 256 != 127
 
+TEST FAIL
+6.
+9.
+10.
+	
+
+
+
+error syntax: 2
+input no such file: 1
+error "" not closed: 130 (pareil pour heredoc)
+heredoc ctrl d = 0??????????????????????
+ctrl \ doit pas arreter heredoc
 bash: /usr/local/sbin/..: Is a directory
 126
 
 ^C 130
+lim pour heredoc doit pas prendre en compte les var env
+si lim n'est pas entre quote, expend les env var

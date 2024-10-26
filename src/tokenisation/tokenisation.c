@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/22 17:36:55 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/26 19:19:14 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,15 @@ int	ft_set_args(t_global *global, char **cmd, int *pos, int size)
 	return (1);
 }
 
+t_command	*ft_cmd_init(void)
+{
+	t_command	*command;
+
+	command = ft_calloc(1, sizeof(t_command));
+	command->infile = -1;
+	command->outfile = -1;
+	return (command);
+}
 int	ft_fillcmd(t_global *global, char **line, int *pos)
 {
 	int			size;
@@ -161,7 +170,7 @@ int	ft_fillcmd(t_global *global, char **line, int *pos)
 		(*line)++;
 	if (**line)
 	{
-		cmd->next = ft_calloc(1, sizeof(t_command));
+		cmd->next = ft_cmd_init();
 		if (!cmd->next)
 			return (perr(ERR_ALLOC), 0);
 	}
@@ -174,7 +183,7 @@ t_command	*ft_token(char *line, t_global *global)
 	int			pos;
 
 	// printf("step 2\n");
-	cmd = ft_calloc(1, sizeof(t_command));
+	cmd = ft_cmd_init();
 	// cmd = NULL;
 	if (!cmd)
 		return (perr(ERR_ALLOC), NULL);

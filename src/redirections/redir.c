@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:11:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/16 15:13:06 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/22 18:46:45 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	ft_redir(t_global *global, char *line)
 	while (line[i])
 	{
 		if (ft_strncmp(line + i, ">>", 2) == 0)
-			tmp += ft_outfile2(global, line + i);
+			tmp = ft_outfile2(global, line + i);
 		else if (line[i] == '>')
-			tmp += ft_outfile(global, line + i);
+			tmp = ft_outfile(global, line + i);
 		else if (ft_strncmp(line + i, "<<", 2) == 0)
-			tmp += ft_heredoc(global, line + i);
+			tmp = ft_heredoc(global, line + i);
 		else if (line[i] == '<')
-			tmp += ft_infile(global, line + i);
+			tmp = ft_infile(global, line + i);
 		if (tmp < 0)
 			return (0);
 		i += tmp;
