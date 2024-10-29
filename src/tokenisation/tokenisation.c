@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/26 19:19:14 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/29 18:04:33 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ t_command	*ft_cmd_init(void)
 	command = ft_calloc(1, sizeof(t_command));
 	command->infile = -1;
 	command->outfile = -1;
+	command->prev_fd = -1;
 	return (command);
 }
 int	ft_fillcmd(t_global *global, char **line, int *pos)

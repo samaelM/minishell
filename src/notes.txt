@@ -2,7 +2,10 @@ EXIT :
 free readline
 exit n, tester avec 5555555555555555555
 
+TODO:
+supp command->cmd
 
+builtins dup
 
 SIGNAUX :
 cmd not found 127

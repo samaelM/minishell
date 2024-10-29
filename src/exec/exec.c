@@ -6,96 +6,58 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/26 20:51:03 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/29 18:15:36 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+void	dup_infile(t_global *g, int i)
+{
+	if (g->command->infile != -1)
+		dup2(g->command->infile, 0);
+	else if (i != 0)
+	{
+		dup2(g->command->prev_fd, 0);
+		close(g->command->prev_fd);
+	}
+}
+
+void	dup_outfile(t_global *g)
+{
+	if (g->command->outfile != -1)
+		dup2(g->command->outfile, 1);
+	else if (g->command->next)
+	{
+		dup2(g->command->pipe[1], 1);
+		close(g->command->pipe[1]);
+	}
+	else
+		close(g->command->pipe[1]);
+}
+
 int	one_cmd(t_global *g, int i)
 {
 	pid_t	pid;
-	int		status;
 
 	pid = fork();
 	if (pid == -1)
 		printf("erreur fork");
 	else if (pid == 0) // fils
 	{
-		if (g->command->infile != -1)
-			dup2(g->command->infile, 0);
-		else if (i != 0)
-			dup2(g->pipe[0], 0);
-		if (g->command->outfile != -1)
-			dup2(g->command->outfile, 1);
-		else
-			dup2(g->pipe[1], 1);
+		close(g->command->pipe[0]);
+		dup_infile(g, i);
+		// printf("\033[0;93mcommande \033[0m\n");
+		dup_outfile(g);
 		exec_la_cmd(g);
 	}
 	else // pere
 	{
-		waitpid(pid, &status, 0);
 		// if (WIFEXITED(status))
 		// 	g->exit_value = WEXITSTATUS(status);
 		if (g_sig)
-			g->exit_value = 128 + g_sig;
-	}
-	return (0);
-}
-
-int	last_cmd(t_global *g)
-{
-	pid_t	pid;
-	int		status;
-
-	pid = fork();
-	if (pid == -1)
-		printf("erreur fork");
-	else if (pid == 0) // fils
-	{
-		if (g->command->infile != -1)
-			dup2(g->command->infile, 0);
-		else
-			dup2(g->pipe[0], 0);
-		if (g->command->outfile != -1)
-			dup2(g->command->outfile, 1);
-		ft_putstr_fd("sardine\n", 2);
-		printf("1\n");
-		exec_la_cmd(g);
-	}
-	else // pere
-	{
-		waitpid(pid, &status, 0);
-		// if (WIFEXITED(status))
-		// 	g->exit_value = WEXITSTATUS(status);
-		if (g_sig)
-			g->exit_value = 128 + g_sig;
-	}
-	return (0);
-}
-
-int	execution_wt_pipe(t_global *g)
-{
-	int		status;
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-		printf("erreur fork");
-	else if (pid == 0)
-	{
-		// if (g->command->next)
-		// 	printf("pipe\n");
-		exec_la_cmd(g);
-		exit(0);
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		// if (WIFEXITED(status))
-		// 	g->exit_value = WEXITSTATUS(status);
-		if (g_sig)
-			g->exit_value = 128 + g_sig;
+			close(g->command->pipe[0]);
+		g->exit_value = 128 + g_sig;
 	}
 	return (0);
 }
@@ -105,24 +67,27 @@ int	execution(t_global *g)
 	int	i;
 
 	i = 0;
-	if (!g->command->next)
-		return (execution_wt_pipe(g));
-	if (pipe(g->pipe) == -1)
-		perror("pipe");
 	while (g->command)
 	{
+		pipe(g->command->pipe);
+		one_cmd(g, i);
+		i++;
+		close(g->command->pipe[1]);
 		if (g->command->next)
 		{
-			one_cmd(g, i);
-			i++;
+			g->command->next->prev_fd = g->command->pipe[0];
+			if (g->command->prev_fd != -1)
+				close(g->command->prev_fd);
 			g->command = g->command->next;
 		}
 		else
-		{
-			last_cmd(g);
 			break ;
-		}
 	}
+	close(g->command->pipe[0]);
+	if (g->command->prev_fd != -1)
+		close(g->command->prev_fd);
+	while (waitpid(0, NULL, 0) != -1)
+		;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/26 20:07:40 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/29 18:04:36 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_command
 	int					is_heredoc;
 	char				**args;
 	int					outfile;
+	int					pipe[2];
+	int					prev_fd;
 	struct s_command	*next;
 }						t_command;
 
@@ -63,7 +65,6 @@ typedef struct s_global
 	t_command			*tmp;
 	char				**env;
 	int					exit_value;
-	int					pipe[2];
 }						t_global;
 
 ///////////////////////////////////////////
@@ -141,5 +142,6 @@ int						ft_strcmp(const char *s1, const char *s2);
 int						ft_skipquotes(char *str, char quote);
 void					ft_printcmd(t_command *cmd);
 void					ft_free_cmd(t_command *cmd);
+int	ft_readfile(int fd);
 
 #endif
