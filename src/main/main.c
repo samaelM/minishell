@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/25 18:24:25 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/28 15:51:28 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,21 @@
 
 int	g_sig = 0;
 
-int ft_readfile(int fd)
+int	ft_readfile(int fd)
 {
-	char *line;
+	char	*line;
+
 	if (fd < 3)
-		return 0;
+		return (0);
 	while (42)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			break;
+			break ;
 		printf("%s", line);
 		free(line);
 	}
-	return 1;
+	return (1);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -58,7 +59,7 @@ int	main(int argc, char **argv, char **envp)
 			// printf("step 1\n");
 			if (ft_token(line, &global) && ft_redir(&global, line))
 				ft_exec(&global);
-			ft_readfile(global.command->infile);
+			// ft_readfile(global.command->infile);
 			ft_printcmd(global.command);
 			ft_free_cmd(global.command);
 		}

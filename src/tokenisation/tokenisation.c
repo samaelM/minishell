@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/26 17:51:33 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:54:00 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ t_command	*ft_cmd_init(void)
 	command = ft_calloc(1, sizeof(t_command));
 	command->infile = -1;
 	command->outfile = -1;
+	command->prev_fd = -1;
 	return (command);
 }
 int	ft_fillcmd(t_global *global, char **line, int *pos)

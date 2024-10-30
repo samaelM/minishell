@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/30 12:50:19 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:53:55 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_command
 	int					is_heredoc;
 	char				**args;
 	int					outfile;
+	int					pipe[2];
+	int					prev_fd;
 	struct s_command	*next;
 }						t_command;
 
@@ -148,5 +150,6 @@ int						ft_strcmp(const char *s1, const char *s2);
 int						ft_skipquotes(char *str, char quote);
 void					ft_printcmd(t_command *cmd);
 void					ft_free_cmd(t_command *cmd);
+int	ft_readfile(int fd);
 
 #endif
