@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 19:12:25 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/18 20:43:45 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/30 16:21:54 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ void	change_env_(t_global *glob)
 	int		line;
 
 	// check si existe
-	var_ = malloc(sizeof(char) * (12 + ft_strlen(glob->command->cmd)));
+	var_ = malloc(sizeof(char) * (12 + ft_strlen(glob->command->args[0])));
 	ft_strlcpy(var_, "_=/usr/bin/", 12);
-	ft_strlcat(var_, glob->command->cmd, 12 + ft_strlen(glob->command->cmd));
-	// ft_memcpy(var_ + 11, glob->command->cmd, ft_strlen(glob->command->cmd)
-	//	+ 1);
+	ft_strlcat(var_, glob->command->args[0], 12
+		+ ft_strlen(glob->command->args[0]));
 	line = find_var_in_env(glob->env, "_");
 	if (line == -1)
 		printf("ok\n\n");
