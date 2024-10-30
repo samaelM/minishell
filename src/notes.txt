@@ -20,3 +20,7 @@ bash: /usr/local/sbin/..: Is a directory
 input no such file: 1
 error "" not closed: 130
 -2 si file non open
+<end ls | ls (n'execute pas la cmd avec un pb de file)
+ctrl d continue la cmd, pas ctrl c
+warning: here-document at line 8 delimited by end-of-file (wanted `end')
+/!\ erreur sur stderr stp anaellllllllllllle

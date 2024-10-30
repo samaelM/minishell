@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/30 16:28:33 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:15:32 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 int	ft_exec(t_global *glob)
 {
+	// printf("exec\n");
 	if (glob->command && glob->command->args && glob->command->args[0])
 	{
 		change_env_(glob);

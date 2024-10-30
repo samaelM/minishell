@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_env.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:09:11 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/22 15:39:33 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:39:31 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,7 @@ char	*ft_env_var(t_global *global, char *str)
 	ft_sstrlcpy(env_var, str, len + 1);
 	content = ft_getenv(global->env, env_var);
 	free(env_var);
+	if (content == NULL)
+		return ("");
 	return (content);
 }
