@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:29:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/28 18:52:11 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:52:35 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,52 +110,6 @@ int	ft_infile(t_global *global, char *line)
 	free(name);
 	return (len + 1);
 }
-
-// need protection
-// int	ft_heredoc(t_global *global, char *line)
-// {
-// 	int			len;
-// 	int			size;
-// 	char		*lim;
-// 	char		*buff;
-// 	char		*line2;
-// 	t_command	*cmd;
-
-// 	cmd = global->tmp;
-// 	if (cmd->infile > 1)
-// 		close(cmd->infile);
-// 	if (cmd->is_heredoc)
-// 		unlink(HEREDOC_NAME);
-// 	buff = malloc(700 * sizeof(char));
-// 	if (!buff)
-// 		return (-1);
-// 	len = 0;
-// 	size = ft_size_token(global, line + 2);
-// 	if (size == -1)
-// 		return (-1);
-// 	lim = ft_calloc(size + 1, sizeof(char));
-// 	if (!lim)
-// 		return (perr(ERR_ALLOC), -1);
-// 	ft_get_arg(global, lim, line + 2);
-// 	cmd->infile = open(HEREDOC_NAME, O_CREAT | O_RDWR, 0666);
-// 	while (42)
-// 	{
-// 		line2 = readline(">");
-// 		if (ft_strncmp(lim, line2, ft_strlen(lim)) == 0
-// 			&& ft_strlen(lim) == ft_strlen(line2))
-// 			break ;
-// 		write(cmd->infile, line2, ft_strlen(line2));
-// 		write(cmd->infile, "\n", 1);
-// 	}
-// 	close(cmd->infile);
-// 	cmd->infile = open(HEREDOC_NAME, O_RDONLY);
-// 	printf("fd=%d\n", cmd->infile);
-// 	printf("%zd\n", read(cmd->infile, buff, 700));
-// 	printf(">%s<\n", buff);
-// 	free(buff);
-// 	cmd->is_heredoc = 1;
-// 	return (len + 2);
-// }
 
 char	*ft_get_lim(t_global *global, char *line)
 {
@@ -262,7 +216,7 @@ char	*ft_hd_parse(t_global *global, char *line)
 		}
 	}
 	new_line = ft_calloc(size + 1, sizeof(char));
-	printf("size = %d\n", size);
+	// printf("size = %d\n", size);
 	idx = 0;
 	size = 0;
 	while (line[idx])
@@ -307,7 +261,7 @@ int	ft_hd_nquote(t_global *global, int fd[2], char *lim)
 			&& here_line[ft_strlen(lim)] == 0)
 			break ;
 		new_line = ft_hd_parse(global, here_line);
-		printf("nl = %s\n", new_line);
+		// printf("nl = %s\n", new_line);
 		write_all(fd[1], new_line, ft_strlen(new_line));
 		write(fd[1], "\n", 1);
 		free(here_line);
@@ -343,7 +297,7 @@ int	ft_hd_quote(t_global *global, int fd[2], char *lim)
 	return (2);
 }
 
-int	ft_heredoc(t_global *global, char *line)
+int	ft_hd(t_global *global, char *line)
 {
 	char	*lim;
 	int		fd[2];
@@ -356,4 +310,14 @@ int	ft_heredoc(t_global *global, char *line)
 	if (in_quote)
 		return (ft_hd_quote(global, fd, lim));
 	return (ft_hd_nquote(global, fd, lim));
+}
+
+int	ft_heredoc(t_global *global, char *line)
+{
+	int	res;
+
+	signal(SIGINT, hd_sigint_handler);
+	res = ft_hd(global, line);
+	signal(SIGINT, sigint_handler);
+	return (res);
 }

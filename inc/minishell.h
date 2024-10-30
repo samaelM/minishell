@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/28 17:57:03 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/30 12:50:19 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,7 @@ char					*ft_getcwd(void);
 void					sigint_handler(int sig_num);
 void					sigquit_handler(int sig_num);
 void					signal_ctrD(t_global *g);
+void					hd_sigint_handler(int signum);
 
 ///				OTHER					///
 void					ft_watermark(void);
