@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:29:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/30 12:52:35 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:50:15 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -316,8 +316,8 @@ int	ft_heredoc(t_global *global, char *line)
 {
 	int	res;
 
-	signal(SIGINT, hd_sigint_handler);
+	// signal(SIGINT, hd_sigint_handler);
 	res = ft_hd(global, line);
-	signal(SIGINT, sigint_handler);
+	// signal(SIGINT, sigint_handler);
 	return (res);
 }
