@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/25 18:07:01 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/28 17:57:03 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,13 @@ t_command				*ft_token(char *command, t_global *global);
 int						ft_check_line(char *str);
 int						ft_get_arg(t_global *global, char *dest, char *str);
 int						ft_size_token(t_global *global, char *str);
+int						ft_tokencpy(t_global *global, char *dest, char *src,
+							int *pos);
+int						ft_get_size_qtoken(t_global *global, char *str,
+							int *idx, int *size);
+int						ft_envname_len(char *str);
+int						ft_env_len_bis(t_global *global, char *str);
+char					*ft_env_var(t_global *global, char *str);
 
 ///				REDIRECTION				///
 

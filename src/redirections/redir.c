@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:11:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/22 18:46:45 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/26 16:39:57 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,15 @@ int	ft_redir(t_global *global, char *line)
 			return (0);
 		i += tmp;
 		while (line[i] && !is_in_set(line[i], "><|'\""))
-			i++;
-		i += ft_skipquotes(line + i, '"');
-		i += ft_skipquotes(line + i, '\'');
-		if (line[i] == '|')
 		{
 			i++;
-			global->tmp = global->tmp->next;
+			i += ft_skipquotes(line + i, '"');
+			i += ft_skipquotes(line + i, '\'');
+			if (line[i] == '|')
+			{
+				i++;
+				global->tmp = global->tmp->next;
+			}
 		}
 	}
 	return (1);

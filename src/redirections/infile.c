@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:29:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/25 19:16:16 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/28 18:52:11 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,21 +163,63 @@ char	*ft_get_lim(t_global *global, char *line)
 	int		size;
 
 	size = ft_size_token(global, line + 2);
+	if (size == -1)
 		return (NULL);
 	lim = ft_calloc(size + 1, sizeof(char));
-	if (size == -1)
 	if (!lim)
 		return (perr(ERR_ALLOC), NULL);
 	ft_get_arg(global, lim, line + 2);
 	return (lim);
 }
 
+size_t	ft_getsizelim(char *line)
+{
+	size_t	idx;
+	size_t	len;
+
+	len = 0;
+	idx = 0;
+	while (is_in_set(line[idx], " 	"))
+		idx++;
+	while (line[idx] && !is_in_set(line[idx], " 	"))
+	{
+		if (!is_in_set(line[idx], "'\""))
+			len++;
+		idx++;
+	}
+	return (len);
+}
+
+char	*ft_getlim(t_global *global, char *line, int *in_quote)
+{
+	char	*result;
+	char	*tmp;
+
+	(void)global;
+	line = line + 2;
+	result = ft_calloc(ft_getsizelim(line) + 1, sizeof(char));
+	tmp = result;
+	while (is_in_set(*line, " 	"))
+		line++;
+	while (*line && !is_in_set(*line, " 	"))
+	{
+		if (is_in_set(*line, "'\""))
+			*in_quote = 1;
+		else
+			*(tmp++) = *line;
+		line++;
+	}
+	*tmp = 0;
+	return (result);
+}
+
 ssize_t	write_all(int fd, const void *buffer, size_t count)
 {
-	const char	*buf = buffer;
+	const char	*buf;
 	size_t		total_written;
 	ssize_t		bytes_written;
 
+	buf = buffer;
 	total_written = 0;
 	while (total_written < count)
 	{
@@ -195,17 +237,94 @@ ssize_t	write_all(int fd, const void *buffer, size_t count)
 	return (total_written);
 }
 
-int	ft_heredoc(t_global *global, char *line)
+char	*ft_hd_parse(t_global *global, char *line)
 {
-	char	*lim;
-	char	*here_line;
-	int		fd[2];
+	int		idx;
+	int		size;
+	char	*new_line;
+	char	*env_var;
 
-	lim = ft_get_lim(global, line);
-	if (!lim)
-		return (-1);
+	idx = 0;
+	size = 0;
+	while (line[idx])
+	{
+		if (line[idx] == '$')
+		{
+			size += ft_env_len_bis(global, line + idx + 1);
+			if (size == -1)
+				return (NULL);
+			idx += ft_envname_len(line + idx + 1);
+		}
+		else
+		{
+			size++;
+			idx++;
+		}
+	}
+	new_line = ft_calloc(size + 1, sizeof(char));
+	printf("size = %d\n", size);
+	idx = 0;
+	size = 0;
+	while (line[idx])
+	{
+		if (line[idx] == '$')
+		{
+			env_var = ft_env_var(global, line + idx + 1);
+			if (!env_var)
+				return (free(new_line), NULL);
+			ft_sstrlcpy(new_line + size, env_var, ft_strlen(env_var) + 1);
+			size += ft_strlen(env_var);
+			idx += ft_envname_len(line + idx + 1) + 1;
+		}
+		else
+		{
+			new_line[size] = line[idx];
+			size++;
+			idx++;
+		}
+	}
+	new_line[size] = 0;
+	return (new_line);
+}
+
+int	ft_hd_nquote(t_global *global, int fd[2], char *lim)
+{
+	char	*here_line;
+	char	*new_line;
+	int		pos;
+	int		size_tk;
+
+	pos = 1;
+	size_tk = 0;
 	if (pipe(fd) == -1)
-		return (-1);
+		return (free(lim), 1);
+	while (1)
+	{
+		here_line = readline("> ");
+		if (!here_line)
+			return (-1);
+		if (ft_strncmp(here_line, lim, ft_strlen(lim)) == 0
+			&& here_line[ft_strlen(lim)] == 0)
+			break ;
+		new_line = ft_hd_parse(global, here_line);
+		printf("nl = %s\n", new_line);
+		write_all(fd[1], new_line, ft_strlen(new_line));
+		write(fd[1], "\n", 1);
+		free(here_line);
+		free(new_line);
+	}
+	free(lim);
+	free(here_line);
+	close(fd[1]);
+	global->command->infile = fd[0];
+	return (2);
+}
+int	ft_hd_quote(t_global *global, int fd[2], char *lim)
+{
+	char	*here_line;
+
+	if (pipe(fd) == -1)
+		return (free(lim), 1);
 	while (1)
 	{
 		here_line = readline("> ");
@@ -222,4 +341,19 @@ int	ft_heredoc(t_global *global, char *line)
 	close(fd[1]);
 	global->command->infile = fd[0];
 	return (2);
+}
+
+int	ft_heredoc(t_global *global, char *line)
+{
+	char	*lim;
+	int		fd[2];
+	int		in_quote;
+
+	in_quote = 0;
+	lim = ft_getlim(global, line, &in_quote); // protections?
+	if (!lim)
+		return (-1);
+	if (in_quote)
+		return (ft_hd_quote(global, fd, lim));
+	return (ft_hd_nquote(global, fd, lim));
 }

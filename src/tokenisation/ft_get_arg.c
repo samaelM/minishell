@@ -6,13 +6,13 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:19:14 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/18 17:51:40 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/26 18:15:48 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/tokenisation.h"
 
-static int	ft_tokencpy(t_global *global, char *dest, char *src, int *pos)
+int	ft_tokencpy(t_global *global, char *dest, char *src, int *pos)
 {
 	int		idx;
 	char	*exit_stat;
@@ -88,7 +88,7 @@ int	ft_get_arg(t_global *global, char *dest, char *str)
 			idx += tmp;
 		}
 		while (str[idx] && is_in_set(str[idx], "<>"))
-			idx += ft_redir_len(str + idx);
+			idx += ft_redir_len(str + idx);//
 	}
 	dest[pos] = 0;
 	return (idx);
