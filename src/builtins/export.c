@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:48:08 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/31 14:45:20 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:43:07 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int	parse_export(char *var)
 			i++;
 		}
 	}
-	printf("export: `%s': not a valid identifier\n", var);
+	if (var[i] != '\0')
+		printf("export: `%s': not a valid identifier\n", var);
 	return (1);
 }
 
