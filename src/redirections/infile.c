@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:29:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/30 12:52:35 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/30 19:52:22 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	ft_outfile(t_global *global, char *line)
 	cmd->outfile = open(name, O_CREAT | O_TRUNC | O_RDWR, 0666);
 	if (cmd->outfile == -1)
 	{
+		global->exit_value = 1;
 		perror(name);
 		free(name);
 		return (-1);
@@ -68,6 +69,7 @@ int	ft_outfile2(t_global *global, char *line)
 	cmd->outfile = open(name, O_CREAT | O_APPEND | O_RDWR, 0666);
 	if (cmd->outfile == -1)
 	{
+		global->exit_value = 1;
 		perror(name);
 		free(name);
 		return (-1);
@@ -103,6 +105,7 @@ int	ft_infile(t_global *global, char *line)
 	cmd->infile = open(name, O_RDONLY);
 	if (cmd->infile == -1)
 	{
+		global->exit_value = 1;
 		perror(name);
 		free(name);
 		return (-1);
@@ -316,8 +319,8 @@ int	ft_heredoc(t_global *global, char *line)
 {
 	int	res;
 
-	signal(SIGINT, hd_sigint_handler);
+	// signal(SIGINT, hd_sigint_handler);
 	res = ft_hd(global, line);
-	signal(SIGINT, sigint_handler);
+	// signal(SIGINT, sigint_handler);
 	return (res);
 }

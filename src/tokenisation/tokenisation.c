@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/31 14:06:07 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:07:48 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,8 @@ int	ft_set_args(t_global *global, char **cmd, int *pos, int size)
 		// printf("size_tk = %d\n", sizetk);
 		if (sizetk == -1)
 			return (0);
-		if (sizetk == 0)
-			return (1);
+		// if (sizetk == 0)
+		// 	return (1);
 		args[idx] = ft_calloc(sizetk + 1, sizeof(char));
 		if (!args[idx])
 			return (perr(ERR_ALLOC), 0);

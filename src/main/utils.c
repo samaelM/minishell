@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/28 15:02:16 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/30 18:02:10 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,17 @@ void	ft_printcmd(t_command *cmd)
 	while (cmd)
 	{
 		i = 0;
-		//	printf("-----\ncmd[%d]\n", j++);
-		printf("\033[1;94minfile fd=%d\n", cmd->infile);
+		printf("-----\ncmd[%d]\n", j++);
+		printf("infile fd=%d\n", cmd->infile);
 		while (cmd->args && cmd->args[i])
 		{
-			// printf("\033[1;94marg[%d]:>%s<\033[0m\n", i, cmd->args[i]);
+			printf("\033[1;94marg[%d]:>%s<\033[0m\n", i, cmd->args[i]);
 			i++;
 		}
-		printf("outfile fd=%d\033[0m\n", cmd->outfile);
+		printf("outfile fd=%d\n", cmd->outfile);
 		cmd = cmd->next;
 	}
-	// printf("-----\n");
+	printf("-----\n");
 }
 
 size_t	ft_sstrlcpy(char *dst, const char *src, size_t dstsize)
