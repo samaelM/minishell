@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:30:33 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/31 14:44:03 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/31 17:20:44 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int	change_pwd_vars(t_global *g, char *cwd)
 		change_env_var(g, string, is_line);
 	else
 		add_env_var(g, string);
-	free(string);
 	free(cwd);
+	free(string);
 	return (change_pwd(g));
 }
 
@@ -96,11 +96,13 @@ int	ft_cd(t_global *g)
 		home = ft_getenv(g->env, "HOME");
 		if (!home)
 		{
+			free(cwd);
 			printf("cd: HOME not set\n");
 			return (1);
 		}
 		if (chdir(home))
 		{
+			free(cwd);
 			printf("cd: %s\n", strerror(errno));
 			return (1);
 		}
@@ -108,11 +110,13 @@ int	ft_cd(t_global *g)
 	}
 	if (g->command->args[2])
 	{
+		free(cwd);
 		printf("cd: too many arguments\n");
 		return (1);
 	}
 	if (g->command->args[1] && chdir(g->command->args[1]))
 	{
+		free(cwd);
 		printf("cd: %s: %s\n", g->command->args[1], strerror(errno));
 		return (1);
 	}
