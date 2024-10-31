@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:34:17 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/28 15:55:57 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/31 14:45:36 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	cmd_path(t_global *g)
 
 void	exec_la_cmd(t_global *g)
 {
-	//	ft_putstr_fd("eeeeeuh", 2);
 	int i;
 
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:30:33 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/15 21:47:51 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/31 14:44:03 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_getcwd(void)
 	return (cwd);
 }
 
-int	change_pwd(t_global *glo)
+int	change_pwd(t_global *g)
 {
 	char	*cwd;
 	char	*string;
@@ -49,17 +49,17 @@ int	change_pwd(t_global *glo)
 	}
 	ft_strlcpy(string, "PWD=", 5);
 	ft_strlcat(string, cwd, (5 + ft_strlen(cwd)));
-	is_line = find_var_in_env(glo->env, "PWD");
+	is_line = find_var_in_env(g->env, "PWD");
 	if (is_line != -1)
-		change_env_var(glo, string, is_line);
+		change_env_var(g, string, is_line);
 	else
-		add_env_var(glo, string);
+		add_env_var(g, string);
 	free(string);
 	free(cwd);
 	return (0);
 }
 
-int	change_pwd_vars(t_global *glo, char *cwd)
+int	change_pwd_vars(t_global *g, char *cwd)
 {
 	char	*string;
 	int		is_line;
@@ -73,17 +73,17 @@ int	change_pwd_vars(t_global *glo, char *cwd)
 	}
 	ft_strlcpy(string, "OLDPWD=", 9);
 	ft_strlcat(string, cwd, 9 + ft_strlen(cwd));
-	is_line = find_var_in_env(glo->env, "OLDPWD");
+	is_line = find_var_in_env(g->env, "OLDPWD");
 	if (is_line != -1)
-		change_env_var(glo, string, is_line);
+		change_env_var(g, string, is_line);
 	else
-		add_env_var(glo, string);
+		add_env_var(g, string);
 	free(string);
 	free(cwd);
-	return (change_pwd(glo));
+	return (change_pwd(g));
 }
 
-int	ft_cd(t_global *glo)
+int	ft_cd(t_global *g)
 {
 	char	*home;
 	char	*cwd;
@@ -91,9 +91,9 @@ int	ft_cd(t_global *glo)
 	cwd = ft_getcwd();
 	if (!cwd)
 		return (1);
-	if (glo->command->args[1] == NULL)
+	if (g->command->args[1] == NULL)
 	{
-		home = ft_getenv(glo->env, "HOME");
+		home = ft_getenv(g->env, "HOME");
 		if (!home)
 		{
 			printf("cd: HOME not set\n");
@@ -104,17 +104,17 @@ int	ft_cd(t_global *glo)
 			printf("cd: %s\n", strerror(errno));
 			return (1);
 		}
-		return (change_pwd_vars(glo, cwd));
+		return (change_pwd_vars(g, cwd));
 	}
-	if (glo->command->args[2])
+	if (g->command->args[2])
 	{
 		printf("cd: too many arguments\n");
 		return (1);
 	}
-	if (glo->command->args[1] && chdir(glo->command->args[1]))
+	if (g->command->args[1] && chdir(g->command->args[1]))
 	{
-		printf("cd: %s: %s\n", glo->command->args[1], strerror(errno));
+		printf("cd: %s: %s\n", g->command->args[1], strerror(errno));
 		return (1);
 	}
-	return (change_pwd_vars(glo, cwd));
+	return (change_pwd_vars(g, cwd));
 }

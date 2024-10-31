@@ -1,9 +1,8 @@
-EXIT :
-free readline
-exit n, tester avec 5555555555555555555
-
+free readline parfois ???
 
 builtins dup
+
+
 
 SIGNAUX :
 cmd not found 127
