@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/30 16:28:33 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:35:02 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	dup_infile(t_global *g, int i)
 
 void	dup_outfile(t_global *g)
 {
+	ft_putnbr_fd(g->command->outfile, 2);
 	if (g->command->outfile != -1)
 		dup2(g->command->outfile, 1);
 	else if (g->command->next)

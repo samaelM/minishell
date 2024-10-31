@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:47:56 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/25 18:19:04 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/30 13:23:08 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,14 @@ void	sigint_handler(int signum)
 	rl_on_new_line();
 	if (wait(NULL) == -1)
 		rl_redisplay();
+	g_sig = signum;
+}
+
+void	hd_sigint_handler(int signum)
+{
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 	g_sig = signum;
 }
 

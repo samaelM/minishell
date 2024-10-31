@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:21:21 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/18 17:51:27 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/26 17:34:28 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_redir_len(char *str)
 	int	idx;
 
 	idx = 0;
-	while (str[idx] && is_in_set(str[idx], "<>"))
+	while (str[idx] && is_in_set(str[idx], "<>'\""))
 	{
 		while (str[idx] && is_in_set(str[idx], "<>"))
 			idx++;
@@ -46,5 +46,6 @@ int	ft_redir_len(char *str)
 		while (str[idx] && is_in_set(str[idx], " 	"))
 			idx++;
 	}
+	// printf("len redir = %d\n", idx);
 	return (idx);
 }

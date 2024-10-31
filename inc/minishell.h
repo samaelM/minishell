@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/29 18:04:36 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/31 14:06:16 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ typedef struct s_command
 {
 	int					infile;
 	char				*cmdpath;
-	char				*cmd;
 	int					is_pipe;
 	int					is_heredoc;
 	char				**args;
@@ -91,6 +90,13 @@ t_command				*ft_token(char *command, t_global *global);
 int						ft_check_line(char *str);
 int						ft_get_arg(t_global *global, char *dest, char *str);
 int						ft_size_token(t_global *global, char *str);
+int						ft_tokencpy(t_global *global, char *dest, char *src,
+							int *pos);
+int						ft_get_size_qtoken(t_global *global, char *str,
+							int *idx, int *size);
+int						ft_envname_len(char *str);
+int						ft_env_len_bis(t_global *global, char *str);
+char					*ft_env_var(t_global *global, char *str);
 
 ///				REDIRECTION				///
 
@@ -126,6 +132,7 @@ char					*ft_getcwd(void);
 void					sigint_handler(int sig_num);
 void					sigquit_handler(int sig_num);
 void					signal_ctrD(t_global *g);
+void					hd_sigint_handler(int signum);
 
 ///				OTHER					///
 void					ft_watermark(void);
@@ -142,6 +149,6 @@ int						ft_strcmp(const char *s1, const char *s2);
 int						ft_skipquotes(char *str, char quote);
 void					ft_printcmd(t_command *cmd);
 void					ft_free_cmd(t_command *cmd);
-int	ft_readfile(int fd);
+int						ft_readfile(int fd);
 
 #endif

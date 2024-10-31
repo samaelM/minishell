@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/29 18:04:33 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/31 14:06:07 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	ft_get_size_qtoken(t_global *global, char *str, int *idx, int *size)
 				if (str[*idx] == '$')
 				{
 					env_len = ft_env_len_bis(global, str + (*idx) + 1);
-					// printf("step 6\n, %d", env_len);
 					if (env_len == -1)
 						return (0);
 					*size += env_len;
@@ -52,12 +51,12 @@ int	ft_size_token(t_global *global, char *str)
 	int	size;
 	int	env_len;
 
-	// printf("step 5\n");
+	// printf("ft_size_token str:%s\n", str);
 	size = 0;
 	idx = 0;
 	while (str[idx] && is_in_set(str[idx], " 	"))
 		idx++;
-	while (str[idx] && !is_in_set(str[idx], " 	|<>"))
+	while (str[idx] && !is_in_set(str[idx], " 	|"))
 	{
 		if (!ft_get_size_qtoken(global, str, &idx, &size))
 			return (-1);
@@ -75,9 +74,12 @@ int	ft_size_token(t_global *global, char *str)
 				size++;
 			idx++;
 		}
+		// printf("%d: %s\n", idx, str+idx);
 		while (str[idx] && is_in_set(str[idx], "<>"))
 			idx += ft_redir_len(str + idx);
+		// printf("%d: %s\n", idx, str+idx);
 	}
+	// printf("end ft_size_token\n");
 	return (size);
 }
 
@@ -126,6 +128,8 @@ int	ft_set_args(t_global *global, char **cmd, int *pos, int size)
 		// printf("size_tk = %d\n", sizetk);
 		if (sizetk == -1)
 			return (0);
+		if (sizetk == 0)
+			return (1);
 		args[idx] = ft_calloc(sizetk + 1, sizeof(char));
 		if (!args[idx])
 			return (perr(ERR_ALLOC), 0);
@@ -198,8 +202,6 @@ t_command	*ft_token(char *line, t_global *global)
 		if (global->tmp->next)
 			global->tmp = global->tmp->next;
 	}
-	if (cmd->args)
-		cmd->cmd = cmd->args[0];
 	return (cmd);
 }
 
