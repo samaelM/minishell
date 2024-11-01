@@ -6,11 +6,21 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:11:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/30 19:33:45 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/01 15:44:22 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	skip_cmd(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] != '|')
+		i++;
+	return (i);
+}
 
 int	ft_redir(t_global *global, char *line)
 {
@@ -33,16 +43,15 @@ int	ft_redir(t_global *global, char *line)
 		else if (line[i] == '<')
 			tmp = ft_infile(global, line + i);
 		if (tmp < 0)
-			return (0);
+			i += skip_cmd(line);
 		i += tmp;
+		// printf("%d:%c\n", i, line[i]);
 		while (line[i] && !is_in_set(line[i], "><|"))
 		{
 			if (!is_in_set(line[i], "'\""))
 				i++;
 			i += ft_skipquotes(line + i, '"');
-			// printf("1:%c\n", line[i]);
 			i += ft_skipquotes(line + i, '\'');
-			// printf("2:%c\n", line[i]);
 			if (line[i] == '|')
 			{
 				i++;

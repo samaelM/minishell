@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:29:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/30 19:52:22 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:00:47 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	ft_outfile(t_global *global, char *line)
 	cmd->outfile = open(name, O_CREAT | O_TRUNC | O_RDWR, 0666);
 	if (cmd->outfile == -1)
 	{
+		cmd->outfile = -2;
 		global->exit_value = 1;
 		perror(name);
 		free(name);
@@ -69,6 +70,7 @@ int	ft_outfile2(t_global *global, char *line)
 	cmd->outfile = open(name, O_CREAT | O_APPEND | O_RDWR, 0666);
 	if (cmd->outfile == -1)
 	{
+		cmd->outfile = -2;
 		global->exit_value = 1;
 		perror(name);
 		free(name);
@@ -105,6 +107,7 @@ int	ft_infile(t_global *global, char *line)
 	cmd->infile = open(name, O_RDONLY);
 	if (cmd->infile == -1)
 	{
+		cmd->infile = -2;
 		global->exit_value = 1;
 		perror(name);
 		free(name);
@@ -259,7 +262,7 @@ int	ft_hd_nquote(t_global *global, int fd[2], char *lim)
 	{
 		here_line = readline("> ");
 		if (!here_line)
-			return (-1);
+			break;
 		if (ft_strncmp(here_line, lim, ft_strlen(lim)) == 0
 			&& here_line[ft_strlen(lim)] == 0)
 			break ;
@@ -286,7 +289,7 @@ int	ft_hd_quote(t_global *global, int fd[2], char *lim)
 	{
 		here_line = readline("> ");
 		if (!here_line)
-			return (-1);
+			break;
 		if (ft_strncmp(here_line, lim, ft_strlen(lim)) == 0
 			&& here_line[ft_strlen(lim)] == 0)
 			break ;
@@ -319,8 +322,6 @@ int	ft_heredoc(t_global *global, char *line)
 {
 	int	res;
 
-	// signal(SIGINT, hd_sigint_handler);
 	res = ft_hd(global, line);
-	// signal(SIGINT, sigint_handler);
 	return (res);
 }

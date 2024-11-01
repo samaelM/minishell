@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   t_checks.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:43:39 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/22 15:39:30 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/01 15:44:37 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	ft_check_line(char *str)
 {
 	int	idx;
 	int	pos;
+	int	tmp;
 
 	idx = 0;
 	while (str[idx] && is_in_set(str[idx], " 	"))
@@ -85,8 +86,15 @@ int	ft_check_line(char *str)
 	{
 		while (str[idx] && !is_in_set(str[idx], "><|\"'"))
 			idx++;
-		idx += ft_skipquotes(str + idx, '"');
-		idx += ft_skipquotes(str + idx, '\'');
+		tmp = ft_skipquotes(str + idx, '"');
+		// printf("tmp=%d\n", tmp);
+		if (tmp == -1)// quote non fermees
+			return (0);
+		idx += tmp;
+		tmp = ft_skipquotes(str + idx, '\'');
+		if (tmp == -1)// quote non fermees
+			return (0);
+		idx += tmp;
 		pos = ft_check_pipes(str + idx);
 		if (pos == -1)
 			return (0);
