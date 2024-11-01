@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/01 17:52:15 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/01 19:07:43 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@
 
 # define METACHAR " 	|<>"
 # define HEREDOC_NAME "/tmp/heredoc_poivre"
+# define ERR_HD_EOF "warning: here-document at line 8 delimited by end-of-file (wanted `end')\n"
 # define ERR_ALLOC \
-	"an error has occured\
-, it may be related with \
-a malloc failure\n"
+	"an error has occured,\
+	it may be related with a malloc failure\n"
 
 ///////////////////////////////////////////
 ///				STRUCTURES				///
@@ -106,7 +106,7 @@ int						ft_infile(t_global *global, char *line);
 int						ft_outfile(t_global *global, char *line);
 int						ft_outfile2(t_global *global, char *line);
 char					*ft_hd_parse(t_global *global, char *line);
-char	*ft_getlim(t_global *global, char *line, int *in_quote);
+char					*ft_getlim(t_global *global, char *line, int *in_quote);
 
 ///				BUILT-INS				///
 
