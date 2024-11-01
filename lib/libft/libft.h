@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 14:49:55 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/04/02 14:03:35 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:22:54 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ char				*ft_ltoa_hexa(unsigned long long n, char format);
 int					ft_utoa_size(long nb);
 char				*ft_utoa(unsigned int n);
 char				*printf_s(const char *src);
+int					ft_perrorf(const char *format, ...);
 
 #endif

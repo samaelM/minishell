@@ -39,11 +39,11 @@ S_FILES		=	${addprefix src/,${addprefix ${S_DIR}/,${S_SRC}}}
 
 ######	redirection	#####
 R_DIR		=	redirections
-R_SRC		=	pipex.c \
-				redir.c \
+R_SRC		=	redir.c \
 				infile.c \
 				outfile.c \
 				here_doc.c \
+				here_doc_utils.c \
 
 R_FILES		=	${addprefix src/,${addprefix ${R_DIR}/,${R_SRC}}}
 
@@ -58,7 +58,6 @@ E_FILES		=	${addprefix src/,${addprefix ${E_DIR}/,${E_SRC}}}
 MAIN_DIR		=	main
 MAIN_SRC		=	main.c \
 					utils.c \
-					ft_watermark.c \
 
 				# ${addprefix ${E_DIR}/,${E_SRC}} \
 

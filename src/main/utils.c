@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/30 18:02:10 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:49:20 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	ft_free_glob(t_global *glob)
 	ft_free_cmd(glob->command);
 }
 
-/*				cmd manipulation				*/
 void	ft_free_cmd(t_command *cmd)
 {
 	int			i;
@@ -46,20 +45,6 @@ void	ft_free_cmd(t_command *cmd)
 	}
 }
 
-// void	ft_free_env(t_global *g)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while (g->env[i])
-// 	{
-// 		free(g->env[i]);
-// 		i++;
-// 	}
-// 	free(g->env);
-// }
-
-// c la meme qu'en haut
 void	free_tab(char **tab)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:19:14 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/30 19:40:06 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:35:54 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	ft_get_arg(t_global *global, char *dest, char *str)
 			idx += tmp;
 		}
 		while (str[idx] && is_in_set(str[idx], "<>"))
-			idx += ft_redir_len(str + idx); //
+			idx += ft_redir_len(str + idx);
 	}
 	dest[pos] = 0;
 	return (idx);

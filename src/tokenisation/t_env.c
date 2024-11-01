@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:09:11 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/30 19:39:31 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/01 17:57:10 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	ft_envname_len(char *str)
 	return (idx);
 }
 
+//malloc sensitive
 int	ft_env_len_bis(t_global *global, char *str)
 {
 	int		len;
@@ -51,6 +52,7 @@ int	ft_env_len_bis(t_global *global, char *str)
 	return (len);
 }
 
+//malloc sensitive
 char	*ft_env_var(t_global *global, char *str)
 {
 	int		len;

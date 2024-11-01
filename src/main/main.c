@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/01 16:03:06 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/01 18:52:32 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char **argv, char **envp)
 		if (g_sig == SIGINT)
 			global.exit_value = 130;
 		if (line == NULL)
-			signal_ctrD(&global);
+			signal_ctrd(&global);
 		if (*line)
 			add_history(line);
 		if (line && ft_check_line(line))
@@ -59,9 +59,9 @@ int	main(int argc, char **argv, char **envp)
 			// printf("step 1\n");
 			if (ft_token(line, &global) && ft_redir(&global, line))
 			{
-				ft_printcmd(global.command);
 				ft_exec(&global);
 			}
+				// ft_printcmd(global.command);
 			// ft_readfile(global.command->infile);
 			ft_free_cmd(global.command);
 		}

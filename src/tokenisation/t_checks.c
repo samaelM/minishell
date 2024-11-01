@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:43:39 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/01 15:44:37 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/01 18:51:53 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static int	ft_check_redir(char *str)
 		return (ft_error_token("newline"));
 	if (is_in_set(str[idx], "><|"))
 		return (ft_error_token(ft_get_token(str + idx)));
-	idx++;
 	return (idx);
 }
 
@@ -87,13 +86,12 @@ int	ft_check_line(char *str)
 		while (str[idx] && !is_in_set(str[idx], "><|\"'"))
 			idx++;
 		tmp = ft_skipquotes(str + idx, '"');
-		// printf("tmp=%d\n", tmp);
-		if (tmp == -1)// quote non fermees
-			return (0);
+		if (tmp == -1)
+			return (perr("quote`'` not closed\n"), 0);
 		idx += tmp;
 		tmp = ft_skipquotes(str + idx, '\'');
-		if (tmp == -1)// quote non fermees
-			return (0);
+		if (tmp == -1)
+			return (perr("quote`\"` not closed\n"), 0);
 		idx += tmp;
 		pos = ft_check_pipes(str + idx);
 		if (pos == -1)

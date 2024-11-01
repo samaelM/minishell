@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 16:21:21 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/31 18:25:46 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:36:12 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	ft_skipquotes(char *str, char quote)
 		if (str[idx])
 			idx++;
 	}
-
 	return (idx);
 }
 
@@ -49,6 +48,5 @@ int	ft_redir_len(char *str)
 		while (str[idx] && is_in_set(str[idx], " 	"))
 			idx++;
 	}
-	// printf("len redir = %d\n", idx);
 	return (idx);
 }

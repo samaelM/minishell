@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenisation.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/31 16:07:48 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/01 16:34:08 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	ft_size_token(t_global *global, char *str)
 	int	size;
 	int	env_len;
 
-	// printf("ft_size_token str:%s\n", str);
 	size = 0;
 	idx = 0;
 	while (str[idx] && is_in_set(str[idx], " 	"))
@@ -74,12 +73,9 @@ int	ft_size_token(t_global *global, char *str)
 				size++;
 			idx++;
 		}
-		// printf("%d: %s\n", idx, str+idx);
 		while (str[idx] && is_in_set(str[idx], "<>"))
 			idx += ft_redir_len(str + idx);
-		// printf("%d: %s\n", idx, str+idx);
 	}
-	// printf("end ft_size_token\n");
 	return (size);
 }
 
@@ -119,17 +115,13 @@ int	ft_set_args(t_global *global, char **cmd, int *pos, int size)
 	char	**args;
 	int		sizetk;
 
-	// printf("step 4\n");
 	args = global->tmp->args;
 	idx = 0;
 	while (idx < size)
 	{
 		sizetk = ft_size_token(global, *cmd);
-		// printf("size_tk = %d\n", sizetk);
 		if (sizetk == -1)
 			return (0);
-		// if (sizetk == 0)
-		// 	return (1);
 		args[idx] = ft_calloc(sizetk + 1, sizeof(char));
 		if (!args[idx])
 			return (perr(ERR_ALLOC), 0);
@@ -153,15 +145,14 @@ t_command	*ft_cmd_init(void)
 	command->prev_fd = -1;
 	return (command);
 }
+
 int	ft_fillcmd(t_global *global, char **line, int *pos)
 {
 	int			size;
 	t_command	*cmd;
 
-	// printf("step 3\n");
 	cmd = global->tmp;
 	size = ft_counttoken(*line);
-	// printf("nb_token = %d\n", size);
 	cmd->args = ft_calloc((size + 1), sizeof(char *));
 	if (!cmd->args)
 		return (perr(ERR_ALLOC), 0);
@@ -187,9 +178,7 @@ t_command	*ft_token(char *line, t_global *global)
 	t_command	*cmd;
 	int			pos;
 
-	// printf("step 2\n");
 	cmd = ft_cmd_init();
-	// cmd = NULL;
 	if (!cmd)
 		return (perr(ERR_ALLOC), NULL);
 	global->command = cmd;

@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:11:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/01 15:44:22 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/01 18:49:21 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	ft_redir(t_global *global, char *line)
 		if (tmp < 0)
 			i += skip_cmd(line);
 		i += tmp;
-		// printf("%d:%c\n", i, line[i]);
 		while (line[i] && !is_in_set(line[i], "><|"))
 		{
 			if (!is_in_set(line[i], "'\""))

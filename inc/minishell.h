@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/31 16:07:30 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/01 17:52:15 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int						ft_heredoc(t_global *global, char *line);
 int						ft_infile(t_global *global, char *line);
 int						ft_outfile(t_global *global, char *line);
 int						ft_outfile2(t_global *global, char *line);
+char					*ft_hd_parse(t_global *global, char *line);
+char	*ft_getlim(t_global *global, char *line, int *in_quote);
 
 ///				BUILT-INS				///
 
@@ -131,7 +133,7 @@ char					*ft_getcwd(void);
 ///				SIGNALS					///
 void					sigint_handler(int sig_num);
 void					sigquit_handler(int sig_num);
-void					signal_ctrD(t_global *g);
+void					signal_ctrd(t_global *g);
 void					hd_sigint_handler(int signum);
 
 ///				OTHER					///
