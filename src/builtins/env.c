@@ -6,20 +6,20 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 18:49:59 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/18 20:57:25 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/10/31 14:44:53 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_env(t_global *glob)
+int	ft_env(t_global *g)
 {
 	int	i;
 
 	i = 0;
-	while (glob->env[i])
+	while (g->env[i])
 	{
-		printf("%s\n", glob->env[i]);
+		printf("%s\n", g->env[i]);
 		i++;
 	}
 	return (0);

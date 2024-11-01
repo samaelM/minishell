@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/30 19:15:32 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:07:44 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,43 +107,42 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (0);
 }
 
-int	ft_exec(t_global *glob)
+int	ft_exec(t_global *g)
 {
-	// printf("exec\n");
-	if (glob->command && glob->command->args && glob->command->args[0])
+	if (g->command && g->command->args && g->command->args[0])
 	{
-		change_env_(glob);
-		if (ft_strcmp(glob->command->args[0], "exit") == 0)
+		change_env_(g);
+		if (ft_strcmp(g->command->args[0], "exit") == 0)
 		{
-			glob->exit_value = ft_exit(glob);
+			g->exit_value = ft_exit(g);
 		}
-		else if (ft_strcmp(glob->command->args[0], "pwd") == 0)
+		else if (ft_strcmp(g->command->args[0], "pwd") == 0)
 		{
-			glob->exit_value = ft_pwd();
+			g->exit_value = ft_pwd();
 		}
-		else if (ft_strcmp(glob->command->args[0], "cd") == 0)
+		else if (ft_strcmp(g->command->args[0], "cd") == 0)
 		{
-			glob->exit_value = ft_cd(glob);
+			g->exit_value = ft_cd(g);
 		}
-		else if (ft_strcmp(glob->command->args[0], "echo") == 0)
+		else if (ft_strcmp(g->command->args[0], "echo") == 0)
 		{
-			glob->exit_value = ft_echo(glob->command);
+			g->exit_value = ft_echo(g->command);
 		}
-		else if (ft_strcmp(glob->command->args[0], "env") == 0)
+		else if (ft_strcmp(g->command->args[0], "env") == 0)
 		{
-			glob->exit_value = ft_env(glob);
+			g->exit_value = ft_env(g);
 		}
-		else if (ft_strcmp(glob->command->args[0], "export") == 0)
+		else if (ft_strcmp(g->command->args[0], "export") == 0)
 		{
-			glob->exit_value = ft_export(glob);
+			g->exit_value = ft_export(g);
 		}
-		else if (ft_strcmp(glob->command->args[0], "unset") == 0)
+		else if (ft_strcmp(g->command->args[0], "unset") == 0)
 		{
-			glob->exit_value = ft_unset(glob);
+			g->exit_value = ft_unset(g);
 		}
 		else
 		{
-			execution(glob);
+			execution(g);
 		}
 	}
 	return (0);

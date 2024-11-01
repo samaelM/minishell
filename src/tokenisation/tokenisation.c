@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenisation.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/30 19:40:13 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/10/31 16:07:48 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,8 +202,6 @@ t_command	*ft_token(char *line, t_global *global)
 		if (global->tmp->next)
 			global->tmp = global->tmp->next;
 	}
-	if (cmd->args)
-		cmd->cmd = cmd->args[0];
 	return (cmd);
 }
 

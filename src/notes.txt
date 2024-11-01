@@ -1,11 +1,14 @@
-EXIT :
-free readline
-exit n, tester avec 5555555555555555555
-
-TODO:
-supp command->cmd
+free readline parfois ???
 
 builtins dup
+
+
+EXPORT
+if a variable name is followed by =value, the value of the variable is set to value.
+
+
+
+
 
 SIGNAUX :
 cmd not found 127
