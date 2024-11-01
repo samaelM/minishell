@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:22:30 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/03 19:09:31 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:46:46 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,14 @@ int	ft_exit(t_global *g)
 			&& ft_strncmp("9223372036854775807", g->command->args[1], 19) < 0))
 	{
 		ft_putstr_fd("exit numeric required =0\n", 2);
-		printf("exit: %s: numeric argument required\n", g->command->args[1]);
+		ft_perrorf("exit: %s: numeric argument required\n",
+			g->command->args[1]);
 		ft_free_glob(g);
 		exit(2);
 	}
 	if (is_nb(g->command->args[1]) == 0 && nb_args(g->command->args + 1) == 1)
 		exit_nb(g, g->command->args[1]);
 	ft_putstr_fd("exit too many =0\n", 2);
-	printf("exit: too many arguments\n");
+	ft_perrorf("exit: too many arguments\n");
 	return (1);
 }

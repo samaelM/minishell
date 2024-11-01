@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/04 18:33:23 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/04 19:16:25 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,9 @@ int	main(int argc, char **argv, char **envp)
 			// printf("step 1\n");
 			if (ft_token(line, &global) && ft_redir(&global, line))
 			{
-				;
+				// ft_printcmd(global.command);
 				ft_exec(&global);
 			}
-				ft_printcmd(global.command);
 			// ft_readfile(global.command->infile);
 			ft_free_cmd(global.command);
 		}

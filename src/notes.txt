@@ -3,9 +3,9 @@ free readline parfois ???
 ------------------------------
 Problemes:
 
-/!\ erreur sur stderr stp anaellllllllllllle
-
 struct tmp
+
+echo <Makefile "bonjour       42" << la faute a ce batard de mael
 
 ------------------------------
 SIGNAUX :

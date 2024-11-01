@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:30:33 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/03 18:29:48 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:45:15 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ char	*ft_getcwd(void)
 	cwd = malloc(PATH_MAX);
 	if (!cwd)
 	{
-		printf("erreur malloc\n");
+		ft_perrorf("erreur malloc\n");
 		return (NULL);
 	}
 	if (getcwd(cwd, PATH_MAX) == NULL)
 	{
-		printf("erreur getcwd qd change var\n");
+		ft_perrorf("erreur getcwd qd change var\n");
 		free(cwd);
 		return (NULL);
 	}
@@ -43,7 +43,7 @@ int	change_pwd(t_global *g)
 	string = malloc(sizeof(char) * (ft_strlen("PWD=\0") + ft_strlen(cwd) + 1));
 	if (!string)
 	{
-		printf("erreur malloc qd change var\n");
+		ft_perrorf("erreur malloc qd change var\n");
 		free(cwd);
 		return (1);
 	}
@@ -67,7 +67,7 @@ int	change_pwd_vars(t_global *g, char *cwd)
 	string = malloc(sizeof(char) * (8 + ft_strlen(cwd) + 1));
 	if (!string)
 	{
-		printf("erreur malloc qd change var\n");
+		ft_perrorf("erreur malloc qd change var\n");
 		free(cwd);
 		return (1);
 	}
@@ -97,13 +97,13 @@ int	ft_cd(t_global *g)
 		if (!home)
 		{
 			free(cwd);
-			printf("cd: HOME not set\n");
+			ft_perrorf("cd: HOME not set\n");
 			return (1);
 		}
 		if (chdir(home))
 		{
 			free(cwd);
-			printf("cd: %s: %s\n", home, strerror(errno));
+			ft_perrorf("cd: %s: %s\n", home, strerror(errno));
 			return (1);
 		}
 		return (change_pwd_vars(g, cwd));
@@ -111,13 +111,13 @@ int	ft_cd(t_global *g)
 	if (g->command->args[2])
 	{
 		free(cwd);
-		printf("cd: too many arguments\n");
+		ft_perrorf("cd: too many arguments\n");
 		return (1);
 	}
 	if (g->command->args[1] && chdir(g->command->args[1]))
 	{
 		free(cwd);
-		printf("cd: %s: %s\n", g->command->args[1], strerror(errno));
+		ft_perrorf("cd: %s: %s\n", g->command->args[1], strerror(errno));
 		return (1);
 	}
 	return (change_pwd_vars(g, cwd));
