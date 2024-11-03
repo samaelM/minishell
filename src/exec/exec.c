@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/03 20:08:25 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/03 21:16:06 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,18 @@ int	pipe_and_fork(t_global *g, int i)
 	{
 		close(g->command->pipe[0]);
 		dup_infile(g, i);
-		// printf("\033[0;93mcommande \033[0m\n");
 		dup_outfile(g);
 		exec_which_cmd(g);
 	}
 	else // pere
 	{
-		// if (WIFEXITED(status))
-		// 	g->exit_value = WEXITSTATUS(status);
+		if (WIFEXITED(0))
+			g->exit_value = WEXITSTATUS(0);
 		if (g_sig)
+		{
 			close(g->command->pipe[0]);
-		g->exit_value = 128 + g_sig;
+			g->exit_value = 128 + g_sig;
+		}
 	}
 	return (0);
 }
