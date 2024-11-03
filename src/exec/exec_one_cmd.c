@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:34:17 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/31 14:45:36 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:54:27 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,5 +95,4 @@ void	exec_la_cmd(t_global *g)
 		i++;
 	}
 	cmd_path(g);
-	return ;
 }

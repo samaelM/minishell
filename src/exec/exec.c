@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/03 19:14:19 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/03 20:08:25 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ int	exec_which_cmd(t_global *g)
 			exec_la_cmd(g);
 		}
 	}
-	exit(0);
-	return (0);
+	ft_free_glob(g);
+	exit(g->exit_value);
 }
 
 int	pipe_and_fork(t_global *g, int i)
