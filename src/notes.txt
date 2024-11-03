@@ -1,13 +1,6 @@
 free readline parfois ???
 
-builtins dup
-
-
-exit | ls
-pas d'exit
-
-
-
+------------------------------
 SIGNAUX :
 cmd not found 127
 
@@ -16,7 +9,8 @@ exit status 256 != 127
 bash: /usr/local/sbin/..: Is a directory
 126
 
-
+check pour exit
+------------------------------
 
 input no such file: 1
 error "" not closed: 130

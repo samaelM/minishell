@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/03 18:43:22 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/03 19:14:19 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,11 @@ int	ft_exec(t_global *g)
 	int	i;
 
 	i = 0;
+	if (ft_strcmp(g->command->args[0], "exit") == 0 && g->command->next == NULL)
+	{
+		g->exit_value = ft_exit(g);
+		return (g->exit_value);
+	}
 	while (g->command)
 	{
 		pipe_and_fork(g, i);
