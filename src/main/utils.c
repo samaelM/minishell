@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/01 16:49:20 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/04 13:50:07 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@ void	ft_free_cmd(t_command *cmd)
 		i = 0;
 		if (cmd->infile > 2)
 			close(cmd->infile);
-		if (cmd->is_heredoc)
-			unlink(HEREDOC_NAME);
 		if (cmd->outfile > 2)
 			close(cmd->outfile);
 		while (cmd->args && cmd->args[i])
@@ -117,4 +115,9 @@ int	is_in_set(char c, char *set)
 void	perr(char *str)
 {
 	write(STDERR_FILENO, str, ft_strlen(str));
+}
+int	ft_error_token(char *str)
+{
+	printf("syntax error near unexpected token `%s'\n", str);
+	return (-1);
 }

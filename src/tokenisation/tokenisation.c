@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/01 19:12:14 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/04 14:56:50 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ int	ft_get_size_qtoken(t_global *global, char *str, int *idx, int *size)
 					(*size)++;
 				(*idx)++;
 			}
-			if (str[*idx])
-				(*idx)++;
+			(*idx)++;
 		}
 		if (str[*idx] && str[*idx] == '\'')
 			*size += ft_skipquotes(str + (*idx), '\'') - 2;

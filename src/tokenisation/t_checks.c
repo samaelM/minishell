@@ -6,17 +6,11 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:43:39 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/01 18:51:53 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/04 13:57:05 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/tokenisation.h"
-
-static int	ft_error_token(char *str)
-{
-	printf("syntax error near unexpected token `%s'\n", str);
-	return (-1);
-}
 
 static int	ft_check_pipes(char *str)
 {
@@ -70,10 +64,37 @@ static int	ft_check_redir(char *str)
 	return (idx);
 }
 
+static int	ft_checks(char *str)
+{
+	int	idx;
+	int	tmp;
+
+	tmp = 0;
+	idx = 0;
+	while (str[idx] && !is_in_set(str[idx], "><|\"'"))
+		idx++;
+	tmp = ft_skipquotes(str + idx, '"');
+	if (tmp == -1)
+		return (perr("quote `\"` not closed\n"), 0);
+	idx += tmp;
+	tmp = ft_skipquotes(str + idx, '\'');
+	if (tmp == -1)
+		return (perr("quote `'` not closed\n"), 0);
+	idx += tmp;
+	tmp = ft_check_pipes(str + idx);
+	if (tmp == -1)
+		return (0);
+	idx += tmp;
+	tmp = ft_check_redir(str + idx);
+	if (tmp == -1)
+		return (0);
+	idx += tmp;
+	return (idx);
+}
+
 int	ft_check_line(char *str)
 {
 	int	idx;
-	int	pos;
 	int	tmp;
 
 	idx = 0;
@@ -83,24 +104,10 @@ int	ft_check_line(char *str)
 		return (ft_error_token("|"), 0);
 	while (str[idx])
 	{
-		while (str[idx] && !is_in_set(str[idx], "><|\"'"))
-			idx++;
-		tmp = ft_skipquotes(str + idx, '"');
-		if (tmp == -1)
-			return (perr("quote`'` not closed\n"), 0);
+		tmp = ft_checks(str + idx);
+		if (tmp <= 0)
+			return (tmp);
 		idx += tmp;
-		tmp = ft_skipquotes(str + idx, '\'');
-		if (tmp == -1)
-			return (perr("quote`\"` not closed\n"), 0);
-		idx += tmp;
-		pos = ft_check_pipes(str + idx);
-		if (pos == -1)
-			return (0);
-		idx += pos;
-		pos = ft_check_redir(str + idx);
-		if (pos == -1)
-			return (0);
-		idx += pos;
 	}
 	return (1);
 }
