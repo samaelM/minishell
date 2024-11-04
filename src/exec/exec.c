@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/04 19:18:30 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/04 19:48:28 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ int	exec_one_cmd(t_global *g)
 				ft_perrorf("erreur fork");
 			else if (pid == 0) // fils
 			{
+				close(fd_stdin);
+				close(fd_stdout);
 				exec_la_cmd(g);
 			}
 			else // pere
@@ -71,6 +73,8 @@ int	exec_one_cmd(t_global *g)
 			dup2(fd_stdin, 0);
 		if (g->command->outfile != -1)
 			dup2(fd_stdout, 1);
+		close(fd_stdin);
+		close(fd_stdout);
 	}
 	return (g->exit_value);
 }
