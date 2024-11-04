@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:47:56 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/04 15:19:04 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:33:59 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,6 @@ void	sigint_handler(int signum)
 	g_sig = signum;
 }
 
-// void	hd_sigint_handler(int signum)
-// {
-// 	rl_replace_line("", 0);
-// 	rl_on_new_line();
-// 	rl_redisplay();
-// 	g_sig = signum;
-// }
-
 void	sigquit_handler(int signum)
 {
 	rl_on_new_line();
@@ -43,7 +35,7 @@ void	sigquit_handler(int signum)
 	g_sig = signum;
 }
 
-void	signal_ctrD(t_global *g)
+void	signal_ctrd(t_global *g)
 {
 	int	i;
 

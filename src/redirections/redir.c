@@ -6,11 +6,41 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:11:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/30 19:33:45 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/04 13:34:23 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static int	skip_cmd(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] != '|')
+		i++;
+	return (i);
+}
+
+static int	skip_nonredir(t_global *global, char *line, int i)
+{
+	int	skipped;
+
+	skipped = 0;
+	while (line[i + skipped] && !is_in_set(line[i + skipped], "><|"))
+	{
+		if (!is_in_set(line[i + skipped], "'\""))
+			skipped++;
+		skipped += ft_skipquotes(line + i + skipped, '"');
+		skipped += ft_skipquotes(line + i + skipped, '\'');
+		if (line[i + skipped] == '|')
+		{
+			skipped++;
+			global->tmp = global->tmp->next;
+		}
+	}
+	return (skipped);
+}
 
 int	ft_redir(t_global *global, char *line)
 {
@@ -33,22 +63,9 @@ int	ft_redir(t_global *global, char *line)
 		else if (line[i] == '<')
 			tmp = ft_infile(global, line + i);
 		if (tmp < 0)
-			return (0);
+			i += skip_cmd(line);
 		i += tmp;
-		while (line[i] && !is_in_set(line[i], "><|"))
-		{
-			if (!is_in_set(line[i], "'\""))
-				i++;
-			i += ft_skipquotes(line + i, '"');
-			// printf("1:%c\n", line[i]);
-			i += ft_skipquotes(line + i, '\'');
-			// printf("2:%c\n", line[i]);
-			if (line[i] == '|')
-			{
-				i++;
-				global->tmp = global->tmp->next;
-			}
-		}
+		i += skip_nonredir(global, line, i);
 	}
 	return (1);
 }

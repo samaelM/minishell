@@ -39,11 +39,11 @@ S_FILES		=	${addprefix src/,${addprefix ${S_DIR}/,${S_SRC}}}
 
 ######	redirection	#####
 R_DIR		=	redirections
-R_SRC		=	pipex.c \
-				redir.c \
+R_SRC		=	redir.c \
 				infile.c \
 				outfile.c \
 				here_doc.c \
+				here_doc_utils.c \
 
 R_FILES		=	${addprefix src/,${addprefix ${R_DIR}/,${R_SRC}}}
 
@@ -58,7 +58,6 @@ E_FILES		=	${addprefix src/,${addprefix ${E_DIR}/,${E_SRC}}}
 MAIN_DIR		=	main
 MAIN_SRC		=	main.c \
 					utils.c \
-					ft_watermark.c \
 
 				# ${addprefix ${E_DIR}/,${E_SRC}} \
 
@@ -143,37 +142,37 @@ ${OBJ_DIR}/${MAIN_DIR}/%.o: src/main/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
 	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
-	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
+	@echo -n "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${OBJ_DIR}/${T_DIR}/%.o: src/${T_DIR}/%.c $(MS_INC) $(T_INC)
 	@mkdir -p ${dir $@}
 	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
-	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
+	@echo -n "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${OBJ_DIR}/${B_DIR}/%.o: src/${B_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
 	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
-	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
+	@echo -n "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${OBJ_DIR}/${S_DIR}/%.o: src/${S_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
 	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
-	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
+	@echo -n "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${OBJ_DIR}/${R_DIR}/%.o: src/${R_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
 	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
-	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
+	@echo -n "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${OBJ_DIR}/${E_DIR}/%.o: src/${E_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
 	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
-	@echo "\e[2K\r${GREEN}[OK]${WHITE}$<"
+	@echo -n "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 $(LIBFT): $(LIBFT_INC)
 	@make -sC $(LIBFT_DIR)
