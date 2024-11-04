@@ -6,11 +6,74 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/03 21:16:06 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:22:51 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	exec_one_cmd(t_global *g)
+{
+	pid_t	pid;
+	int		fd_stdin;
+	int		fd_stdout;
+
+	fd_stdin = dup(0);
+	fd_stdout = dup(1);
+	if (g->command && g->command->args && g->command->args[0])
+	{
+		if (g->command->infile != -1)
+			dup2(g->command->infile, 0);
+		if (g->command->outfile != -1)
+			dup2(g->command->outfile, 1);
+		change_env_(g);
+		if (ft_strcmp(g->command->args[0], "exit") == 0)
+		{
+			g->exit_value = ft_exit(g);
+		}
+		else if (ft_strcmp(g->command->args[0], "pwd") == 0)
+		{
+			g->exit_value = ft_pwd();
+		}
+		else if (ft_strcmp(g->command->args[0], "cd") == 0)
+		{
+			g->exit_value = ft_cd(g);
+		}
+		else if (ft_strcmp(g->command->args[0], "echo") == 0)
+		{
+			g->exit_value = ft_echo(g->command);
+		}
+		else if (ft_strcmp(g->command->args[0], "env") == 0)
+		{
+			g->exit_value = ft_env(g);
+		}
+		else if (ft_strcmp(g->command->args[0], "export") == 0)
+		{
+			g->exit_value = ft_export(g);
+		}
+		else if (ft_strcmp(g->command->args[0], "unset") == 0)
+		{
+			g->exit_value = ft_unset(g);
+		}
+		else
+		{
+			pid = fork();
+			if (pid == -1)
+				printf("erreur fork");
+			else if (pid == 0) // fils
+			{
+				exec_la_cmd(g);
+			}
+			else // pere
+				waitpid(pid, NULL, 0);
+		}
+		if (g->command->infile != -1)
+			dup2(fd_stdin, 0);
+		if (g->command->outfile != -1)
+			dup2(fd_stdout, 1);
+	}
+	return (g->exit_value);
+}
 
 void	dup_infile(t_global *g, int i)
 {
@@ -111,11 +174,8 @@ int	ft_exec(t_global *g)
 	int	i;
 
 	i = 0;
-	if (ft_strcmp(g->command->args[0], "exit") == 0 && g->command->next == NULL)
-	{
-		g->exit_value = ft_exit(g);
-		return (g->exit_value);
-	}
+	if (g->command->next == NULL)
+		return (exec_one_cmd(g));
 	while (g->command)
 	{
 		pipe_and_fork(g, i);

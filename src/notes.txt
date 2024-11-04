@@ -3,9 +3,9 @@ free readline parfois ???
 ------------------------------
 Problemes:
 
-unset export dans le process child
-
 /!\ erreur sur stderr stp anaellllllllllllle
+
+struct tmp
 
 ------------------------------
 SIGNAUX :

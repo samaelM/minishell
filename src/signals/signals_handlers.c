@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_handlers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 12:47:56 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/10/30 17:50:49 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/04 15:19:04 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ void	sigquit_handler(int signum)
 
 void	signal_ctrD(t_global *g)
 {
+	int	i;
+
 	printf("exit\n");
-	int i = 0;
+	i = 0;
 	while (g->env[i])
 		free(g->env[i++]);
 	free(g->env);
