@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/04 14:56:50 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:44:34 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,22 +89,27 @@ int	ft_counttoken(char *str)
 	{
 		while (str[idx] && is_in_set(str[idx], " 	"))
 			idx++;
+		// printf("idx = %d avant redirlen str=%s\n",idx, str+idx);
 		if (is_in_set(str[idx], "<>"))
 			idx += ft_redir_len(str + idx);
+		// printf("idx = %d apres redirlen str=%s\n",idx, str+idx);
 		if (str[idx] == '|')
 			return (nb_t);
-		if (str[idx])
+		if (str[idx] && !is_in_set(str[idx], "<>"))
 			nb_t++;
-		while (str[idx] && !is_in_set(str[idx], " 	"))
+		// printf("idx = %d avant big while str=%s\n",idx, str+idx);
+		while (str[idx] && !is_in_set(str[idx], "<> 	"))
 		{
 			idx += ft_skipquotes(str + idx, '"');
 			idx += ft_skipquotes(str + idx, '\'');
 			if (str[idx] && str[idx] == '|')
 				return (nb_t);
-			while (str[idx] && !is_in_set(str[idx], "\"' 	|"))
+			while (str[idx] && !is_in_set(str[idx], "<>\"' 	|"))
 				idx++;
 		}
+		// printf("idx = %d apres big while str=%s\n",idx, str+idx);
 	}
+	// printf("\n\n\n\n\n\n");
 	return (nb_t);
 }
 
@@ -154,6 +159,7 @@ int	ft_fillcmd(t_global *global, char **line, int *pos)
 
 	cmd = global->tmp;
 	size = ft_counttoken(*line);
+	// printf("nbtk = %d (%s)\n", size, *line);
 	cmd->args = ft_calloc((size + 1), sizeof(char *));
 	if (!cmd->args)
 		return (perr(ERR_ALLOC), 0);
@@ -192,6 +198,7 @@ t_command	*ft_token(char *line, t_global *global)
 		if (global->tmp->next)
 			global->tmp = global->tmp->next;
 	}
+	// printf("fin tk\n");
 	return (cmd);
 }
 
