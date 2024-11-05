@@ -1,11 +1,6 @@
 free readline parfois ???
 
 ------------------------------
-Problemes:
-
-struct tmp
-
-------------------------------
 EXIT STATUS:
 
 invalid args for cmd 2

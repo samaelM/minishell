@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/05 18:40:21 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/05 20:11:48 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,18 @@ int	exec_one_cmd(t_global *g)
 			g->exit_value = 2;
 			return (g->exit_value);
 		}
+		change_env_(g);
+		if (ft_strcmp(g->command->args[0], "exit") == 0)
+		{
+			g->exit_value = ft_exit(g);
+		}
 		fd_stdin = dup(0);
 		fd_stdout = dup(1);
 		if (g->command->infile != -1)
 			dup2(g->command->infile, 0);
 		if (g->command->outfile != -1)
 			dup2(g->command->outfile, 1);
-		change_env_(g);
-		if (ft_strcmp(g->command->args[0], "exit") == 0)
-		{
-			g->exit_value = ft_exit(g);
-		}
-		else if (ft_strcmp(g->command->args[0], "pwd") == 0)
+		if (ft_strcmp(g->command->args[0], "pwd") == 0)
 		{
 			g->exit_value = ft_pwd();
 		}
@@ -67,6 +67,10 @@ int	exec_one_cmd(t_global *g)
 				ft_perrorf("erreur fork");
 			else if (pid == 0) // fils
 			{
+				if (g->command->infile > 0)
+					close(g->command->infile);
+				if (g->command->outfile > 0)
+					close(g->command->outfile);
 				close(fd_stdin);
 				close(fd_stdout);
 				exec_la_cmd(g);
@@ -167,8 +171,8 @@ int	pipe_and_fork(t_global *g, int i)
 	}
 	else // pere
 	{
-		if (WIFEXITED(0))
-			g->exit_value = WEXITSTATUS(0);
+		// if (WIFEXITED(0))
+		// 	g->exit_value = WEXITSTATUS(0);
 		if (g_sig)
 		{
 			close(g->command->pipe[0]);
@@ -185,6 +189,7 @@ int	ft_exec(t_global *g)
 	i = 0;
 	if (g->command->next == NULL)
 		return (exec_one_cmd(g));
+	g->tmp = g->command;
 	while (g->command)
 	{
 		pipe_and_fork(g, i);
@@ -205,6 +210,7 @@ int	ft_exec(t_global *g)
 		close(g->command->prev_fd);
 	while (waitpid(0, NULL, 0) != -1)
 		;
+	g->command = g->tmp;
 	return (0);
 }
 

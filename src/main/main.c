@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/05 17:45:18 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/05 19:38:19 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	main(int argc, char **argv, char **envp)
 			// ft_readfile(global.command->infile);
 			ft_free_cmd(global.command);
 		}
-		// printf("\033[0;33mexit status: %d\n", global.exit_value);
+		printf("\033[0;33mexit status: %d\n", global.exit_value);
 		free(line);
 	}
 }
