@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 18:49:59 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/31 14:44:53 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:46:25 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,11 @@ char	*coller_deux_strings(char *s1, char *s2)
 	string = malloc(sizeof(char) * (size_s1 + size_s2) + 1);
 	if (!string)
 	{
-		printf("erreur malloc\n");
+		ft_perrorf("erreur malloc\n");
 		return (NULL);
 	}
 	ft_strlcpy(string, s1, size_s1 + 1);
 	ft_strlcat(string, s2, size_s1 + size_s2 + 1);
-	//	printf("coller 2 string: %s\n", string);
 	return (string);
 }
 
@@ -72,7 +71,7 @@ char	**create_env_i(void)
 	env_tab = ft_calloc(4, sizeof(char *));
 	if (!env_tab)
 	{
-		printf("erreur malloc\n");
+		ft_perrorf("erreur malloc\n");
 		return (NULL);
 	}
 	env_tab[0] = coller_deux_strings("PWD=", ft_getcwd());
@@ -95,7 +94,7 @@ char	**create_our_env(char **envp)
 
 	if (envp[0] == NULL)
 	{
-		printf("error no envp\n");
+		ft_perrorf("error no envp\n");
 		return (create_env_i());
 	}
 	i = 0;
@@ -104,7 +103,7 @@ char	**create_our_env(char **envp)
 	env_tab = malloc(sizeof(char *) * (i + 1));
 	if (!env_tab)
 	{
-		printf("erreur malloc\n");
+		ft_perrorf("erreur malloc\n");
 		return (NULL);
 	}
 	i = 0;
@@ -115,7 +114,7 @@ char	**create_our_env(char **envp)
 			env_tab[i] = change_shlvl(envp, envp[i]);
 			if (!env_tab[i])
 			{
-				printf("erreur strdup\n");
+				ft_perrorf("erreur strdup\n");
 				free_tab(env_tab);
 				return (NULL);
 			}
@@ -125,7 +124,7 @@ char	**create_our_env(char **envp)
 			env_tab[i] = ft_strdup(envp[i]);
 			if (!env_tab[i])
 			{
-				printf("erreur strdup\n");
+				ft_perrorf("erreur strdup\n");
 				free_tab(env_tab);
 				return (NULL);
 			}

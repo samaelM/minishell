@@ -1,24 +1,27 @@
 free readline parfois ???
 
-builtins dup
+------------------------------
+Problemes:
 
+struct tmp
 
-EXPORT
-if a variable name is followed by =value, the value of the variable is set to value.
+echo <Makefile "bonjour       42" << la faute a ce batard de mael
 
-
-
-
-
+------------------------------
 SIGNAUX :
+
+invalid args for cmd 2
+
+bash: /usr/local/sbin/..: Is a directory 126
+
 cmd not found 127
+/bi/ls
 
-/bi/ls 
-exit status 256 != 127
-bash: /usr/local/sbin/..: Is a directory
-126
+^c 130
+^\ 131
 
-
+check pour exit
+------------------------------
 
 error "" not closed: 130 ecrire le message
 -2 si file non open
@@ -34,3 +37,5 @@ warning: here-document at line 8 delimited by end-of-file (wanted `end')
 
 
 leaks check error (Poivre-echelle> >|)
+
+echo <"./test_files/infile" "bonjour       42"

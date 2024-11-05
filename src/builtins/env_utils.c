@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 19:12:25 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/31 14:44:40 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:46:01 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	change_env_(t_global *g)
 	ft_strlcpy(var_, "_=/usr/bin/", 12);
 	ft_strlcat(var_, g->command->args[0], 12 + ft_strlen(g->command->args[0]));
 	line = find_var_in_env(g->env, "_");
-	if (line == -1)
-		printf("ok\n\n");
 	change_env_var(g, var_, find_var_in_env(g->env, "_"));
 	free(var_);
 }
@@ -53,7 +51,7 @@ char	*ft_var_name(char *var)
 	new_line = malloc(sizeof(char) * (i + 1));
 	if (!new_line)
 	{
-		printf("erreur malloc\n");
+		ft_perrorf("erreur malloc\n");
 		return (NULL);
 	}
 	i = 0;
@@ -65,36 +63,6 @@ char	*ft_var_name(char *var)
 	new_line[i] = '\0';
 	return (new_line);
 }
-
-// 		remplace par ft_getenv
-// char	*ft_var_content(char *var)
-// {
-// 	int		var_name;
-// 	int		i;
-// 	char	*new_line;
-
-// 	var_name = 0;
-// 	i = 0;
-// 	while (var[var_name] && var[var_name] != '=')
-// 		var_name++;
-// 	var_name++;
-// 	while (var[var_name + i])
-// 		i++;
-// 	new_line = malloc(sizeof(char) * (i + 1));
-// 	if (!new_line)
-// 	{
-// 		printf("erreur malloc\n");
-// 		return (NULL);
-// 	}
-// 	i = 0;
-// 	while (var[var_name + i])
-// 	{
-// 		new_line[i] = var[var_name + i];
-// 		i++;
-// 	}
-// 	new_line[i] = '\0';
-// 	return (new_line);
-// }
 
 int	find_var_in_env(char **env, char *var)
 {

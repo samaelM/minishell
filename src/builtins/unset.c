@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:36 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/18 21:09:26 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:48:00 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	unset_this_line(char **env, int l)
 	j = l + 1;
 	if (l == -1)
 	{
-		printf("pas trouve\n");
+		ft_perrorf("pas trouve\n");
 		return (1);
 	}
 	tmp = env[l];
@@ -43,7 +43,7 @@ int	ft_unset(t_global *glob)
 	i = 1;
 	while (glob->command->args[i])
 	{
-		printf("unset: %s\n", glob->command->args[i]);
+		ft_perrorf("unset: %s\n", glob->command->args[i]);
 		if (ft_strncmp(glob->command->args[i], "_", 1) == 0)
 			change_env_var(glob, "_=_", find_var_in_env(glob->env, "_"));
 		else

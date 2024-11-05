@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/04 13:50:07 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:58:10 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_printcmd(t_command *cmd)
 	while (cmd)
 	{
 		i = 0;
-		printf("-----\ncmd[%d]\n", j++);
+		// printf("-----\ncmd[%d]\n", j++);
 		printf("infile fd=%d\n", cmd->infile);
 		while (cmd->args && cmd->args[i])
 		{
@@ -75,7 +75,7 @@ void	ft_printcmd(t_command *cmd)
 		printf("outfile fd=%d\n", cmd->outfile);
 		cmd = cmd->next;
 	}
-	printf("-----\n");
+	// printf("-----\n");
 }
 
 size_t	ft_sstrlcpy(char *dst, const char *src, size_t dstsize)

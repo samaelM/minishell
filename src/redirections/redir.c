@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:11:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/04 13:34:23 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/05 17:23:53 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,13 @@ static int	skip_cmd(char *line)
 	int	i;
 
 	i = 0;
+	// printf("coucou?\n");
 	while (line[i] && line[i] != '|')
 		i++;
+	// printf("skip = %i (%s)\n", i, line + i);
 	return (i);
 }
+// #include <time.h>
 
 static int	skip_nonredir(t_global *global, char *line, int i)
 {
@@ -29,6 +32,8 @@ static int	skip_nonredir(t_global *global, char *line, int i)
 	skipped = 0;
 	while (line[i + skipped] && !is_in_set(line[i + skipped], "><|"))
 	{
+		// printf("jspskip: %d, %s\n", i + skipped, line + i + skipped);
+		// sleep(1);
 		if (!is_in_set(line[i + skipped], "'\""))
 			skipped++;
 		skipped += ft_skipquotes(line + i + skipped, '"');
@@ -62,10 +67,17 @@ int	ft_redir(t_global *global, char *line)
 			tmp = ft_heredoc(global, line + i);
 		else if (line[i] == '<')
 			tmp = ft_infile(global, line + i);
+		// printf("avant if: %d\n", i);
 		if (tmp < 0)
-			i += skip_cmd(line);
+			i += skip_cmd(line + i);
+		if (!line[i])
+			return (1);
 		i += tmp;
+		// printf("jspredir: %d, %s\n", i, line + i);
 		i += skip_nonredir(global, line, i);
 	}
+	// printf("fin redir\n");
 	return (1);
 }
+
+// echo hi | cat <"./test_files/infile"

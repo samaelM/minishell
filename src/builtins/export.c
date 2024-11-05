@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:48:08 by ahenault          #+#    #+#             */
-/*   Updated: 2024/10/31 17:16:37 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:47:23 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	change_env_var(t_global *g, char *var, int line)
 	g->env[line] = ft_strdup(var);
 	if (!g->env[line])
 	{
-		printf("export: erreur strdup\n");
+		ft_perrorf("export: erreur strdup\n");
 		g->env[line] = tmp;
 		return (1);
 	}
@@ -79,7 +79,7 @@ int	parse_export(char *var)
 		}
 	}
 	if (var[i] != '\0')
-		printf("export: `%s': not a valid identifier\n", var);
+		ft_perrorf("export: `%s': not a valid identifier\n", var);
 	return (1);
 }
 
@@ -105,7 +105,7 @@ int	print_export(t_global *g)
 				free(var_name);
 				return (1);
 			}
-			printf("export %s=\"%s\"\n", var_name, var_content);
+			ft_perrorf("export %s=\"%s\"\n", var_name, var_content);
 			free(var_name);
 		}
 		i++;
@@ -135,7 +135,7 @@ int	ft_export(t_global *g)
 			free(var_name);
 			if (is_line == -1 && add_env_var(g, g->command->args[i]) == 1)
 			{
-				printf("export: erreur malloc\n");
+				ft_perrorf("export: erreur malloc\n");
 				return (1);
 			}
 			if (is_line != -1 && change_env_var(g, g->command->args[i],

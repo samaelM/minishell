@@ -10,3 +10,11 @@
 	...
 	fun:add_history
 }
+
+{
+    ls_leaks
+    Memcheck:Leak
+    match-leak-kinds: reachable
+    fun:malloc
+    obj:/usr/bin/ls
+}
