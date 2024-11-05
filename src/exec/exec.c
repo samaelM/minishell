@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/04 19:48:28 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/05 20:03:51 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	ft_waitall(t_global *global)
+{
+	while (wait(&global->exit_value) != -1)
+		;
+	if (g_sig)
+	{
+		// close(global->command->pipe[0]);
+		global->exit_value = 128 + g_sig;
+	}
+}
 
 int	exec_one_cmd(t_global *g)
 {
@@ -66,8 +77,7 @@ int	exec_one_cmd(t_global *g)
 				close(fd_stdout);
 				exec_la_cmd(g);
 			}
-			else // pere
-				waitpid(pid, NULL, 0);
+			ft_waitall(g);
 		}
 		if (g->command->infile != -1)
 			dup2(fd_stdin, 0);
@@ -160,16 +170,16 @@ int	pipe_and_fork(t_global *g, int i)
 		dup_outfile(g);
 		exec_which_cmd(g);
 	}
-	else // pere
-	{
-		if (WIFEXITED(0))
-			g->exit_value = WEXITSTATUS(0);
-		if (g_sig)
-		{
-			close(g->command->pipe[0]);
-			g->exit_value = 128 + g_sig;
-		}
-	}
+	// else // pere
+	// {
+	// 	if (WIFEXITED(0))
+	// 		g->exit_value = WEXITSTATUS(0);
+	// 	if (g_sig)
+	// 	{
+	// 		close(g->command->pipe[0]);
+	// 		g->exit_value = 128 + g_sig;
+	// 	}
+	// }
 	return (0);
 }
 
@@ -198,8 +208,7 @@ int	ft_exec(t_global *g)
 	close(g->command->pipe[0]);
 	if (g->command->prev_fd != -1)
 		close(g->command->prev_fd);
-	while (waitpid(0, NULL, 0) != -1)
-		;
+	ft_waitall(g);
 	return (0);
 }
 
