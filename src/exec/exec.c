@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/04 19:48:28 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/05 18:40:21 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,15 @@ int	exec_one_cmd(t_global *g)
 	int		fd_stdin;
 	int		fd_stdout;
 
-	fd_stdin = dup(0);
-	fd_stdout = dup(1);
 	if (g->command && g->command->args && g->command->args[0])
 	{
+		if (g->command->infile == -2 || g->command->outfile == -2)
+		{
+			g->exit_value = 2;
+			return (g->exit_value);
+		}
+		fd_stdin = dup(0);
+		fd_stdout = dup(1);
 		if (g->command->infile != -1)
 			dup2(g->command->infile, 0);
 		if (g->command->outfile != -1)
