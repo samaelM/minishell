@@ -7,8 +7,10 @@ struct tmp
 
 echo <Makefile "bonjour       42" << la faute a ce batard de mael
 
+-2 pas execu	
+
 ------------------------------
-SIGNAUX :
+EXIT STATUS:
 
 invalid args for cmd 2
 
@@ -32,7 +34,6 @@ si il y a une pipe, continue.
 
 ctrl d continue la cmd pour heredoc
 warning: here-document at line 8 delimited by end-of-file (wanted `end')
-/!\ erreur sur stderr stp anaellllllllllllle
 
 
 
