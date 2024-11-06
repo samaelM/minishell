@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/07 15:06:18 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/07 19:12:18 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_free_glob(t_global *glob)
 {
 	free_tab(glob->env);
 	ft_free_cmd(glob->command);
+	free(glob->line);
 }
 
 void	ft_free_cmd(t_command *cmd)
