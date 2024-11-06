@@ -52,6 +52,7 @@ R_FILES		=	${addprefix src/,${addprefix ${R_DIR}/,${R_SRC}}}
 E_DIR		=	exec
 E_SRC		=	exec.c \
 				exec_one_cmd.c \
+				exec_pipe.c \
 
 E_FILES		=	${addprefix src/,${addprefix ${E_DIR}/,${E_SRC}}}
 

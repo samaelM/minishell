@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:28:47 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/06 18:10:19 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/06 19:47:59 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,20 @@ int	ft_error_token(char *str)
 {
 	ft_perrorf("syntax error near unexpected token `%s'\n", str);
 	return (-1);
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	size_t i;
+
+	i = 0;
+	if (ft_strlen(s1) != ft_strlen(s2))
+		return (1);
+	while ((s1[i] || s2[i]))
+	{
+		if (s1[i] != s2[i])
+			return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
+		i++;
+	}
+	return (0);
 }
