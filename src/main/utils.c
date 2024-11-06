@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:40:51 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/04 18:58:10 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:28:59 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_printcmd(t_command *cmd)
 	while (cmd)
 	{
 		i = 0;
-		// printf("-----\ncmd[%d]\n", j++);
+		printf("-----\ncmd[%d]\n", j++);
 		printf("infile fd=%d\n", cmd->infile);
 		while (cmd->args && cmd->args[i])
 		{
@@ -75,7 +75,7 @@ void	ft_printcmd(t_command *cmd)
 		printf("outfile fd=%d\n", cmd->outfile);
 		cmd = cmd->next;
 	}
-	// printf("-----\n");
+	printf("-----\n");
 }
 
 size_t	ft_sstrlcpy(char *dst, const char *src, size_t dstsize)
@@ -96,28 +96,4 @@ size_t	ft_sstrlcpy(char *dst, const char *src, size_t dstsize)
 		i++;
 	}
 	return (ft_strlen(src));
-}
-
-int	is_in_set(char c, char *set)
-{
-	int	i;
-
-	i = 0;
-	while (set && set[i])
-	{
-		if (set[i] == c)
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void	perr(char *str)
-{
-	write(STDERR_FILENO, str, ft_strlen(str));
-}
-int	ft_error_token(char *str)
-{
-	printf("syntax error near unexpected token `%s'\n", str);
-	return (-1);
 }

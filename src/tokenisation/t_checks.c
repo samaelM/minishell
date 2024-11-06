@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:43:39 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/04 13:57:05 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/06 18:09:42 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ static int	ft_check_pipes(char *str)
 static char	*ft_get_token(char *str)
 {
 	if (ft_strncmp(str, ">>", 2) == 0)
-		return (ft_strdup(">>"));
+		return ((">>"));
 	if (*str == '>')
-		return (ft_strdup(">"));
+		return ((">"));
 	if (ft_strncmp(str, "<<", 2) == 0)
-		return (ft_strdup("<<"));
+		return (("<<"));
 	if (*str == '<')
-		return (ft_strdup("<"));
-	return (ft_strdup("|"));
+		return (("<"));
+	return (("|"));
 }
 
 static int	ft_check_redir(char *str)

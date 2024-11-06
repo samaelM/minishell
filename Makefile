@@ -26,6 +26,7 @@ T_DIR		=	tokenisation
 T_SRC		=	tokenisation.c \
 				t_env.c \
 				t_utils.c \
+				t_utils2.c \
 				t_checks.c \
 				ft_get_arg.c \
 
@@ -54,10 +55,11 @@ E_SRC		=	exec.c \
 
 E_FILES		=	${addprefix src/,${addprefix ${E_DIR}/,${E_SRC}}}
 
-######	All sources	#####
+######	main sources	#####
 MAIN_DIR		=	main
 MAIN_SRC		=	main.c \
 					utils.c \
+					utils2.c \
 
 				# ${addprefix ${E_DIR}/,${E_SRC}} \
 
@@ -127,64 +129,64 @@ BANDE = \033[7m #comme moi
 all : $(NAME)
 
 $(NAME): $(LIBFT) $(T_OBJETS) $(MAIN_OBJETS) $(B_OBJETS) $(S_OBJETS) $(R_OBJETS) $(E_OBJETS)
-	@echo -n "${RED}[COMPILING]${WHITE}${NAME}"
+	@printf "${RED}[COMPILING]${WHITE}${NAME}"
 	@cc $(ALL_OBJETS) $(LIBFT) -o $(NAME) $(CFLAGS) $(RLFLAGS)
-	@echo "\033[2K\r${GREEN}[DONE!]${WHITE}${NAME}"
-	@echo "${RED}${BOLD}    ___________  "
-	@echo "   ( COMPILED! ) "
-	@echo "    ͞ v ͞ ͞ ͞ ͞ ͞ ͞ v ͞  "
-	@echo "   /\/\    /\_/\ "
-	@echo "  ( ${FLASH}o${RED}${BOLD}w${FLASH}o${RED}${BOLD})  ( ${FLASH}o${RED}${BOLD}.${FLASH}o${RED}${BOLD} )"
-	@echo "  / >*<\   > ^ < "
-	@echo "   Maël   Anaëlle${WHITE}"
+	@printf "\033[2K\r${GREEN}[DONE!]${WHITE}${NAME}\n"
+	@printf "${RED}${BOLD}    ___________  \n"
+	@printf "   ( COMPILED! ) \n"
+	@printf "    ͞ v ͞ ͞ ͞ ͞ ͞ ͞ v ͞  \n"
+	@printf "   /\/\    /\_/\ \n"
+	@printf "  ( ${FLASH}o${RED}${BOLD}w${FLASH}o${RED}${BOLD})  ( ${FLASH}o${RED}${BOLD}.${FLASH}o${RED}${BOLD} )\n"
+	@printf "  / >*<\   > ^ < \n"
+	@printf "   Maël   Anaëlle${WHITE}\n"
 
 ${OBJ_DIR}/${MAIN_DIR}/%.o: src/main/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
-	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
+	@printf "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
-	@echo -n "\e[2K\r${GREEN}[OK]${WHITE}$<"
+	@printf "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${OBJ_DIR}/${T_DIR}/%.o: src/${T_DIR}/%.c $(MS_INC) $(T_INC)
 	@mkdir -p ${dir $@}
-	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
+	@printf "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
-	@echo -n "\e[2K\r${GREEN}[OK]${WHITE}$<"
+	@printf "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${OBJ_DIR}/${B_DIR}/%.o: src/${B_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
-	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
+	@printf "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
-	@echo -n "\e[2K\r${GREEN}[OK]${WHITE}$<"
+	@printf "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${OBJ_DIR}/${S_DIR}/%.o: src/${S_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
-	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
+	@printf "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
-	@echo -n "\e[2K\r${GREEN}[OK]${WHITE}$<"
+	@printf "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${OBJ_DIR}/${R_DIR}/%.o: src/${R_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
-	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
+	@printf "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
-	@echo -n "\e[2K\r${GREEN}[OK]${WHITE}$<"
+	@printf "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 ${OBJ_DIR}/${E_DIR}/%.o: src/${E_DIR}/%.c $(MS_INC)
 	@mkdir -p ${dir $@}
-	@echo -n "\e[2K\r${RED}[COMPILING]${WHITE}$<"
+	@printf "\e[2K\r${RED}[COMPILING]${WHITE}$<"
 	@cc $(CFLAGS) -c -o $@ $< -g
-	@echo -n "\e[2K\r${GREEN}[OK]${WHITE}$<"
+	@printf "\e[2K\r${GREEN}[OK]${WHITE}$<"
 
 $(LIBFT): $(LIBFT_INC)
 	@make -sC $(LIBFT_DIR)
 
 clean:
 	@rm -rf $(OBJ_DIR)
-	@echo "$(RED)[DELETED]$(WHITE)$(OBJ_DIR)/"
+	@printf "$(RED)[DELETED]$(WHITE)$(OBJ_DIR)/\n"
 
 fclean: clean
 	@make -sC $(LIBFT_DIR) fclean
 	@rm -rf $(NAME)
-	@echo "$(RED)[DELETED]$(WHITE)$(NAME)"
+	@printf "$(RED)[DELETED]$(WHITE)$(NAME)\n"
 
 re: fclean all
 

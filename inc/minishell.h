@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/04 13:50:18 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:44:35 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,8 @@
 # define METACHAR " 	|<>"
 # define HEREDOC_NAME "/tmp/heredoc_poivre"
 # define ERR_HD_EOF "warning: here-document delimited by end-of-file\n"
-# define ERR_ALLOC \
-	"an error has occured,\
-	it may be related with a malloc failure\n"
+# define ERR_ALLOC "an error has occured,it may\
+ be related with a malloc failure\n"
 
 ///////////////////////////////////////////
 ///				STRUCTURES				///

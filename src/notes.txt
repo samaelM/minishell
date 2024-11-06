@@ -16,19 +16,4 @@ cmd not found 127
 check pour exit
 ------------------------------
 
-echo <Makefile "bonjour       42" << la faute a ce batard de mael
-error "" not closed: 130 ecrire le message
--2 si file non open
-<end ls | ls (n'execute pas la cmd avec un pb de file)
-
-redir = s'arrete a la premiere failure, mais seulement pour la cmd
-si il y a une pipe, continue.
-
-ctrl d continue la cmd pour heredoc
-warning: here-document at line 8 delimited by end-of-file (wanted `end')
-
-
-
 leaks check error (Poivre-echelle> >|)
-
-echo <"./test_files/infile" "bonjour       42"
