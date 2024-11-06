@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:29:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/06 17:00:19 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:43:17 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_outfile2(t_global *global, char *line)
 	cmd = global->tmp;
 	if (cmd->outfile > 1)
 		close(cmd->outfile);
-	name = ft_get_file_name(global, line);
+	name = ft_get_file_name(global, line+1);
 	if (!name)
 		return (-1);
 	cmd->outfile = open(name, O_CREAT | O_APPEND | O_RDWR, 0666);

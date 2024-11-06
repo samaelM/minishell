@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 14:11:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/06 14:50:35 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:34:51 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int	ft_redir(t_global *global, char *line)
 	int	i;
 	int	tmp;
 
-	if (!global->command) //mettre dans le main??
-		return (0);
 	global->tmp = global->command;
 	i = 0;
 	tmp = 0;
@@ -71,5 +69,3 @@ int	ft_redir(t_global *global, char *line)
 	}
 	return (1);
 }
-
-// echo hi | cat <"./test_files/infile"

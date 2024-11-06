@@ -1,26 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenisation.h                                     :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/02 19:52:21 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/06 17:33:13 by maemaldo         ###   ########.fr       */
+/*   Created: 2024/11/06 17:28:47 by maemaldo          #+#    #+#             */
+/*   Updated: 2024/11/06 17:29:57 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TOKENISATION_H
-# define TOKENISATION_H
+#include "../../inc/minishell.h"
 
-# include "minishell.h"
+int	is_in_set(char c, char *set)
+{
+	int	i;
 
-int			ft_envname_len(char *str);
-int			ft_env_len_bis(t_global *global, char *str);
-char		*ft_env_var(t_global *global, char *str);
-int			ft_redir_len(char *str);
-int			skip_not_in_set(char *src, char *set);
-t_command	*ft_cmd_init(void);
-int			ft_fillcmd(t_global *global, char **line, int *pos);
+	i = 0;
+	while (set && set[i])
+	{
+		if (set[i] == c)
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
-#endif
+void	perr(char *str)
+{
+	write(STDERR_FILENO, str, ft_strlen(str));
+}
+
+int	ft_error_token(char *str)
+{
+	printf("syntax error near unexpected token `%s'\n", str);
+	return (-1);
+}

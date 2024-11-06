@@ -26,6 +26,7 @@ T_DIR		=	tokenisation
 T_SRC		=	tokenisation.c \
 				t_env.c \
 				t_utils.c \
+				t_utils2.c \
 				t_checks.c \
 				ft_get_arg.c \
 
@@ -54,10 +55,11 @@ E_SRC		=	exec.c \
 
 E_FILES		=	${addprefix src/,${addprefix ${E_DIR}/,${E_SRC}}}
 
-######	All sources	#####
+######	main sources	#####
 MAIN_DIR		=	main
 MAIN_SRC		=	main.c \
 					utils.c \
+					utils2.c \
 
 				# ${addprefix ${E_DIR}/,${E_SRC}} \
 
