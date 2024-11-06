@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/07 17:51:40 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/07 18:29:50 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_is_cmd_is_ok(t_global *g)
 	return (1);
 }
 
-int	close_infile_and_outfile(t_global *g)
+int	close_if_error(t_global *g)
 {
 	if (g->command->infile != -1)
 	{
@@ -60,9 +60,9 @@ int	dup_infile_and_outfile(t_global *g)
 	{
 		g->command->stdout_copy = dup(1);
 		if (g->command->stdout_copy == -1)
-			return (close_infile_and_outfile(g));
+			return (close_if_error(g));
 		if (dup2(g->command->outfile, 1) == -1)
-			return (close_infile_and_outfile(g));
+			return (close_if_error(g));
 	}
 	return (0);
 }
@@ -92,7 +92,7 @@ int	fork_execve(t_global *g)
 	return (0);
 }
 
-void	exec_witch_cmd(t_global *g)
+void	exec_which_cmd(t_global *g)
 {
 	if (ft_strcmp(g->command->args[0], "pwd") == 0)
 		g->exit_value = ft_pwd();
@@ -110,6 +110,32 @@ void	exec_witch_cmd(t_global *g)
 		fork_execve(g);
 }
 
+void	close_fd(t_global *g)
+{
+	if (g->command->infile != -1)
+	{
+		if (dup2(g->command->stdin_copy, 0) == -1)
+		{
+			close(g->command->stdin_copy);
+			if (g->command->outfile != -1)
+				close(g->command->stdout_copy);
+			ft_free_glob(g);
+			exit(1);
+		}
+		close(g->command->stdin_copy);
+	}
+	if (g->command->outfile != -1)
+	{
+		if (dup2(g->command->stdout_copy, 1) == -1)
+		{
+			close(g->command->stdout_copy);
+			ft_free_glob(g);
+			exit(1);
+		}
+		close(g->command->stdout_copy);
+	}
+}
+
 int	exec_one_cmd(t_global *g)
 {
 	if (check_is_cmd_is_ok(g) == 1)
@@ -125,19 +151,9 @@ int	exec_one_cmd(t_global *g)
 		ft_perrorf("erreur dup\n", 2);
 		return (1);
 	}
-	exec_witch_cmd(g);
-	//
-	if (g->command->infile != -1)
-	{
-		dup2(g->command->stdin_copy, 0);
-		close(g->command->stdin_copy);
-	}
-	if (g->command->outfile != -1)
-	{
-		dup2(g->command->stdout_copy, 1);
-		close(g->command->stdout_copy);
-	}
-	return (g->exit_value);
+	exec_which_cmd(g);
+	close_fd(g);
+	return (0);
 }
 
 int	ft_exec(t_global *g)
