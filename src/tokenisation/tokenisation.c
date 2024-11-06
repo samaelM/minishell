@@ -6,11 +6,33 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 19:52:18 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/05 17:44:34 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/06 17:19:09 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/tokenisation.h"
+
+int	ft_get_size_envtk(t_global *global, char *str, int *i, int *sz)
+{
+	int	idx;
+	int	size;
+	int	env_len;
+
+	idx = *i;
+	size = *sz;
+	if (str[idx] == '$')
+	{
+		env_len = ft_env_len_bis(global, str + idx + 1);
+		if (env_len == -1)
+			return (-1);
+		size += env_len;
+		idx += ft_envname_len(str + idx + 1);
+	}
+	else
+		size++;
+	idx++;
+	return (1);
+}
 
 int	ft_get_size_qtoken(t_global *global, char *str, int *idx, int *size)
 {
@@ -23,7 +45,7 @@ int	ft_get_size_qtoken(t_global *global, char *str, int *idx, int *size)
 			(*idx)++;
 			while (str[*idx] && str[*idx] != '"')
 			{
-				if (str[*idx] == '$')
+				if (str[*idx] == '$') // remplacer par ft
 				{
 					env_len = ft_env_len_bis(global, str + (*idx) + 1);
 					if (env_len == -1)
@@ -60,7 +82,7 @@ int	ft_size_token(t_global *global, char *str)
 			return (-1);
 		while (str[idx] && !is_in_set(str[idx], "\"' 	|<>"))
 		{
-			if (str[idx] == '$')
+			if (str[idx] == '$') // remplacer par ft
 			{
 				env_len = ft_env_len_bis(global, str + idx + 1);
 				if (env_len == -1)
@@ -72,10 +94,30 @@ int	ft_size_token(t_global *global, char *str)
 				size++;
 			idx++;
 		}
-		while (str[idx] && is_in_set(str[idx], "<>"))
+		while (str[idx] && is_in_set(str[idx], "<>")) // enleve while
 			idx += ft_redir_len(str + idx);
 	}
 	return (size);
+}
+
+int	skip_in_set(char *src, char *set)
+{
+	int	i;
+
+	i = 0;
+	while (src[i] && is_in_set(src[i], set))
+		i++;
+	return (i);
+}
+
+int	skip_not_in_set(char *src, char *set)
+{
+	int	i;
+
+	i = 0;
+	while (src[i] && !is_in_set(src[i], set))
+		i++;
+	return (i);
 }
 
 int	ft_counttoken(char *str)
@@ -89,27 +131,21 @@ int	ft_counttoken(char *str)
 	{
 		while (str[idx] && is_in_set(str[idx], " 	"))
 			idx++;
-		// printf("idx = %d avant redirlen str=%s\n",idx, str+idx);
 		if (is_in_set(str[idx], "<>"))
 			idx += ft_redir_len(str + idx);
-		// printf("idx = %d apres redirlen str=%s\n",idx, str+idx);
 		if (str[idx] == '|')
 			return (nb_t);
 		if (str[idx] && !is_in_set(str[idx], "<>"))
 			nb_t++;
-		// printf("idx = %d avant big while str=%s\n",idx, str+idx);
 		while (str[idx] && !is_in_set(str[idx], "<> 	"))
 		{
 			idx += ft_skipquotes(str + idx, '"');
 			idx += ft_skipquotes(str + idx, '\'');
 			if (str[idx] && str[idx] == '|')
 				return (nb_t);
-			while (str[idx] && !is_in_set(str[idx], "<>\"' 	|"))
-				idx++;
+			idx += skip_not_in_set(str + idx, "<>\"' 	|");
 		}
-		// printf("idx = %d apres big while str=%s\n",idx, str+idx);
 	}
-	// printf("\n\n\n\n\n\n");
 	return (nb_t);
 }
 
@@ -159,7 +195,6 @@ int	ft_fillcmd(t_global *global, char **line, int *pos)
 
 	cmd = global->tmp;
 	size = ft_counttoken(*line);
-	// printf("nbtk = %d (%s)\n", size, *line);
 	cmd->args = ft_calloc((size + 1), sizeof(char *));
 	if (!cmd->args)
 		return (perr(ERR_ALLOC), 0);
@@ -198,7 +233,6 @@ t_command	*ft_token(char *line, t_global *global)
 		if (global->tmp->next)
 			global->tmp = global->tmp->next;
 	}
-	// printf("fin tk\n");
 	return (cmd);
 }
 
