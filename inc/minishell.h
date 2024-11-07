@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/06 19:46:30 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/07 15:05:56 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,10 @@ typedef struct s_command
 	int					outfile;
 	int					pipe[2];
 	int					prev_fd;
+	int					stdin_copy;
+	int					stdout_copy;
 	struct s_command	*next;
+
 }						t_command;
 
 typedef struct s_global

@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/06 19:47:35 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/07 17:43:52 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	dup_outfile(t_global *g)
 		close(g->command->pipe[1]);
 }
 
-int	exec_which_cmd(t_global *g)
+int	exec_which_cmd_pipe(t_global *g)
 {
 	if (g->command && g->command->args && g->command->args[0])
 	{
@@ -86,7 +86,7 @@ int	pipe_and_fork(t_global *g, int i)
 		close(g->command->pipe[0]);
 		dup_infile(g, i);
 		dup_outfile(g);
-		exec_which_cmd(g);
+		exec_which_cmd_pipe(g);
 	}
 	return (0);
 }
