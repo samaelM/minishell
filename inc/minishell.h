@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/07 15:05:56 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/07 18:54:50 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_global
 	t_command			*tmp;
 	char				**env;
 	int					exit_value;
+	char				*line;
 }						t_global;
 
 ///////////////////////////////////////////
