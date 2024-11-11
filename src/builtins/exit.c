@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:22:30 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/04 18:46:46 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 17:21:43 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	ft_exit(t_global *g)
 	}
 	if (is_nb(g->command->args[1]) == 0 && nb_args(g->command->args + 1) == 1)
 		exit_nb(g, g->command->args[1]);
-	ft_putstr_fd("exit too many =0\n", 2);
+	// ft_putstr_fd("exit too many =0\n", 2);
 	ft_perrorf("exit: too many arguments\n");
 	return (1);
 }

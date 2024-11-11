@@ -1,27 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_pipe.c                                        :+:      :+:    :+:   */
+/*   exec_pipe_cmds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/07 18:41:30 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 17:30:58 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	ft_waitall(t_global *global)
-{
-	while (wait(&global->exit_value) != -1)
-		;
-	if (g_sig)
-	{
-		// close(global->command->pipe[0]);
-		global->exit_value = 128 + g_sig;
-	}
-}
 
 void	dup_infile(t_global *g, int i)
 {
@@ -67,7 +56,7 @@ int	exec_which_cmd_pipe(t_global *g)
 		else if (ft_strcmp(g->command->args[0], "unset") == 0)
 			g->exit_value = ft_unset(g);
 		else
-			exec_la_cmd(g);
+			execve_cmd(g);
 	}
 	ft_free_glob(g);
 	exit(g->exit_value);
@@ -89,4 +78,31 @@ int	pipe_and_fork(t_global *g, int i)
 		exec_which_cmd_pipe(g);
 	}
 	return (0);
+}
+
+void	exec_pipe_cmds(t_global *g)
+{
+	int	i;
+
+	i = 0;
+	g->tmp = g->command;
+	while (g->command)
+	{
+		pipe_and_fork(g, i);
+		i++;
+		close(g->command->pipe[1]);
+		if (g->command->next)
+		{
+			g->command->next->prev_fd = g->command->pipe[0];
+			if (g->command->prev_fd != -1)
+				close(g->command->prev_fd);
+			g->command = g->command->next;
+		}
+		else
+			break ;
+	}
+	close(g->command->pipe[0]);
+	if (g->command->prev_fd != -1)
+		close(g->command->prev_fd);
+	ft_waitall(g);
 }

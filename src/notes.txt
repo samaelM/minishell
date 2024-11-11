@@ -1,6 +1,3 @@
-free readline parfois ???
-
-------------------------------
 EXIT STATUS:
 
 invalid args for cmd 2
@@ -15,3 +12,8 @@ ex : /bi/ls
 check pour exit
 ------------------------------
 
+CHECK 	builtins
+		exit STATUS
+		pipe
+
+		norme
