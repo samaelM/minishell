@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:48:08 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/04 18:47:23 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/05 20:16:58 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	print_export(t_global *g)
 				free(var_name);
 				return (1);
 			}
-			ft_perrorf("export %s=\"%s\"\n", var_name, var_content);
+			ft_printf("export %s=\"%s\"\n", var_name, var_content);
 			free(var_name);
 		}
 		i++;

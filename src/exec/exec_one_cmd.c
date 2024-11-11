@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_one_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:34:17 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/04 18:49:35 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:37:27 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	cmd_path(t_global *g)
 	{
 		free_tab(all_paths);
 		ft_free_glob(g);
-		exit(1);
+		exit(126);
 	}
 	if (execve(path, g->command->args, g->env) == -1)
 	{
@@ -85,7 +85,7 @@ void	cmd_path(t_global *g)
 
 void	exec_la_cmd(t_global *g)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (g->command->args[0][i])

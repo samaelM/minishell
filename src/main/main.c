@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/11 14:30:52 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/11 16:38:14 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	ft_readfile(int fd)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char		*line;
 	t_global	global;
 
 	(void)argc;
@@ -47,17 +46,17 @@ int	main(int argc, char **argv, char **envp)
 	while (42)
 	{
 		g_sig = 0;
-		line = readline("\001\033[1;95m\002Poivre-echelle> \001\033[0m\002");
+		global.line = readline("\001\033[1;95m\002Poivre-echelle> \001\033[0m\002");
 		if (g_sig == SIGINT)
 			global.exit_value = 130;
-		if (line == NULL)
+		if (global.line == NULL)
 			signal_ctrd(&global);
-		if (*line)
-			add_history(line);
-		if (line && ft_check_line(line))
+		if (*global.line)
+			add_history(global.line);
+		if (global.line && ft_check_line(global.line))
 		{
-			if (ft_token(line, &global) && global.command && ft_redir(&global,
-					line))
+			if (ft_token(global.line, &global) && global.command
+				&& ft_redir(&global, global.line))
 			{
 				g_sig = 0;
 				// ft_printcmd(global.command);
@@ -66,7 +65,9 @@ int	main(int argc, char **argv, char **envp)
 			// ft_readfile(global.command->infile);
 			ft_free_cmd(global.command);
 		}
+		else 
+			global.exit_value=2;
 		// printf("\033[0;33mexit status: %d\n", global.exit_value);
-		free(line);
+		free(global.line);
 	}
 }

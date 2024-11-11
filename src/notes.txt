@@ -1,24 +1,16 @@
 free readline parfois ???
 
 ------------------------------
-Problemes:
-
-struct tmp
-
-echo <Makefile "bonjour       42" << la faute a ce batard de mael
-
-------------------------------
-SIGNAUX :
+EXIT STATUS:
 
 invalid args for cmd 2
+ex : ls gfdg
 
 bash: /usr/local/sbin/..: Is a directory 126
 
 cmd not found 127
-/bi/ls
+ex : /bi/ls
 
-^c 130
-^\ 131
 
 check pour exit
 ------------------------------
