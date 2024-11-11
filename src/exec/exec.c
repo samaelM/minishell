@@ -6,24 +6,24 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/11 18:38:57 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:08:12 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_waitall(t_global *global)
+void	ft_waitall(t_global *g)
 {
-	while (wait(&global->exit_value) != -1)
+	while (wait(&g->exit_value) != -1)
 		;
-	// printf("exec status: %d\n", global->exit_value);
-	if (WIFEXITED(global->exit_value))
+	// printf("exec status: %d\n", g->exit_value);
+	if (WIFEXITED(g->exit_value))
 	{
-		global->exit_value = WEXITSTATUS(global->exit_value);
+		g->exit_value = WEXITSTATUS(g->exit_value);
 	}
 	else
 	{
-		global->exit_value = 128 + g_sig;
+		g->exit_value = 128 + g_sig;
 	}
 }
 

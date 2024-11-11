@@ -6,13 +6,11 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/11 17:39:37 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:15:58 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-
 
 void	dup_infile(t_global *g, int i)
 {
@@ -68,7 +66,8 @@ int	pipe_and_fork(t_global *g, int i)
 {
 	pid_t	pid;
 
-	pipe(g->command->pipe);
+	if (pipe(g->command->pipe) == -1)
+		return (1);
 	pid = fork();
 	if (pid == -1)
 		ft_perrorf("erreur fork");
@@ -106,5 +105,6 @@ void	exec_pipe_cmds(t_global *g)
 	close(g->command->pipe[0]);
 	if (g->command->prev_fd != -1)
 		close(g->command->prev_fd);
+	g->command = g->tmp;
 	ft_waitall(g);
 }
