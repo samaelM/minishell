@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/11 19:15:58 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 19:23:10 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,8 @@ void	dup_outfile(t_global *g)
 
 int	exec_which_cmd_pipe(t_global *g)
 {
-	if (g->command && g->command->args && g->command->args[0])
+	if (check_is_cmd_is_ok(g) == 0)
 	{
-		change_env_(g);
 		if (ft_strcmp(g->command->args[0], "exit") == 0)
 			g->exit_value = ft_exit(g);
 		else if (ft_strcmp(g->command->args[0], "pwd") == 0)
