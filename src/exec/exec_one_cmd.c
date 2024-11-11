@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:34:17 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/07 18:40:16 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 15:41:57 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ void	absolute_path(t_global *g)
 {
 	if (execve(g->command->args[0], g->command->args, g->env) == -1)
 	{
-		perror(g->command->args[0]);
+		if (access(g->command->args[0], F_OK) == 0)
+			printf("%s: Is a directory\n", g->command->args[0]);
+		else
+			perror(g->command->args[0]);
 		ft_free_glob(g);
 		exit(1);
 	}
