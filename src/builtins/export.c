@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:48:08 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/05 20:16:58 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 20:05:39 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,23 +122,23 @@ int	ft_export(t_global *g)
 
 	i = 1;
 	return_value = 0;
-	if (g->command->args[1] == NULL)
+	if (g->tmp->args[1] == NULL)
 		return (print_export(g));
-	while (g->command->args[i])
+	while (g->tmp->args[i])
 	{
-		if (parse_export(g->command->args[i]) == 0)
+		if (parse_export(g->tmp->args[i]) == 0)
 		{
-			var_name = ft_var_name(g->command->args[i]);
+			var_name = ft_var_name(g->tmp->args[i]);
 			if (!var_name)
 				return (1);
 			is_line = find_var_in_env(g->env, var_name);
 			free(var_name);
-			if (is_line == -1 && add_env_var(g, g->command->args[i]) == 1)
+			if (is_line == -1 && add_env_var(g, g->tmp->args[i]) == 1)
 			{
 				ft_perrorf("export: erreur malloc\n");
 				return (1);
 			}
-			if (is_line != -1 && change_env_var(g, g->command->args[i],
+			if (is_line != -1 && change_env_var(g, g->tmp->args[i],
 					is_line) == 1)
 				return (1);
 		}

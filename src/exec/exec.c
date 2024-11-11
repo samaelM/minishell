@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/11 19:08:12 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 20:02:21 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	ft_waitall(t_global *g)
 
 int	check_is_cmd_is_ok(t_global *g)
 {
-	if (g->command && g->command->args && g->command->args[0])
+	if (g->tmp && g->tmp->args && g->tmp->args[0])
 	{
 		change_env_(g);
-		if (g->command->infile != -2 && g->command->outfile != -2)
+		if (g->tmp->infile != -2 && g->tmp->outfile != -2)
 			return (0);
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 19:22:30 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/11 18:29:28 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 20:05:53 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,23 +56,23 @@ int	exit_nb(t_global *g, char *cmd)
 int	ft_exit(t_global *g)
 {
 	printf("exit\n");
-	if (nb_args(g->command->args + 1) == 0)
+	if (nb_args(g->tmp->args + 1) == 0)
 	{
 		ft_free_glob(g);
 		exit(g->exit_value);
 	}
-	if (is_nb(g->command->args[1]) || ft_strlen(g->command->args[1]) > 19
-		|| (ft_strlen(g->command->args[1]) == 19
-			&& ft_strncmp("9223372036854775807", g->command->args[1], 19) < 0))
+	if (is_nb(g->tmp->args[1]) || ft_strlen(g->tmp->args[1]) > 19
+		|| (ft_strlen(g->tmp->args[1]) == 19
+			&& ft_strncmp("9223372036854775807", g->tmp->args[1], 19) < 0))
 	{
 		ft_putstr_fd("exit numeric required =0\n", 2);
 		ft_perrorf("exit: %s: numeric argument required\n",
-			g->command->args[1]);
+			g->tmp->args[1]);
 		ft_free_glob(g);
 		exit(2);
 	}
-	if (is_nb(g->command->args[1]) == 0 && nb_args(g->command->args + 1) == 1)
-		exit_nb(g, g->command->args[1]);
+	if (is_nb(g->tmp->args[1]) == 0 && nb_args(g->tmp->args + 1) == 1)
+		exit_nb(g, g->tmp->args[1]);
 	// ft_putstr_fd("exit too many =0\n", 2);
 	ft_perrorf("exit: too many arguments\n");
 	g->exit_value = 1;

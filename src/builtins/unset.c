@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:36 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/04 18:48:00 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 20:05:28 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ int	ft_unset(t_global *glob)
 	int	i;
 
 	i = 1;
-	while (glob->command->args[i])
+	while (glob->tmp->args[i])
 	{
-		ft_perrorf("unset: %s\n", glob->command->args[i]);
-		if (ft_strncmp(glob->command->args[i], "_", 1) == 0)
+		ft_perrorf("unset: %s\n", glob->tmp->args[i]);
+		if (ft_strncmp(glob->tmp->args[i], "_", 1) == 0)
 			change_env_var(glob, "_=_", find_var_in_env(glob->env, "_"));
 		else
 			unset_this_line(glob->env, find_var_in_env(glob->env,
-					glob->command->args[i]));
+					glob->tmp->args[i]));
 		i++;
 	}
 	return (0);
