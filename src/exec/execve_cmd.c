@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:34:17 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/11 17:26:35 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 17:39:03 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	execve_cmd_path(t_global *g)
 	{
 		free_tab(all_paths);
 		ft_free_glob(g);
-		exit(1);
+		exit(126);
 	}
 	if (execve(path, g->command->args, g->env) == -1)
 	{

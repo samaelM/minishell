@@ -6,11 +6,13 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/11 17:30:58 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 17:39:37 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+
 
 void	dup_infile(t_global *g, int i)
 {

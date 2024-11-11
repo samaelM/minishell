@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/11 17:28:47 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 17:39:42 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@ void	ft_waitall(t_global *global)
 {
 	while (wait(&global->exit_value) != -1)
 		;
-	if (g_sig)
+	// printf("exec status: %d\n", global->exit_value);
+	if (WIFEXITED(global->exit_value))
 	{
-		// close(global->command->pipe[0]);
+		global->exit_value = WEXITSTATUS(global->exit_value);
+	}
+	else
+	{
 		global->exit_value = 128 + g_sig;
 	}
 }
