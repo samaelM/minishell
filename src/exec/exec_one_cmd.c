@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 15:57:43 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/11 17:38:40 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 18:31:12 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,10 @@ int	exec_one_cmd(t_global *g)
 	if (dup_infile_and_outfile(g) == 1)
 	{
 		ft_perrorf("erreur dup\n", 2);
+		g->exit_value = 1;
 		return (1);
 	}
 	exec_which_cmd(g);
 	close_fd(g);
-	return (0);
+	return (g->exit_value);
 }

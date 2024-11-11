@@ -1,13 +1,8 @@
 EXIT STATUS:
 
-invalid args for cmd 2
-ex : ls gfdg
-
-bash: /usr/local/sbin/..: Is a directory 126
-
-cmd not found 127
-ex : /bi/ls
-
+Input:        [ls not_existing_file | echo 42 | cat]
+    Bash $?:      [0]
+    Minishell $?: [2]
 
 check pour exit
 ------------------------------

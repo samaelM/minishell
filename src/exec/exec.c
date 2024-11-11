@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/11 17:39:42 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/11 18:38:57 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,7 @@ int	check_is_cmd_is_ok(t_global *g)
 int	ft_exec(t_global *g)
 {
 	if (g->command->next == NULL)
-	{
-		g->exit_value = exec_one_cmd(g);
-		return (g->exit_value);
-	}
+		return (exec_one_cmd(g));
 	exec_pipe_cmds(g);
 	return (0);
 }
