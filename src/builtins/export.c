@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:48:08 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/11 20:05:39 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/12 17:15:04 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	change_env_var(t_global *g, char *var, int line)
 	return (0);
 }
 
-int	parse_export(char *var)
+int	parse_export(char *var, int *return_value)
 {
 	int	i;
 
@@ -79,7 +79,10 @@ int	parse_export(char *var)
 		}
 	}
 	if (var[i] != '\0')
+	{
 		ft_perrorf("export: `%s': not a valid identifier\n", var);
+		*return_value = 1;
+	}
 	return (1);
 }
 
@@ -126,7 +129,7 @@ int	ft_export(t_global *g)
 		return (print_export(g));
 	while (g->tmp->args[i])
 	{
-		if (parse_export(g->tmp->args[i]) == 0)
+		if (parse_export(g->tmp->args[i], &return_value) == 0)
 		{
 			var_name = ft_var_name(g->tmp->args[i]);
 			if (!var_name)
@@ -142,8 +145,6 @@ int	ft_export(t_global *g)
 					is_line) == 1)
 				return (1);
 		}
-		else
-			return_value = 1;
 		i++;
 	}
 	return (return_value);

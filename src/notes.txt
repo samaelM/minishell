@@ -4,6 +4,16 @@ Input:        [ls not_existing_file | echo 42 | cat]
     Bash $?:      [0]
     Minishell $?: [2]
 
+Test  62: ❌ cat <"./test_files/file name with spaces" 
+mini output = ()
+bash output = (😈 😈 😈 This will break your minishell 😈 😈 😈)
+mini exit code = 1
+bash exit code = 0
+mini error = ( No such file or directory)
+bash error = ()
+
+extras
+
 check pour exit
 ------------------------------
 
