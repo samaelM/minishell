@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 18:49:59 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/04 18:46:25 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/12 19:38:56 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,7 @@ char	**create_our_env(char **envp)
 	char	**env_tab;
 
 	if (envp[0] == NULL)
-	{
-		ft_perrorf("error no envp\n");
 		return (create_env_i());
-	}
 	i = 0;
 	while (envp[i])
 		i++;
