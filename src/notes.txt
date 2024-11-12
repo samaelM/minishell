@@ -1,15 +1,4 @@
-EXIT STATUS:
 
-Input:        [ls not_existing_file | echo 42 | cat]
-    Bash $?:      [0]
-    Minishell $?: [2]
-
-
-
-extras
-
-check pour exit
-------------------------------
 
 leaks check error (Poivre-echelle> >|)
 

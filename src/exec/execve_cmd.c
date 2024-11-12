@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:34:17 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/12 18:29:07 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/12 19:10:47 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*get_path(char **all_paths, char *cmd)
 		free(path);
 		i++;
 	}
-	ft_perrorf("command not found : %s\n", cmd);
+	ft_perrorf("%s: command not found\n", cmd);
 	return (0);
 }
 
