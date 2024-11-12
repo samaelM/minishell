@@ -1,5 +1,3 @@
-
-
 leaks check error (Poivre-echelle> >|)
 
 echo ali >a |>f (pipe)
