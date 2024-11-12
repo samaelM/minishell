@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:43:39 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/06 18:09:42 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/12 17:42:51 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,15 @@ static int	ft_check_pipes(char *str)
 
 	if (*str != '|')
 		return (0);
+	// printf("pipe: %s\n", str);
 	idx = 1;
 	while (is_in_set(str[idx], " 	"))
 		idx++;
 	if (!str[idx] || str[idx] == '|')
 		return (ft_error_token("|"));
 	idx++;
-	return (idx);
+	// printf("pipe: %s\n", str+idx);
+	return (1);
 }
 
 static char	*ft_get_token(char *str)
@@ -46,6 +48,7 @@ static int	ft_check_redir(char *str)
 
 	if (!*str || !is_in_set(*str, "><"))
 		return (0);
+	// printf("redir: %s\n", str);
 	idx = 0;
 	if (ft_strncmp(str + idx, ">>", 2) == 0)
 		idx += 2;

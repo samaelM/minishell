@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:49:55 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/11 14:34:37 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:31:52 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_getlim(t_global *global, char *line, int *in_quote)
 	tmp = result;
 	while (is_in_set(*line, " 	"))
 		line++;
-	while (*line && !is_in_set(*line, " 	|"))
+	while (*line && !is_in_set(*line, " 	|><"))
 	{
 		if (is_in_set(*line, "'\""))
 			*in_quote = 1;
