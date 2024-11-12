@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/11 19:29:57 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/12 18:42:54 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int	pipe_and_fork(t_global *g, int i)
 		dup_outfile(g);
 		exec_which_cmd_pipe(g);
 	}
+	g->last_pid = pid;
 	return (0);
 }
 
