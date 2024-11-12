@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/12 18:42:54 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/12 20:48:00 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 void	dup_infile(t_global *g, int i)
 {
 	if (g->tmp->infile != -1)
+	{
 		dup2(g->tmp->infile, 0);
+		close(g->tmp->infile);
+	}
 	else if (i != 0)
 	{
 		dup2(g->tmp->prev_fd, 0);
@@ -26,7 +29,10 @@ void	dup_infile(t_global *g, int i)
 void	dup_outfile(t_global *g)
 {
 	if (g->tmp->outfile != -1)
+	{
 		dup2(g->tmp->outfile, 1);
+		close(g->tmp->outfile);
+	}
 	else if (g->tmp->next)
 	{
 		dup2(g->tmp->pipe[1], 1);
@@ -36,13 +42,15 @@ void	dup_outfile(t_global *g)
 		close(g->tmp->pipe[1]);
 }
 
-int	exec_which_cmd_pipe(t_global *g)
+int	exec_which_cmd_pipe(t_global *g, int i)
 {
 	if (check_is_cmd_is_ok(g) == 0)
 	{
 		if (ft_strcmp(g->tmp->args[0], "exit") == 0)
-			g->exit_value = ft_exit(g);
-		else if (ft_strcmp(g->tmp->args[0], "pwd") == 0)
+			return (ft_exit(g));
+		dup_infile(g, i);
+		dup_outfile(g);
+		if (ft_strcmp(g->tmp->args[0], "pwd") == 0)
 			g->exit_value = ft_pwd();
 		else if (ft_strcmp(g->tmp->args[0], "cd") == 0)
 			g->exit_value = ft_cd(g);
@@ -73,11 +81,13 @@ int	pipe_and_fork(t_global *g, int i)
 	else if (pid == 0) // fils
 	{
 		close(g->tmp->pipe[0]);
-		dup_infile(g, i);
-		dup_outfile(g);
-		exec_which_cmd_pipe(g);
+		exec_which_cmd_pipe(g, i);
 	}
 	g->last_pid = pid;
+	if (g->tmp->infile != -1)
+		close(g->tmp->infile);
+	if (g->tmp->outfile != -1)
+		close(g->tmp->outfile);
 	return (0);
 }
 
