@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/13 19:21:27 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/13 19:47:30 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	check_is_cmd_is_ok(t_global *g)
 		if (g->tmp->infile != -2 && g->tmp->outfile != -2)
 			return (0);
 	}
+	close_all_fd_child(g);
 	return (1);
 }
 
