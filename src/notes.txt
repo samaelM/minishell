@@ -9,3 +9,6 @@ echo ali > outfile1 < infile1 > outfile2 > outfile3 | <infile2 < infile3 cat > o
 proteger dup pipe
 pipe infile > 0 psq-2
 fd open
+
+Poivre-echelle> < Makefil wc > l | < Makefile ls > l
+Poivre-echelle> < Makefile wc > l | < Makefile ls > l

@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/13 19:47:41 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/13 20:11:31 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_global
 ///				EXECUTION				///
 
 int						ft_exec(t_global *s_global);
-int						check_is_cmd_is_ok(t_global *g);
+int						check_is_cmd_is_ok(t_global *g, int i);
 int						exec_one_cmd(t_global *g);
 void					exec_pipe_cmds(t_global *g);
 void					execve_cmd(t_global *g);

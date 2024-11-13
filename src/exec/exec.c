@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/13 19:47:30 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/13 20:12:53 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_waitall(t_global *g)
 	}
 }
 
-int	check_is_cmd_is_ok(t_global *g)
+int	check_is_cmd_is_ok(t_global *g, int i)
 {
 	if (g->tmp && g->tmp->args && g->tmp->args[0])
 	{
@@ -44,7 +44,13 @@ int	check_is_cmd_is_ok(t_global *g)
 		if (g->tmp->infile != -2 && g->tmp->outfile != -2)
 			return (0);
 	}
-	close_all_fd_child(g);
+	if (i != -1)
+	{
+		close_all_fd_child(g);
+		if (i != 0)
+			close(g->tmp->prev_fd);
+		close(g->tmp->pipe[1]);
+	}
 	return (1);
 }
 

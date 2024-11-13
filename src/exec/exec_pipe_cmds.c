@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/13 19:47:22 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/13 20:10:56 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void	close_all_fd_child(t_global *g)
 	{
 		// ft_perrorf("test (%s)\n", tmp->args[0]);
 		// ft_putstr_fd(tmp->args[0], 2);
-		if (tmp->infile != -1)
+		if (tmp->infile > 2)
 		{
 			close(tmp->infile);
 			// ft_putstr_fd("close!\n", 2);
 		}
-		if (tmp->outfile != -1)
+		if (tmp->outfile > 2)
 		{
 			close(tmp->outfile);
 			// ft_putstr_fd("close outf!\n", 2);
@@ -67,7 +67,7 @@ void	close_all_fd_child(t_global *g)
 
 int	exec_which_cmd_pipe(t_global *g, int i)
 {
-	if (check_is_cmd_is_ok(g) == 0)
+	if (check_is_cmd_is_ok(g, i) == 0)
 	{
 		dup_infile(g, i);
 		dup_outfile(g);
@@ -108,9 +108,9 @@ int	pipe_and_fork(t_global *g, int i)
 		exec_which_cmd_pipe(g, i);
 	}
 	g->last_pid = pid;
-	if (g->tmp->infile != -1)
+	if (g->tmp->infile > 2)
 		close(g->tmp->infile);
-	if (g->tmp->outfile != -1)
+	if (g->tmp->outfile > 2)
 		close(g->tmp->outfile);
 	return (0);
 }
@@ -129,7 +129,7 @@ void	exec_pipe_cmds(t_global *g)
 		if (g->tmp->next)
 		{
 			g->tmp->next->prev_fd = g->tmp->pipe[0];
-			if (g->tmp->prev_fd != -1)
+			if (g->tmp->prev_fd > 2)
 				close(g->tmp->prev_fd);
 			g->tmp = g->tmp->next;
 		}
@@ -137,7 +137,7 @@ void	exec_pipe_cmds(t_global *g)
 			break ;
 	}
 	close(g->tmp->pipe[0]);
-	if (g->tmp->prev_fd != -1)
+	if (g->tmp->prev_fd > 2)
 		close(g->tmp->prev_fd);
 	ft_waitall(g);
 }
