@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/12 18:48:00 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:32:02 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_global	global;
 
-	(void)argc;
 	(void)argv;
+	if (argc > 1)
+		return (1);
 	ft_bzero(&global, sizeof(t_global));
 	global.env = create_our_env(envp);
 	global.exit_value = 0;
@@ -62,7 +63,6 @@ int	main(int argc, char **argv, char **envp)
 				// ft_printcmd(global.command);
 				ft_exec(&global);
 			}
-			// ft_readfile(global.command->infile);
 			ft_free_cmd(global.command);
 		}
 		else
@@ -70,4 +70,5 @@ int	main(int argc, char **argv, char **envp)
 		// printf("\033[0;33mexit status: %d\n", global.exit_value);
 		free(global.line);
 	}
+	return (0);
 }

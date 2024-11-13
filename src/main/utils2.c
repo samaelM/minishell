@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:28:47 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/06 19:47:59 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/12 17:35:08 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ void	perr(char *str)
 
 int	ft_error_token(char *str)
 {
-	ft_perrorf("syntax error near unexpected token `%s'\n", str);
+	ft_perrorf("mini: syntax error near unexpected token `%s'\n", str);
 	return (-1);
 }
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	if (ft_strlen(s1) != ft_strlen(s2))

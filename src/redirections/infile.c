@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:29:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/06 17:43:17 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/12 17:21:44 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ char	*ft_get_file_name(t_global *global, char *line)
 	int		len;
 
 	len = 0;
+	// printf("oui\n");
 	name_size = ft_size_token(global, line + 1);
+	// printf("size name file:%d\n", name_size);
 	if (name_size == -1)
 		return (NULL);
 	name = ft_calloc(name_size + 1, sizeof(char));
@@ -63,7 +65,7 @@ int	ft_outfile2(t_global *global, char *line)
 	cmd = global->tmp;
 	if (cmd->outfile > 1)
 		close(cmd->outfile);
-	name = ft_get_file_name(global, line+1);
+	name = ft_get_file_name(global, line + 1);
 	if (!name)
 		return (-1);
 	cmd->outfile = open(name, O_CREAT | O_APPEND | O_RDWR, 0666);
