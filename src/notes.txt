@@ -13,3 +13,7 @@ echo ali |>""
 
 proteger dup pipe
 fd open
+
+
+ cat <"./test_files/infile" | echo hi 
+120 au lieu 0

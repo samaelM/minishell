@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/13 15:32:02 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:07:57 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	main(int argc, char **argv, char **envp)
 	ft_bzero(&global, sizeof(t_global));
 	global.env = create_our_env(envp);
 	global.exit_value = 0;
-	// global.exit_value = g_sig;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
 	while (42)
