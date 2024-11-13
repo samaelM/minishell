@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/12 18:25:18 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/13 19:06:51 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ char					*ft_getlim(t_global *global, char *line, int *in_quote);
 int						ft_cd(t_global *glo);
 int						ft_pwd(void);
 int						ft_echo(t_command *command);
-int						ft_exit(t_global *glob);
+int						ft_exit(t_global *g, int n);
 int						ft_env(t_global *glob);
 int						ft_export(t_global *glo);
 int						ft_unset(t_global *glob);

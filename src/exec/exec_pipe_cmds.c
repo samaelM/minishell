@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/12 20:48:00 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/13 19:07:33 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ int	exec_which_cmd_pipe(t_global *g, int i)
 {
 	if (check_is_cmd_is_ok(g) == 0)
 	{
-		if (ft_strcmp(g->tmp->args[0], "exit") == 0)
-			return (ft_exit(g));
 		dup_infile(g, i);
 		dup_outfile(g);
+		if (ft_strcmp(g->tmp->args[0], "exit") == 0)
+			return (ft_exit(g, 1));
 		if (ft_strcmp(g->tmp->args[0], "pwd") == 0)
 			g->exit_value = ft_pwd();
 		else if (ft_strcmp(g->tmp->args[0], "cd") == 0)

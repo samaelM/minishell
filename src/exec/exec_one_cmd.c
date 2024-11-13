@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 15:57:43 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/12 18:35:49 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/13 19:08:21 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int	exec_one_cmd(t_global *g)
 	if (check_is_cmd_is_ok(g) == 1)
 		return (1);
 	if (ft_strcmp(g->command->args[0], "exit") == 0)
-		return (ft_exit(g));
+		return (ft_exit(g, 0));
 	if (dup_infile_and_outfile(g) == 1)
 	{
 		ft_perrorf("erreur dup\n", 2);
