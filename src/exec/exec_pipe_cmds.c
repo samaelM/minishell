@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/12 20:48:00 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/13 17:14:49 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	dup_infile(t_global *g, int i)
 	if (g->tmp->infile != -1)
 	{
 		dup2(g->tmp->infile, 0);
-		close(g->tmp->infile);
+		// close(g->tmp->infile);
 	}
 	else if (i != 0)
 	{
@@ -31,15 +31,38 @@ void	dup_outfile(t_global *g)
 	if (g->tmp->outfile != -1)
 	{
 		dup2(g->tmp->outfile, 1);
-		close(g->tmp->outfile);
+		// close(g->tmp->outfile);
 	}
 	else if (g->tmp->next)
 	{
 		dup2(g->tmp->pipe[1], 1);
-		close(g->tmp->pipe[1]);
+		// close(g->tmp->pipe[1]);
 	}
-	else
-		close(g->tmp->pipe[1]);
+	// else
+	close(g->tmp->pipe[1]);
+}
+
+void	close_all_fd_in_the_child(t_global *g)
+{
+	t_command	*tmp;
+
+	tmp = g->command;
+	while (tmp)
+	{
+		// ft_perrorf("test (%s)\n", tmp->args[0]);
+		// ft_putstr_fd(tmp->args[0], 2);
+		if (tmp->infile != -1)
+		{
+			close(tmp->infile);
+			ft_putstr_fd("close!\n", 2);
+		}
+		if (tmp->outfile != -1)
+		{
+			close(tmp->outfile);
+			ft_putstr_fd("close outf!\n", 2);
+		}
+		tmp = tmp->next;
+	}
 }
 
 int	exec_which_cmd_pipe(t_global *g, int i)
@@ -50,6 +73,7 @@ int	exec_which_cmd_pipe(t_global *g, int i)
 			return (ft_exit(g));
 		dup_infile(g, i);
 		dup_outfile(g);
+		close_all_fd_in_the_child(g);
 		if (ft_strcmp(g->tmp->args[0], "pwd") == 0)
 			g->exit_value = ft_pwd();
 		else if (ft_strcmp(g->tmp->args[0], "cd") == 0)
