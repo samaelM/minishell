@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 16:42:07 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/04 13:25:35 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:18:44 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int	ft_heredoc(t_global *global, char *line)
 
 	in_quote = 0;
 	lim = ft_getlim(global, line, &in_quote);
+	printf("heredoc lim: %s\n", lim);
 	if (!lim)
 		return (perr("pas de lim\n"), -1);
 	if (pipe(fd) == -1)

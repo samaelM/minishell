@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:49:55 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/12 16:31:52 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/13 15:26:04 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*ft_getlim(t_global *global, char *line, int *in_quote)
 		line++;
 	while (*line && !is_in_set(*line, " 	|><"))
 	{
-		if (is_in_set(*line, "'\""))
+		if (is_in_set(*line, "'\""))// copier toute la str d'un coup
 			*in_quote = 1;
 		else
 			*(tmp++) = *line;
