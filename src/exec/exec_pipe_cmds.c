@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_cmds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/13 17:14:49 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/13 18:57:50 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ void	close_all_fd_in_the_child(t_global *g)
 		if (tmp->infile != -1)
 		{
 			close(tmp->infile);
-			ft_putstr_fd("close!\n", 2);
+			// ft_putstr_fd("close!\n", 2);
 		}
 		if (tmp->outfile != -1)
 		{
 			close(tmp->outfile);
-			ft_putstr_fd("close outf!\n", 2);
+			// ft_putstr_fd("close outf!\n", 2);
 		}
 		tmp = tmp->next;
 	}
@@ -99,6 +99,7 @@ int	pipe_and_fork(t_global *g, int i)
 
 	if (pipe(g->tmp->pipe) == -1)
 		return (1);
+	printf("pipe:%d-%d\n", g->tmp->pipe[0], g->tmp->pipe[1]);
 	pid = fork();
 	if (pid == -1)
 		ft_perrorf("erreur fork");
