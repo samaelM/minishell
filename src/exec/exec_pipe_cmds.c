@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/13 20:10:56 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/13 21:16:22 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	dup_infile(t_global *g, int i)
 	if (g->tmp->infile != -1)
 	{
 		dup2(g->tmp->infile, 0);
+		if (i != 0)
+			close(g->tmp->prev_fd);
 		// close(g->tmp->infile); //
 	}
 	else if (i != 0)
