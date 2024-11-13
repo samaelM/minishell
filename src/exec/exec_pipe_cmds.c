@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/13 18:57:50 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/13 19:14:24 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	pipe_and_fork(t_global *g, int i)
 
 	if (pipe(g->tmp->pipe) == -1)
 		return (1);
-	printf("pipe:%d-%d\n", g->tmp->pipe[0], g->tmp->pipe[1]);
+	// printf("pipe:%d-%d\n", g->tmp->pipe[0], g->tmp->pipe[1]);
 	pid = fork();
 	if (pid == -1)
 		ft_perrorf("erreur fork");
