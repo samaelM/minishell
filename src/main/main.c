@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/12 17:32:31 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:04:46 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 	global.env = create_our_env(envp);
 	global.exit_value = 0;
 	global.exit_value = g_sig;
-	// signal(SIGINT, sigint_handler);
+	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
 	while (42)
 	{

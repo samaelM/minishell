@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:49:55 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/13 15:26:04 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/13 16:04:07 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ size_t	ft_getsizelim(char *line)
 {
 	size_t	idx;
 	size_t	len;
+	size_t	tmp;
 
 	len = 0;
 	idx = 0;
@@ -23,11 +24,35 @@ size_t	ft_getsizelim(char *line)
 		idx++;
 	while (line[idx] && !is_in_set(line[idx], " 	"))
 	{
-		if (!is_in_set(line[idx], "'\""))
+		if (is_in_set(line[idx], "'\""))
+		{
+			tmp = ft_skipquotes(line + idx, line[idx]);
+			len += tmp -2;
+			idx += tmp;
+		}
+		else
+		{
 			len++;
-		idx++;
+			idx++;
+		}
 	}
 	return (len);
+}
+
+char	*ft_hd_quotecpy(char *dest, char **src)
+{
+	int		i;
+	char	quote;
+
+	i = 0;
+	quote = (*src)[0];
+	while ((*src)[i + 1] && (*src)[i + 1] != quote)
+	{
+		dest[i] = (*src)[i + 1];
+		i++;
+	}
+	(*src) = (*src) + i + 1;
+	return (dest + i);
 }
 
 // malloc sensitive
@@ -46,8 +71,11 @@ char	*ft_getlim(t_global *global, char *line, int *in_quote)
 		line++;
 	while (*line && !is_in_set(*line, " 	|><"))
 	{
-		if (is_in_set(*line, "'\""))// copier toute la str d'un coup
+		if (is_in_set(*line, "'\""))
+		{
 			*in_quote = 1;
+			tmp = ft_hd_quotecpy(tmp, &line);
+		}
 		else
 			*(tmp++) = *line;
 		line++;
