@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/13 21:16:22 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/14 17:25:24 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	pipe_and_fork(t_global *g, int i)
 		return (1);
 	pid = fork();
 	if (pid == -1)
-		ft_perrorf("erreur fork");
+		ft_perrorf("erreur fork\n");
 	else if (pid == 0) // fils
 	{
 		close(g->tmp->pipe[0]);

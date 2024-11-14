@@ -1,8 +1,20 @@
-
+leaks ?
 echo ali |>""
 
 
 proteger dup pipe
-pipe infile > 0 psq-2
+pipe infile > 0 psq -2
 fd open
 
+
+
+
+
+cd ~
+cd -
+
+cd perdu :
+pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+
+
+trop de cmds
