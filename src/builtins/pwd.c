@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/20 19:11:41 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/13 19:19:25 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/14 21:13:29 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_pwd(void)
 
 	if (getcwd(buf, PATH_MAX) == NULL)
 	{
-		ft_perrorf("Error pwd\n");
+		ft_perrorf("pwd: error with getcwd\n");
 		return (1);
 	}
 	printf("%s\n", buf);

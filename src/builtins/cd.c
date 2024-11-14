@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:30:33 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/14 21:00:38 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/14 21:12:38 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ char	*ft_getcwd(void)
 	cwd = malloc(PATH_MAX);
 	if (!cwd)
 	{
-		ft_perrorf("Error: with malloc\n");
+		ft_perrorf("error with malloc\n");
 		return (NULL);
 	}
 	if (getcwd(cwd, PATH_MAX) == NULL)
 	{
-		ft_perrorf("Error: with getcwd\n");
+		ft_perrorf("error with getcwd\n");
 		free(cwd);
 		return (NULL);
 	}
@@ -44,7 +44,7 @@ int	change_pwd(t_global *g)
 	if (!string)
 	{
 		free(cwd);
-		ft_perrorf("Error: with malloc\n");
+		ft_perrorf("cd: error with malloc\n");
 		return (1);
 	}
 	ft_strlcpy(string, "PWD=", 5);
@@ -68,7 +68,7 @@ int	change_pwd_vars(t_global *g, char *cwd)
 	if (!string)
 	{
 		free(cwd);
-		ft_perrorf("Error: with malloc\n");
+		ft_perrorf("cd: error with malloc\n");
 		return (1);
 	}
 	ft_strlcpy(string, "OLDPWD=", 8);
