@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/14 20:55:07 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/14 21:33:30 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,9 @@ int						ft_unset(t_global *glob);
 
 ///				ENV						///
 
+char					**create_env(char **envp);
 char					*ft_var_name(char *var);
 int						add_env_var(t_global *glo, char *var);
-char					**create_our_env(char **envp);
 char					*ft_getenv(char **env, char *var);
 int						find_var_in_env(char **env, char *var);
 int						change_env_var(t_global *glo, char *var, int line);

@@ -11,13 +11,13 @@ NAME 		= minishell
 ######	Builtins	#####
 B_DIR		=	builtins
 B_SRC		=	cd.c \
+				pwd.c \
+				echo.c \
+				exit.c \
 				env.c \
 				env_utils.c \
-				echo.c \
 				unset.c \
 				export.c \
-				pwd.c \
-				exit.c \
 
 B_FILES		=	${addprefix src/,${addprefix ${B_DIR}/,${B_SRC}}}
 

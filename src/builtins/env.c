@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 18:49:59 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/12 19:38:56 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/14 21:53:04 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,20 @@ int	ft_env(t_global *g)
 	return (0);
 }
 
-char	*coller_deux_strings(char *s1, char *s2)
+char	*concat_strings(char *s1, char *s2)
 {
 	char	*string;
 	int		size_s1;
 	int		size_s2;
 
+	if (!s1 || !s2)
+		return (NULL);
 	size_s1 = ft_strlen(s1);
 	size_s2 = ft_strlen(s2);
 	string = malloc(sizeof(char) * (size_s1 + size_s2) + 1);
 	if (!string)
 	{
-		ft_perrorf("erreur malloc\n");
+		ft_perrorf("environment creation: error with malloc\n");
 		return (NULL);
 	}
 	ft_strlcpy(string, s1, size_s1 + 1);
@@ -59,26 +61,26 @@ char	*change_shlvl(char **env, char *var)
 		return (NULL);
 	i = ft_atoi(content) + 1;
 	content = ft_itoa(i);
-	var = coller_deux_strings("SHLVL=", content);
+	var = concat_strings("SHLVL=", content);
 	free(content);
 	return (var);
 }
 
-char	**create_env_i(void)
+char	**create_new_env(void)
 {
 	char	**env_tab;
 
 	env_tab = ft_calloc(4, sizeof(char *));
 	if (!env_tab)
 	{
-		ft_perrorf("erreur malloc\n");
-		return (NULL);
+		ft_perrorf("environment creation: error with malloc\n");
+		exit(1);
 	}
-	env_tab[0] = coller_deux_strings("PWD=", ft_getcwd());
+	env_tab[0] = concat_strings("PWD=", ft_getcwd());
 	if (env_tab[0])
-		env_tab[1] = coller_deux_strings("SHLVL=", "1");
+		env_tab[1] = concat_strings("SHLVL=", "1");
 	if (env_tab[1])
-		env_tab[2] = coller_deux_strings("_=", "/minishell");
+		env_tab[2] = concat_strings("_=", "/minishell");
 	if (!env_tab[2])
 	{
 		free_tab(env_tab);
@@ -87,13 +89,13 @@ char	**create_env_i(void)
 	return (env_tab);
 }
 
-char	**create_our_env(char **envp)
+char	**create_env(char **envp)
 {
 	int		i;
 	char	**env_tab;
 
 	if (envp[0] == NULL)
-		return (create_env_i());
+		return (create_new_env());
 	i = 0;
 	while (envp[i])
 		i++;
