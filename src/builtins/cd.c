@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:30:33 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/11 20:06:07 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/14 19:10:15 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,24 @@ int	ft_cd(t_global *g)
 		ft_perrorf("cd: too many arguments\n");
 		return (1);
 	}
-	if (g->tmp->args[1] && chdir(g->tmp->args[1]))
+	if (ft_strcmp(g->tmp->args[1], "-") == 0)
+	{
+		home = ft_getenv(g->env, "OLDPWD");
+		if (!home)
+		{
+			free(cwd);
+			ft_perrorf("cd: OLDPWD not set\n");
+			return (1);
+		}
+		if (chdir(home))
+		{
+			free(cwd);
+			ft_perrorf("cd: %s: %s\n", home, strerror(errno));
+			return (1);
+		}
+		ft_pwd();
+	}
+	else if (g->tmp->args[1] && chdir(g->tmp->args[1]))
 	{
 		free(cwd);
 		ft_perrorf("cd: %s: %s\n", g->tmp->args[1], strerror(errno));
