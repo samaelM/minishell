@@ -16,6 +16,7 @@ B_SRC		=	cd.c \
 				exit.c \
 				env.c \
 				env_utils.c \
+				env_utils2.c \
 				unset.c \
 				export.c \
 
