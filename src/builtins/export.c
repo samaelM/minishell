@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:48:08 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/15 14:52:24 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:13:43 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	add_env_var(t_global *g, char *var)
 		if (!tab[i])
 		{
 			free_tab(tab);
+			ft_perrorf("export: error with malloc\n");
 			return (1);
 		}
 		i++;
@@ -38,6 +39,7 @@ int	add_env_var(t_global *g, char *var)
 	if (!tab[i])
 	{
 		free_tab(tab);
+		ft_perrorf("export: error with malloc\n");
 		return (1);
 	}
 	tab[i + 1] = NULL;
@@ -56,7 +58,7 @@ int	change_env_var(t_global *g, char *var, int line)
 	g->env[line] = ft_strdup(var);
 	if (!g->env[line])
 	{
-		ft_perrorf("export: erreur strdup\n");
+		ft_perrorf("export: error with malloc\n");
 		g->env[line] = tmp;
 		return (1);
 	}
@@ -94,8 +96,6 @@ int	print_export(t_global *g)
 	char	*var_name;
 	char	*var_content;
 
-	var_name = NULL;
-	var_content = NULL;
 	i = 0;
 	while (g->env[i])
 	{
@@ -123,7 +123,7 @@ int	ft_export(t_global *g)
 	int		i;
 	char	*var_name;
 	int		return_value;
-	int		is_line;
+	int		line;
 
 	i = 1;
 	return_value = 0;
@@ -136,15 +136,11 @@ int	ft_export(t_global *g)
 			var_name = ft_var_name(g->tmp->args[i]);
 			if (!var_name)
 				return (1);
-			is_line = find_var_in_env(g->env, var_name);
+			line = find_var_in_env(g->env, var_name);
 			free(var_name);
-			if (is_line == -1 && add_env_var(g, g->tmp->args[i]) == 1)
-			{
-				ft_perrorf("export: erreur malloc\n");
+			if (line == -1 && add_env_var(g, g->tmp->args[i]) == 1)
 				return (1);
-			}
-			if (is_line != -1 && change_env_var(g, g->tmp->args[i],
-					is_line) == 1)
+			if (line != -1 && change_env_var(g, g->tmp->args[i], line) == 1)
 				return (1);
 		}
 		i++;
