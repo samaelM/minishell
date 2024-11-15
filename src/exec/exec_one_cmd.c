@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/11 15:57:43 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/13 20:12:18 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:02:03 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	fork_and_execve(t_global *g)
 
 	pid = fork();
 	if (pid == -1)
-		ft_perrorf("erreur fork");
+		ft_perrorf("exec: error with fork");
 	else if (pid == 0)
 	{
 		if (g->command->infile != -1)
@@ -122,21 +122,4 @@ void	exec_which_cmd(t_global *g)
 		g->exit_value = ft_unset(g);
 	else
 		fork_and_execve(g);
-}
-
-int	exec_one_cmd(t_global *g)
-{
-	if (check_is_cmd_is_ok(g, -1) == 1)
-		return (1);
-	if (ft_strcmp(g->command->args[0], "exit") == 0)
-		return (ft_exit(g, 0));
-	if (dup_infile_and_outfile(g) == 1)
-	{
-		ft_perrorf("erreur dup\n", 2);
-		g->exit_value = 1;
-		return (1);
-	}
-	exec_which_cmd(g);
-	close_fd(g);
-	return (g->exit_value);
 }
