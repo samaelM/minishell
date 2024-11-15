@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:48:08 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/15 15:13:43 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:18:05 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,11 +125,11 @@ int	ft_export(t_global *g)
 	int		return_value;
 	int		line;
 
-	i = 1;
+	i = 0;
 	return_value = 0;
 	if (g->tmp->args[1] == NULL)
 		return (print_export(g));
-	while (g->tmp->args[i])
+	while (g->tmp->args[++i])
 	{
 		if (parse_export(g->tmp->args[i], &return_value) == 0)
 		{
@@ -143,7 +143,6 @@ int	ft_export(t_global *g)
 			if (line != -1 && change_env_var(g, g->tmp->args[i], line) == 1)
 				return (1);
 		}
-		i++;
 	}
 	return (return_value);
 }
