@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:30:35 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/13 18:49:52 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:00:35 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,20 @@ int	ft_set_args(t_global *global, char **cmd, int *pos, int size)
 	while (idx < size)
 	{
 		sizetk = ft_size_token(global, *cmd);
-		// printf("sztk: %d (%s)\n", sizetk, *cmd);
 		if (sizetk == -1)
 			return (0);
 		args[idx] = ft_calloc(sizetk + 1, sizeof(char));
 		if (!args[idx])
 			return (perr(ERR_ALLOC), 0);
-		// printf("ouioui:%s\n", *cmd);
 		*pos = ft_get_arg(global, args[idx], *cmd);
 		if (*pos == -1)
 			return (0);
 		*cmd = *cmd + *pos;
-		// printf("avant redirlen:%s\n", *(cmd));
 		while (**cmd && is_in_set(**cmd, "<>"))
-			*cmd += ft_redir_len(*cmd);//-1?
-		// printf("apres redirlen:%s\n", *(cmd));
+			*cmd += ft_redir_len(*cmd);
 		idx++;
 	}
 	args[idx] = 0;
-	// printf("arg: %s\n", args);
 	return (1);
 }
 
@@ -94,7 +89,6 @@ int	ft_fillcmd(t_global *global, char **line, int *pos)
 
 	cmd = global->tmp;
 	size = ft_counttoken(*line);
-	// printf("nbtk:%d (%s)\n", size, *line);
 	cmd->args = ft_calloc((size + 1), sizeof(char *));
 	if (!cmd->args)
 		return (perr(ERR_ALLOC), 0);
@@ -104,11 +98,9 @@ int	ft_fillcmd(t_global *global, char **line, int *pos)
 		(*line)++;
 	if (**line && is_in_set(**line, "<>"))
 		*line += ft_redir_len(*line);
-	// ft_printcmd(cmd);
 	if (**line && **line == '|')
 	{
 		(*line)++;
-		// printf("next cmd\n");
 		cmd->next = ft_cmd_init();
 		if (!cmd->next)
 			return (perr(ERR_ALLOC), 0);

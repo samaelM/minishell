@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/14 21:33:30 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:35:23 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@
 # define METACHAR " 	|<>"
 # define HEREDOC_NAME "/tmp/heredoc_poivre"
 # define ERR_HD_EOF "warning: here-document delimited by end-of-file\n"
-# define ERR_ALLOC \
-	"An error has occured, it may\
+# define ERR_ALLOC "An error has occured, it may\
  be related with a malloc failure\n"
 
 ///////////////////////////////////////////
@@ -83,19 +82,10 @@ void					execve_cmd(t_global *g);
 void					ft_waitall(t_global *global);
 void					close_all_fd_child(t_global *g);
 
-///				COMPARATOR				///
-
-int						ft_and(void);
-int						ft_or(void);
-
-///				PIPES					///
-
-int						ft_pipex(void);
-
 ///				TOKENISATION			///
 
 t_command				*ft_token(char *command, t_global *global);
-int						ft_check_line(char *str);
+int						ft_check_line(t_global *global);
 int						ft_get_arg(t_global *global, char *dest, char *str);
 int						ft_size_token(t_global *global, char *str);
 int						ft_tokencpy(t_global *global, char *dest, char *src,
@@ -115,6 +105,12 @@ int						ft_outfile(t_global *global, char *line);
 int						ft_outfile2(t_global *global, char *line);
 char					*ft_hd_parse(t_global *global, char *line);
 char					*ft_getlim(t_global *global, char *line, int *in_quote);
+char					*ft_get_file_name(t_global *global, char *line);
+int						ft_hd_quote(t_global *global, int fd[2], char *lim);
+int						ft_hd_nquote(t_global *global, int fd[2], char *lim);
+char					*ft_init_hd_tk(t_global *global, char *line);
+char					*ft_fill_hd_tk(t_global *global, char *line,
+							char *new_line);
 
 ///				BUILT-INS				///
 
@@ -135,31 +131,26 @@ char					*ft_getenv(char **env, char *var);
 int						find_var_in_env(char **env, char *var);
 int						change_env_var(t_global *glo, char *var, int line);
 void					change_env_(t_global *glob);
-char					*ft_var_content(char *var);
 char					*ft_getcwd(void);
 
 ///				SIGNALS					///
 void					sigint_handler(int sig_num);
 void					sigquit_handler(int sig_num);
 void					signal_ctrd(t_global *g);
-void					hd_sigint_handler(int signum);
 
 ///				OTHER					///
-void					ft_watermark(void);
 extern int				g_sig;
 
 ///				UTILS					///
 size_t					ft_sstrlcpy(char *dst, const char *src, size_t dstsize);
 int						is_in_set(char c, char *set);
 void					perr(char *str);
-void					ft_free_env(t_global *g);
 void					free_tab(char **tab);
 void					ft_free_glob(t_global *glob);
 int						ft_strcmp(const char *s1, const char *s2);
 int						ft_skipquotes(char *str, char quote);
 void					ft_printcmd(t_command *cmd);
 void					ft_free_cmd(t_command *cmd);
-int						ft_readfile(int fd);
 int						ft_error_token(char *str);
 
 #endif

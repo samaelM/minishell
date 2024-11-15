@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 16:42:07 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/13 16:03:41 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:09:08 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static ssize_t	write_all(int fd, const void *buffer, size_t count)
 }
 
 // malloc sensitive
-static int	ft_hd_nquote(t_global *global, int fd[2], char *lim)
+int	ft_hd_nquote(t_global *global, int fd[2], char *lim)
 {
 	char	*here_line;
 	char	*new_line;
@@ -76,7 +76,7 @@ static int	ft_hd_nquote(t_global *global, int fd[2], char *lim)
 	return (2);
 }
 
-static int	ft_hd_quote(t_global *global, int fd[2], char *lim)
+int	ft_hd_quote(t_global *global, int fd[2], char *lim)
 {
 	char	*here_line;
 
@@ -102,19 +102,15 @@ static int	ft_hd_quote(t_global *global, int fd[2], char *lim)
 }
 
 // malloc sensitive
-int	ft_heredoc(t_global *global, char *line)
+char	*ft_hd_parse(t_global *global, char *line)
 {
-	char	*lim;
-	int		fd[2];
-	int		in_quote;
+	char	*new_line;
 
-	in_quote = 0;
-	lim = ft_getlim(global, line, &in_quote);
-	if (!lim)
-		return (perr("pas de lim\n"), -1);
-	if (pipe(fd) == -1)
-		return (free(lim), -1);
-	if (in_quote)
-		return (ft_hd_quote(global, fd, lim));
-	return (ft_hd_nquote(global, fd, lim));
+	new_line = ft_init_hd_tk(global, line);
+	if (!new_line)
+		return (perr(ERR_ALLOC), NULL);
+	new_line = ft_fill_hd_tk(global, line, new_line);
+	if (!new_line)
+		return (NULL);
+	return (new_line);
 }
