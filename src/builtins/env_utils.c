@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 19:12:25 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/15 14:56:29 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 14:59:46 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_var_name(char *var)
 	new_line = malloc(sizeof(char) * (i + 1));
 	if (!new_line)
 	{
-		ft_perrorf("erreur malloc\n");
+		ft_perrorf("env: error with malloc\n");
 		return (NULL);
 	}
 	i = 0;
@@ -60,7 +60,7 @@ void	change_env_(t_global *g)
 	var_ = malloc(sizeof(char) * (12 + ft_strlen(g->tmp->args[0])));
 	if (!var_)
 	{
-		ft_perrorf("error malloc\n");
+		ft_perrorf("env: error with malloc\n");
 		return ;
 	}
 	ft_strlcpy(var_, "_=/usr/bin/", 12);
