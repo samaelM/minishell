@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 18:49:59 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/15 14:12:53 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 14:37:51 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,11 @@ char	**create_new_env(void)
 	return (env_tab);
 }
 
-char	*change_shlvl(char **env, char *var) // check
+char	*change_shlvl(char **env, char *var)
 {
-	char *content;
-	int i;
-	char *var_name;
+	int		i;
+	char	*content;
+	char	*var_name;
 
 	var_name = ft_var_name(var);
 	if (!var_name)
@@ -71,6 +71,8 @@ char	*change_shlvl(char **env, char *var) // check
 		return (NULL);
 	i = ft_atoi(content) + 1;
 	content = ft_itoa(i);
+	if (!content)
+		return (NULL);
 	var = concat_strings("SHLVL=", content);
 	free(content);
 	return (var);
@@ -84,16 +86,14 @@ char	**copy_env(char **env_tab, char **envp)
 	while (envp[i])
 	{
 		if (ft_strncmp(envp[i], "SHLVL=", 6) == 0)
-		{
 			env_tab[i] = change_shlvl(envp, envp[i]);
-			if (!env_tab[i])
-				return (NULL);
-		}
 		else
-		{
 			env_tab[i] = ft_strdup(envp[i]);
-			if (!env_tab[i])
-				return (NULL);
+		if (!env_tab[i])
+		{
+			free_tab(env_tab);
+			ft_perrorf("environment creation: error with malloc\n");
+			exit(1);
 		}
 		i++;
 	}
@@ -117,12 +117,5 @@ char	**create_env(char **envp)
 		ft_perrorf("environment creation: error with malloc\n");
 		exit(1);
 	}
-	env_tab = copy_env(env_tab, envp); // check leaks
-	if (!env_tab)
-	{
-		free_tab(env_tab);
-		ft_perrorf("environment creation: error with malloc\n");
-		exit(1);
-	}
-	return (env_tab);
+	return (copy_env(env_tab, envp));
 }

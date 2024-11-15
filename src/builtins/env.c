@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 22:08:25 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/14 22:09:34 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 14:38:43 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_env(t_global *g)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (g->env[i])
