@@ -7,6 +7,11 @@ pipe infile > 0 psq -2
 fd open
 
 
+ cat <"./test_files/infile" | echo hi 
+128 au lieu 0
+
+
+exit print
 
 
 

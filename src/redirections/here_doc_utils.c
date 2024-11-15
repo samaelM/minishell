@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 17:49:55 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/13 16:04:07 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:09:03 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,19 +137,5 @@ char	*ft_fill_hd_tk(t_global *global, char *line, char *new_line)
 			new_line[size++] = line[idx++];
 	}
 	new_line[size] = 0;
-	return (new_line);
-}
-
-// malloc sensitive
-char	*ft_hd_parse(t_global *global, char *line)
-{
-	char	*new_line;
-
-	new_line = ft_init_hd_tk(global, line);
-	if (!new_line)
-		return (perr(ERR_ALLOC), NULL);
-	new_line = ft_fill_hd_tk(global, line, new_line);
-	if (!new_line)
-		return (NULL);
 	return (new_line);
 }

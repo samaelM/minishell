@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_cmds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/14 17:25:24 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 14:58:36 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int	pipe_and_fork(t_global *g, int i)
 
 	if (pipe(g->tmp->pipe) == -1)
 		return (1);
+	// printf("pipe:%d-%d\n", g->tmp->pipe[0], g->tmp->pipe[1]);
 	pid = fork();
 	if (pid == -1)
 		ft_perrorf("erreur fork\n");

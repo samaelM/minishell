@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 14:43:39 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/12 17:42:51 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:30:31 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,12 @@ static int	ft_check_pipes(char *str)
 
 	if (*str != '|')
 		return (0);
-	// printf("pipe: %s\n", str);
 	idx = 1;
 	while (is_in_set(str[idx], " 	"))
 		idx++;
 	if (!str[idx] || str[idx] == '|')
 		return (ft_error_token("|"));
 	idx++;
-	// printf("pipe: %s\n", str+idx);
 	return (1);
 }
 
@@ -48,7 +46,6 @@ static int	ft_check_redir(char *str)
 
 	if (!*str || !is_in_set(*str, "><"))
 		return (0);
-	// printf("redir: %s\n", str);
 	idx = 0;
 	if (ft_strncmp(str + idx, ">>", 2) == 0)
 		idx += 2;
@@ -95,19 +92,25 @@ static int	ft_checks(char *str)
 	return (idx);
 }
 
-int	ft_check_line(char *str)
+int	ft_check_line(t_global *global)
 {
 	int	idx;
 	int	tmp;
 
 	idx = 0;
-	while (str[idx] && is_in_set(str[idx], " 	"))
+	if (g_sig == SIGINT)
+		global->exit_value = 130;
+	if (global->line == NULL)
+		signal_ctrd(global);
+	if (*global->line)
+		add_history(global->line);
+	while (global->line[idx] && is_in_set(global->line[idx], " 	"))
 		idx++;
-	if (str[idx] == '|')
+	if (global->line[idx] == '|')
 		return (ft_error_token("|"), 0);
-	while (str[idx])
+	while (global->line[idx])
 	{
-		tmp = ft_checks(str + idx);
+		tmp = ft_checks(global->line + idx);
 		if (tmp <= 0)
 			return (tmp);
 		idx += tmp;

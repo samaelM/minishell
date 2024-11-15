@@ -46,6 +46,7 @@ R_SRC		=	redir.c \
 				outfile.c \
 				here_doc.c \
 				here_doc_utils.c \
+				redir_utils.c \
 
 R_FILES		=	${addprefix src/,${addprefix ${R_DIR}/,${R_SRC}}}
 

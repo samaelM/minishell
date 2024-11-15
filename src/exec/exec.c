@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/14 17:25:31 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:22:46 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	check_is_cmd_is_ok(t_global *g, int i)
 
 int	ft_exec(t_global *g)
 {
+	g_sig = 0;
 	if (g->command->next == NULL)
 		return (exec_one_cmd(g));
 	exec_pipe_cmds(g);
