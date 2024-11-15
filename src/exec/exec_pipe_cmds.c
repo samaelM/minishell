@@ -6,34 +6,47 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/15 16:23:38 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:53:06 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	dup_infile(t_global *g, int i)
+int	dup_infile(t_global *g, int i)
 {
 	if (g->tmp->infile != -1)
 	{
-		dup2(g->tmp->infile, 0);
-		// if (i != 0)
-		// 	close(g->tmp->prev_fd);
+		if (i != 0)
+			close(g->tmp->prev_fd);
+		if (dup2(g->tmp->infile, 0) == -1)
+			return (1);
 	}
 	else if (i != 0)
 	{
-		dup2(g->tmp->prev_fd, 0);
+		if (dup2(g->tmp->prev_fd, 0) == -1)
+		{
+			close(g->tmp->prev_fd);
+			return (1);
+		}
 		close(g->tmp->prev_fd);
 	}
+	return (0);
 }
 
-void	dup_outfile(t_global *g)
+int	dup_outfile(t_global *g)
 {
 	if (g->tmp->outfile != -1)
-		dup2(g->tmp->outfile, 1);
+	{
+		if (dup2(g->tmp->outfile, 1) == -1)
+			return (1);
+	}
 	else if (g->tmp->next)
-		dup2(g->tmp->pipe[1], 1);
+	{
+		if (dup2(g->tmp->pipe[1], 1) == -1)
+			return (1);
+	}
 	close(g->tmp->pipe[1]);
+	return (0);
 }
 
 void	close_all_fd_child(t_global *g)
@@ -55,8 +68,8 @@ int	exec_which_cmd_pipe(t_global *g, int i)
 {
 	if (check_is_cmd_is_ok(g, i) == 0)
 	{
-		dup_infile(g, i);
-		dup_outfile(g);
+		if (dup_infile(g, i) || dup_outfile(g))
+			error_dup(g);
 		close_all_fd_child(g);
 		if (ft_strcmp(g->tmp->args[0], "exit") == 0)
 			return (ft_exit(g, 1));
