@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 14:30:33 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/15 13:55:19 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 14:11:00 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_getcwd(void)
 	}
 	if (getcwd(cwd, PATH_MAX) == NULL)
 	{
-		ft_perrorf("change pwd variable: error with getcwd\n");
+		ft_perrorf("getcwd: cannot access parent directories\n");
 		free(cwd);
 		return (NULL);
 	}
