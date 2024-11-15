@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 19:12:25 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/15 14:59:46 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:36:34 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,24 @@ void	change_env_(t_global *g)
 	if (line != -1)
 		change_env_var(g, var_, find_var_in_env(g->env, "_"));
 	free(var_);
+}
+
+int	change_env_var(t_global *g, char *var, int line)
+{
+	char	*tmp;
+
+	if (line == -1)
+		return (1);
+	tmp = g->env[line];
+	g->env[line] = ft_strdup(var);
+	if (!g->env[line])
+	{
+		ft_perrorf("export: error with malloc\n");
+		g->env[line] = tmp;
+		return (1);
+	}
+	free(tmp);
+	return (0);
 }
 
 int	find_var_in_env(char **env, char *var)

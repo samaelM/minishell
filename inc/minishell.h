@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/14 21:33:30 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:39:04 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,14 +129,12 @@ int						ft_unset(t_global *glob);
 ///				ENV						///
 
 char					**create_env(char **envp);
-char					*ft_var_name(char *var);
-int						add_env_var(t_global *glo, char *var);
 char					*ft_getenv(char **env, char *var);
+char					*ft_var_name(char *var);
 int						find_var_in_env(char **env, char *var);
+int						add_env_var(t_global *glo, char *var);
 int						change_env_var(t_global *glo, char *var, int line);
 void					change_env_(t_global *glob);
-char					*ft_var_content(char *var);
-char					*ft_getcwd(void);
 
 ///				SIGNALS					///
 void					sigint_handler(int sig_num);
@@ -161,5 +159,6 @@ void					ft_printcmd(t_command *cmd);
 void					ft_free_cmd(t_command *cmd);
 int						ft_readfile(int fd);
 int						ft_error_token(char *str);
+char					*ft_getcwd(void);
 
 #endif

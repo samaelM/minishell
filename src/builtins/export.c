@@ -6,23 +6,16 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:48:08 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/15 15:18:05 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:36:43 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	add_env_var(t_global *g, char *var)
+int	copy_tab(t_global *g, char **tab, char *var)
 {
-	char	**tab;
-	int		i;
+	int	i;
 
-	i = 0;
-	while (g->env[i])
-		i++;
-	tab = malloc(sizeof(char *) * (i + 2));
-	if (!tab)
-		return (1);
 	i = 0;
 	while (g->env[i])
 	{
@@ -42,27 +35,27 @@ int	add_env_var(t_global *g, char *var)
 		ft_perrorf("export: error with malloc\n");
 		return (1);
 	}
-	tab[i + 1] = NULL;
-	free_tab(g->env);
-	g->env = tab;
 	return (0);
 }
 
-int	change_env_var(t_global *g, char *var, int line)
+int	add_env_var(t_global *g, char *var)
 {
-	char	*tmp;
+	char	**tab;
+	int		i;
 
-	if (line == -1)
-		return (1);
-	tmp = g->env[line];
-	g->env[line] = ft_strdup(var);
-	if (!g->env[line])
+	i = 0;
+	while (g->env[i])
+		i++;
+	tab = ft_calloc((i + 2), sizeof(char *));
+	if (!tab)
 	{
-		ft_perrorf("export: error with malloc\n");
-		g->env[line] = tmp;
+		ft_perrorf("export: error with calloc\n");
 		return (1);
 	}
-	free(tmp);
+	if (copy_tab(g, tab, var) == 1)
+		return (1);
+	free_tab(g->env);
+	g->env = tab;
 	return (0);
 }
 

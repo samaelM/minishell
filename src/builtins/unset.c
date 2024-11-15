@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 14:46:36 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/15 14:52:35 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:28:12 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,17 @@ int	unset_this_line(char **env, int l)
 	return (0);
 }
 
-int	ft_unset(t_global *glob)
+int	ft_unset(t_global *g)
 {
 	int	i;
 
 	i = 1;
-	while (glob->tmp->args[i])
+	while (g->tmp->args[i])
 	{
-		if (ft_strncmp(glob->tmp->args[i], "_", 1) == 0)
-			change_env_var(glob, "_=_", find_var_in_env(glob->env, "_"));
+		if (ft_strncmp(g->tmp->args[i], "_", 1) == 0)
+			change_env_var(g, "_=_", find_var_in_env(g->env, "_"));
 		else
-			unset_this_line(glob->env, find_var_in_env(glob->env,
-					glob->tmp->args[i]));
+			unset_this_line(g->env, find_var_in_env(g->env, g->tmp->args[i]));
 		i++;
 	}
 	return (0);
