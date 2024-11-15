@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 19:12:25 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/15 14:12:51 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 14:56:29 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,6 @@ char	*ft_getenv(char **env, char *var)
 	while (env[line][i] && env[line][i] != '=')
 		i++;
 	return (env[line] + i + 1);
-}
-
-void	change_env_(t_global *g)
-{
-	char	*var_;
-	int		line;
-
-	var_ = malloc(sizeof(char) * (12 + ft_strlen(g->tmp->args[0])));
-	if (!var_)
-	{
-		ft_perrorf("error malloc\n");
-		return ;
-	}
-	ft_strlcpy(var_, "_=/usr/bin/", 12);
-	ft_strlcat(var_, g->tmp->args[0], 12 + ft_strlen(g->tmp->args[0]));
-	line = find_var_in_env(g->env, "_");
-	if (line != -1)
-		change_env_var(g, var_, find_var_in_env(g->env, "_"));
-	free(var_);
 }
 
 char	*ft_var_name(char *var)
@@ -71,6 +52,25 @@ char	*ft_var_name(char *var)
 	return (new_line);
 }
 
+void	change_env_(t_global *g)
+{
+	char	*var_;
+	int		line;
+
+	var_ = malloc(sizeof(char) * (12 + ft_strlen(g->tmp->args[0])));
+	if (!var_)
+	{
+		ft_perrorf("error malloc\n");
+		return ;
+	}
+	ft_strlcpy(var_, "_=/usr/bin/", 12);
+	ft_strlcat(var_, g->tmp->args[0], 12 + ft_strlen(g->tmp->args[0]));
+	line = find_var_in_env(g->env, "_");
+	if (line != -1)
+		change_env_var(g, var_, find_var_in_env(g->env, "_"));
+	free(var_);
+}
+
 int	find_var_in_env(char **env, char *var)
 {
 	int	i;
@@ -80,9 +80,7 @@ int	find_var_in_env(char **env, char *var)
 	{
 		if ((ft_strncmp(env[i], var, ft_strlen(var)) == 0)
 			&& env[i][ft_strlen(var)] == '=')
-		{
 			return (i);
-		}
 		i++;
 	}
 	return (-1);
