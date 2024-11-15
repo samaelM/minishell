@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe_cmds.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 18:52:13 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/15 14:58:36 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:23:38 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ void	dup_infile(t_global *g, int i)
 	if (g->tmp->infile != -1)
 	{
 		dup2(g->tmp->infile, 0);
-		if (i != 0)
-			close(g->tmp->prev_fd);
-		// close(g->tmp->infile); //
+		// if (i != 0)
+		// 	close(g->tmp->prev_fd);
 	}
 	else if (i != 0)
 	{
@@ -31,16 +30,9 @@ void	dup_infile(t_global *g, int i)
 void	dup_outfile(t_global *g)
 {
 	if (g->tmp->outfile != -1)
-	{
 		dup2(g->tmp->outfile, 1);
-		// close(g->tmp->outfile); //
-	}
 	else if (g->tmp->next)
-	{
 		dup2(g->tmp->pipe[1], 1);
-		// close(g->tmp->pipe[1]); //
-	}
-	// else //
 	close(g->tmp->pipe[1]);
 }
 
@@ -51,18 +43,10 @@ void	close_all_fd_child(t_global *g)
 	tmp = g->command;
 	while (tmp)
 	{
-		// ft_perrorf("test (%s)\n", tmp->args[0]);
-		// ft_putstr_fd(tmp->args[0], 2);
 		if (tmp->infile > 2)
-		{
 			close(tmp->infile);
-			// ft_putstr_fd("close!\n", 2);
-		}
 		if (tmp->outfile > 2)
-		{
 			close(tmp->outfile);
-			// ft_putstr_fd("close outf!\n", 2);
-		}
 		tmp = tmp->next;
 	}
 }
@@ -101,11 +85,10 @@ int	pipe_and_fork(t_global *g, int i)
 
 	if (pipe(g->tmp->pipe) == -1)
 		return (1);
-	// printf("pipe:%d-%d\n", g->tmp->pipe[0], g->tmp->pipe[1]);
 	pid = fork();
 	if (pid == -1)
 		ft_perrorf("erreur fork\n");
-	else if (pid == 0) // fils
+	else if (pid == 0)
 	{
 		close(g->tmp->pipe[0]);
 		exec_which_cmd_pipe(g, i);
@@ -116,31 +99,4 @@ int	pipe_and_fork(t_global *g, int i)
 	if (g->tmp->outfile > 2)
 		close(g->tmp->outfile);
 	return (0);
-}
-
-void	exec_pipe_cmds(t_global *g)
-{
-	int	i;
-
-	i = 0;
-	g->tmp = g->command;
-	while (g->tmp)
-	{
-		pipe_and_fork(g, i);
-		i++;
-		close(g->tmp->pipe[1]);
-		if (g->tmp->next)
-		{
-			g->tmp->next->prev_fd = g->tmp->pipe[0];
-			if (g->tmp->prev_fd > 2)
-				close(g->tmp->prev_fd);
-			g->tmp = g->tmp->next;
-		}
-		else
-			break ;
-	}
-	close(g->tmp->pipe[0]);
-	if (g->tmp->prev_fd > 2)
-		close(g->tmp->prev_fd);
-	ft_waitall(g);
 }
