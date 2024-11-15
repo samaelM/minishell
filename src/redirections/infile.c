@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 13:29:46 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/15 15:07:17 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/15 16:50:02 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	ft_heredoc(t_global *global, char *line)
 	int		fd[2];
 	int		in_quote;
 
+	if (global->tmp->infile > 1)
+		close(global->tmp->infile);
 	in_quote = 0;
 	lim = ft_getlim(global, line, &in_quote);
 	if (!lim)
