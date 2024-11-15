@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 17:36:18 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/12 18:46:05 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/14 17:25:31 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,20 +25,31 @@ void	ft_waitall(t_global *g)
 			if (WIFEXITED(exit_status))
 				g->exit_value = WEXITSTATUS(exit_status);
 		}
-		if (!WIFEXITED(exit_status))
+		// if (!WIFEXITED(exit_status))
+		if (g_sig != 0)
+		{
 			g->exit_value = 128 + g_sig;
+			// printf("%i\n", g->exit_value);
+		}
 		if (pid == -1)
 			break ;
 	}
 }
 
-int	check_is_cmd_is_ok(t_global *g)
+int	check_is_cmd_is_ok(t_global *g, int i)
 {
 	if (g->tmp && g->tmp->args && g->tmp->args[0])
 	{
 		change_env_(g);
 		if (g->tmp->infile != -2 && g->tmp->outfile != -2)
 			return (0);
+	}
+	if (i != -1)
+	{
+		close_all_fd_child(g);
+		if (i != 0)
+			close(g->tmp->prev_fd);
+		close(g->tmp->pipe[1]);
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/12 18:25:18 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/14 21:33:30 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define HEREDOC_NAME "/tmp/heredoc_poivre"
 # define ERR_HD_EOF "warning: here-document delimited by end-of-file\n"
 # define ERR_ALLOC \
-	"an error has occured,it may\
+	"An error has occured, it may\
  be related with a malloc failure\n"
 
 ///////////////////////////////////////////
@@ -76,11 +76,12 @@ typedef struct s_global
 ///				EXECUTION				///
 
 int						ft_exec(t_global *s_global);
-int						check_is_cmd_is_ok(t_global *g);
+int						check_is_cmd_is_ok(t_global *g, int i);
 int						exec_one_cmd(t_global *g);
 void					exec_pipe_cmds(t_global *g);
 void					execve_cmd(t_global *g);
 void					ft_waitall(t_global *global);
+void					close_all_fd_child(t_global *g);
 
 ///				COMPARATOR				///
 
@@ -120,16 +121,16 @@ char					*ft_getlim(t_global *global, char *line, int *in_quote);
 int						ft_cd(t_global *glo);
 int						ft_pwd(void);
 int						ft_echo(t_command *command);
-int						ft_exit(t_global *glob);
+int						ft_exit(t_global *g, int n);
 int						ft_env(t_global *glob);
 int						ft_export(t_global *glo);
 int						ft_unset(t_global *glob);
 
 ///				ENV						///
 
+char					**create_env(char **envp);
 char					*ft_var_name(char *var);
 int						add_env_var(t_global *glo, char *var);
-char					**create_our_env(char **envp);
 char					*ft_getenv(char **env, char *var);
 int						find_var_in_env(char **env, char *var);
 int						change_env_var(t_global *glo, char *var, int line);

@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/13 19:12:06 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/15 14:58:10 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc > 1)
 		return (1);
 	ft_bzero(&global, sizeof(t_global));
-	global.env = create_our_env(envp);
+	global.env = create_env(envp);
 	global.exit_value = 0;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);

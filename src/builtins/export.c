@@ -6,7 +6,7 @@
 /*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 12:48:08 by ahenault          #+#    #+#             */
-/*   Updated: 2024/11/12 17:15:04 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/15 14:52:24 by ahenault         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int	change_env_var(t_global *g, char *var, int line)
 {
 	char	*tmp;
 
+	if (line == -1)
+		return (1);
 	tmp = g->env[line];
 	g->env[line] = ft_strdup(var);
 	if (!g->env[line])

@@ -1,17 +1,9 @@
-leaks check error (Poivre-echelle> >|)
-
-echo ali >a |>f (pipe)
->> cat Makefile
-echo ali | echo $USER | echo asdasdasd
+leaks ?
 echo ali |>""
-
-    echo ali > outfile1 < infile1 > outfile2 > outfile3 | <infile2 < infile3 cat > outfile4 <<end |>outfile5| ali > oufile6    
-
-
-
 
 
 proteger dup pipe
+pipe infile > 0 psq -2
 fd open
 
 
@@ -20,3 +12,14 @@ fd open
 
 
 exit print
+
+
+
+cd ~
+cd -
+
+cd perdu :
+pwd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+
+
+trop de cmds
