@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 14:32:05 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/15 15:30:41 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:44:16 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv, char **envp)
 	while (42)
 	{
 		g_sig = 0;
-		global.line = readline("\001\033[1;95m\002Poivre-echelle> \001\033[0m\002");
+		global.line = readline(PROMPT);
 		if (ft_check_line(&global))
 		{
 			if (ft_token(global.line, &global) && global.command

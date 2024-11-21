@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahenault <ahenault@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 18:23:02 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/15 16:54:02 by ahenault         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:51:49 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@
 ///				MACROS					///
 ///////////////////////////////////////////
 
-# define METACHAR " 	|<>"
-# define HEREDOC_NAME "/tmp/heredoc_poivre"
+# define PROMPT "\001\033[1;95m\002Poivre-et-shell> \001\033[0m\002"
 # define ERR_HD_EOF "warning: here-document delimited by end-of-file\n"
 # define ERR_ALLOC "An error has occured, it may\
  be related with a malloc failure\n"
