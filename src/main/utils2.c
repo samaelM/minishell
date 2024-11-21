@@ -6,7 +6,7 @@
 /*   By: maemaldo <maemaldo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 17:28:47 by maemaldo          #+#    #+#             */
-/*   Updated: 2024/11/12 17:35:08 by maemaldo         ###   ########.fr       */
+/*   Updated: 2024/11/21 13:06:23 by maemaldo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,13 @@ int	ft_strcmp(const char *s1, const char *s2)
 		i++;
 	}
 	return (0);
+}
+
+void	error_dup(t_global *g)
+{
+	close(g->tmp->pipe[1]);
+	close_all_fd_child(g);
+	ft_free_glob(g);
+	ft_perrorf("exec: error with dup\n");
+	exit(1);
 }
