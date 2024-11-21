@@ -61,7 +61,7 @@ This shell name is "poivre et shell", it's a pun with "poivre et sel" (pepper an
 
 ## Thanks
 
-Special thanks to [@Anaelle42](https://github.com/Anaelle42), collaborator in this project
+Special thanks to [@Anaelle42](https://github.com/Anaelle42), contributor on this project
 and a precious friend of mine, the project would not have been possible without her.
 
 ## Contacts
