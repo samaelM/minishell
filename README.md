@@ -55,6 +55,10 @@ The following bash features have not been implemented:
 - Parenthesis
 - some more...
 
+## About the name
+
+This shell name is "poivre et shell", it's a pun with "poivre et sel" (pepper and salt in french) and shell
+
 ## Thanks
 
 Special thanks to [@Anaelle42](https://github.com/Anaelle42), collaborator in this project
